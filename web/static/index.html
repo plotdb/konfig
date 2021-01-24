@@ -1,0 +1,168 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldpalettepicker/main/ldpp.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldslider/main/ldrs.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">@font-face {
+  font-family: 'ldi';
+  font-weight: normal;
+  font-style: normal;
+  src: url("/assets/lib/ldiconfont/main/ldif.ttf") format('truetype');
+}
+.ctrl {
+  margin: 0 0 0.5em 0;
+}
+.ctrl [ld=name] {
+  margin: 0;
+}
+</style></head><body><div class="ldcv default-size"><div class="base"><div class="inner"><div class="ldpp" ldPalettePicker><div class="navbar text-center"><div class="inner" data-tag="menu"><ul class="nav nav-pills float-right"><div class="nav-item"><a class="nav-link active" data-panel="view">View</a></div><div class="nav-item"><a class="nav-link" data-panel="mypal">My Pals</a></div><div class="nav-item"><a class="nav-link" data-panel="edit">Edit</a></div></ul><div class="nav nav-pills"><div class="input-group"><input class="form-control" placeholder="Search..." data-tag="search"><div class="input-group-append dropdown"><div class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown">Filter</div><div class="dropdown-menu" data-tag="categories"><a class="dropdown-item" href="#" data-cat="">All</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#" data-cat="artwork">Artwork</a><a class="dropdown-item" href="#" data-cat="brand">Brand</a><a class="dropdown-item" href="#" data-cat="concept">Concept</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#" data-cat="gradient">Gradient</a><a class="dropdown-item" href="#" data-cat="qualitative">Qualitative</a><a class="dropdown-item" href="#" data-cat="diverging">Diverging</a><a class="dropdown-item" href="#" data-cat="colorbrew">Colorbrew</a></div></div></div></div></div></div><div class="panels"><div class="panel active clusterize-scroll" data-panel="view" style="max-height:600px"><div class="inner clusterize-content"></div></div><div class="panel clusterize-scroll" data-panel="mypal" style="max-height:600px"><div class="inner clusterize-content"></div><div class="btn btn-primary btn-block ld-over-inverse btn-load">Load More<div class="ld ldld ldbtn sm"></div></div></div><div class="panel" data-panel="edit"><div class="ldp"><div class="name"></div><div class="colors"></div></div><div class="edit"><div class="inner"><div class="row"><div class="col-sm-6"><div class="ldColorPicker no-border no-palette"></div></div><div class="col-sm-6"><div class="row mb-2"><div class="col-sm-8"><select class="form-control form-control-local-sm" value="rgb"><option value="rgb">RGB</option><option value="hsl">HSL</option><option value="hcl">HCL</option></select></div><div class="col-sm-4 pl-0"><input class="form-control form-control-local-sm value" placeholder="Hex Value" data-tag="hex" style="margin:0"></div></div><div class="row config active" data-tag="rgb"><div class="col-sm-8"><div class="label-group"><span>Red</span></div><input class="ldrs ldrs-sm" data-tag="rgb-r"><div class="label-group"><span>Green</span></div><input class="ldrs ldrs-sm" data-tag="rgb-g"><div class="label-group"><span>Blue</span></div><input class="ldrs ldrs-sm" data-tag="rgb-b"></div><div class="col-sm-4"><input class="value form-control form-control-local-sm" data-tag="rgb-r"><input class="value form-control form-control-local-sm" data-tag="rgb-g"><input class="value form-control form-control-local-sm" data-tag="rgb-b"></div></div><div class="row config" data-tag="hsl"><div class="col-sm-8"><div class="label-group"><span>Hue</span></div><input class="ldrs ldrs-sm" data-tag="hsl-h"><div class="label-group"><span>Saturation</span></div><input class="ldrs ldrs-sm" data-tag="hsl-s"><div class="label-group"><span>Luminance</span></div><input class="ldrs ldrs-sm" data-tag="hsl-l"></div><div class="col-sm-4"><input class="value form-control form-control-local-sm" data-tag="hsl-h"><input class="value form-control form-control-local-sm" data-tag="hsl-s"><input class="value form-control form-control-local-sm" data-tag="hsl-l"></div></div><div class="row config" data-tag="hcl"><div class="col-sm-8"><div class="label-group"><span>Hue</span></div><input class="ldrs ldrs-sm" data-tag="hcl-h"><div class="label-group"><span>Chroma</span></div><input class="ldrs ldrs-sm" data-tag="hcl-c"><div class="label-group"><span>Luminance</span></div><input class="ldrs ldrs-sm" data-tag="hcl-l"></div><div class="col-sm-4"><input class="value form-control form-control-local-sm" data-tag="hcl-h"><input class="value form-control form-control-local-sm" data-tag="hcl-c"><input class="value form-control form-control-local-sm" data-tag="hcl-l"></div></div></div></div></div></div><div class="foot"><hr><div class="float-right"><div class="btn btn-primary mr-2" data-action="use">Use This Palette</div><div class="btn btn-outline-secondary ld-ext-right" data-action="save">Save as Asset <div class="ld ldld ldbtn sm"></div></div></div><div class="btn btn-outline-secondary" data-action="undo">Undo <i class="i-undo"></i></div></div></div></div></div></div></div></div><div class="d-none" id="ctrl-color"><div class="ctrl" ld-scope=""><div class="flex-grow-1" ld="name">color</div><div class="color"><input class="form-control" ld="input" value="#eee" data-cpclass="no-button compact-palette flat" data-toggle="colorpicker" data-context="random" data-exclusive="true"><div class="inner" ld="color"></div></div><style type="@plotdb/block">.color {
+  position: relative;
+}
+.color .inner {
+  background: #f00;
+  width: 0.5em;
+  height: 1.75em;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.color .form-control-sm + .inner {
+  height: 1.4em;
+  width: 0.4em;
+}
+.color .form-control-lg + .inner {
+  height: 2.3em;
+}
+</style><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.color = '#f00';
+    return this.view = new ldView({
+      root: root,
+      init: {
+        input: function(arg$){
+          var node;
+          node = arg$.node;
+          this$.ldcp = new ldColorPicker(node, {
+            className: 'no-button compact-palette flat'
+          });
+          this$.color = ldColor.web(this$.ldcp.getColor());
+          return this$.ldcp.on('change', function(it){
+            this$.color = it;
+            return this$.view.render('color');
+          });
+        }
+      },
+      handler: {
+        color: function(arg$){
+          var node;
+          node = arg$.node;
+          return node.style.backgroundColor = ldColor.web(this$.color);
+        }
+      }
+    });
+  }
+});</script></div></div><div class="d-none" id="ctrl-palette"><div class="ctrl" ld-scope=""><div class="flex-grow-1" ld="name">palette</div><div class="ldp w-100" ld="palette"><div class="colors"><div class="color" ld-each="color"></div></div></div><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.pal = {
+      name: "untiled",
+      colors: ['#f00', '#0f0', '#00f']
+    };
+    this.ldpp = new ldPalettePicker({
+      root: '[ldPalettePicker]',
+      ldcv: true,
+      palettes: ldPalettePicker.get('all')
+    });
+    return this.view = new ldView({
+      root: root,
+      action: {
+        click: {
+          palette: function(arg$){
+            var node;
+            node = arg$.node;
+            return this$.ldpp.get().then(function(it){
+              if (!it) {
+                return;
+              }
+              this$.pal = it;
+              return this$.view.render();
+            });
+          }
+        }
+      },
+      handler: {
+        color: {
+          list: function(){
+            return this$.pal.colors;
+          },
+          handler: function(arg$){
+            var node, data;
+            node = arg$.node, data = arg$.data;
+            return node.style.backgroundColor = ldColor.web(data);
+          }
+        }
+      }
+    });
+  }
+});</script></div></div><div class="d-none" id="ctrl-choice"><div class="ctrl" ld-scope=""><div class="flex-grow-1" ld="name">choice</div><select class="form-control" ld="select"><option ld-each="option"></option></select><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.options = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    return this.view = new ldView({
+      root: root,
+      action: {
+        change: {
+          select: function(arg$){
+            var node, evt;
+            node = arg$.node, evt = arg$.evt;
+            return console.log(node.value);
+          }
+        }
+      },
+      handler: {
+        option: {
+          list: function(){
+            return this$.options;
+          },
+          text: function(arg$){
+            var data;
+            data = arg$.data;
+            return data;
+          }
+        }
+      }
+    });
+  }
+});</script></div></div><div class="d-none" id="ctrl-boolean"><div class="ctrl" ld-scope=""><div class="d-flex"><div class="flex-grow-1" ld="name">boolean</div><div ld="function"><i class="i-pen ml-2" ld="raw-edit"></i><i class="i-question-circle ml-2" ld="info"></i></div></div><div class="d-flex" ld="widget"><div class="btn-group flex-grow-1"><div class="btn btn-outline-secondary" ld="btn" data-value="true">Yes</div><div class="btn btn-outline-secondary" ld="btn" data-value="false">No</div></div></div><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.data = {
+      state: false
+    };
+    return this.view = new ldView({
+      root: root,
+      action: {
+        click: {
+          btn: function(){
+            this$.data.state = !this$.data.state;
+            return this$.view.render();
+          }
+        }
+      },
+      text: {
+        name: function(){
+          return "sample name";
+        }
+      },
+      handler: {
+        btn: function(arg$){
+          var node, ref$, ref1$;
+          node = arg$.node;
+          return node.classList.toggle('active', !(!(ref$ = this$.data).state !== !(ref1$ = node.getAttribute('data-value') === 'true') && (ref$.state || ref1$)));
+        }
+      }
+    });
+  }
+});</script></div></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>

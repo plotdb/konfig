@@ -1,0 +1,69 @@
+{
+  "author": "zbryikt",
+  "name": "config",
+  "license": "MIT",
+  "description": "config tool",
+  "version": "0.0.1",
+  "files": [
+    "dist/**/*"
+  ],
+  "homepage": "https://github.com/loadingio/config",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loadingio/config"
+  },
+  "engines": {
+    "node": ">=10.14.1",
+    "npm": ">=6.4.1"
+  },
+  "scripts": {
+    "start": "npx server -r web -o true"
+  },
+  "devDependencies": {
+    "@loadingio/debounce.js": "0.0.1",
+    "@loadingio/ldquery": "^1.1.1",
+    "@plotdb/csscope": "^0.2.0",
+    "bootstrap": "^4.5.2",
+    "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
+    "bootstrap.native": "^3.0.13",
+    "fedep": "0.0.12",
+    "ldcover": "^1.3.1",
+    "ldiconfont": "^0.1.2",
+    "ldview": "0.0.2",
+    "stylus": "^0.54.5",
+    "template": "github:zbryikt/template#v2.1.10",
+    "uglify-js": "=3.2.0",
+    "uglifycss": "0.0.29"
+  },
+  "frontendDependencies": {
+    "root": "web/static/assets/lib",
+    "modules": [
+      "bootstrap",
+      "bootstrap.ldui",
+      "bootstrap.native",
+      "@loadingio/ldquery",
+      "@loadingio/debounce.js",
+      "@plotdb/datadom",
+      "@plotdb/block",
+      "@plotdb/rescope",
+      "@plotdb/csscope",
+      "proxise",
+      "ldpalettepicker",
+      "@loadingio/ldcolorpicker",
+      "ldcolor",
+      "ldcover",
+      "ldiconfont",
+      "ldslider",
+      "ldview"
+    ]
+  },
+  "dependencies": {
+    "@loadingio/ldcolorpicker": "^1.1.0",
+    "@plotdb/datadom": "0.0.4",
+    "@plotdb/rescope": "^0.2.2",
+    "ldcolor": "0.0.1",
+    "ldpalettepicker": "0.0.3",
+    "ldslider": "^1.1.0",
+    "proxise": "0.0.1"
+  }
+}

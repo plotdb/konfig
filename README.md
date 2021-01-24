@@ -1,0 +1,3 @@
+# config ( tentative )
+
+config editor.
