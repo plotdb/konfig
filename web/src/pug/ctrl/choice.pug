@@ -1,0 +1,19 @@
+//- module
++scope().ctrl
+  .flex-grow-1(ld="name") choice
+  select.form-control(ld="select")
+    option(ld-each="option")
+  script(type="@plotdb/block"): :lsc
+    {
+      init: ({root}) ->
+        @options = [0 to 10]
+        @view = new ldView do
+          root: root
+          action: change:
+            select: ({node,evt}) -> console.log node.value
+          handler:
+            option:
+              list: ~> @options
+              text: ({data}) -> data
+    }
+

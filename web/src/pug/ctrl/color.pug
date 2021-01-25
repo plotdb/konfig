@@ -1,0 +1,41 @@
+//- module
++scope().ctrl
+  .flex-grow-1(ld="name") color
+  .color
+    input.form-control(ld="input",
+    value="#eee",data-cpclass="no-button compact-palette flat",
+    data-toggle="colorpicker",data-context="random",data-exclusive="true")
+    .inner(ld="color")
+  style(type="@plotdb/block"): :stylus
+    .color
+      position: relative
+      .inner
+        background: #f00
+        width: .5em
+        height: 1.75em
+        position: absolute
+        top: 5px
+        right: 5px
+        border-radius: 5px
+        border: 1px solid rgba(0,0,0,.1)
+      .form-control-sm + .inner
+        height: 1.4em
+        width: .4em
+      .form-control-lg + .inner
+        height: 2.3em
+  script(type="@plotdb/block"): :lsc
+    {
+      init: ({root}) ->
+        @color = \#f00
+        @view = new ldView do
+          root: root
+          init: input: ({node}) ~>
+            @ldcp = new ldColorPicker node, {className: 'no-button compact-palette flat'}
+            @color = ldColor.web @ldcp.getColor!
+            @ldcp.on \change, ~>
+              @color = it
+              @view.render \color
+          handler:
+            color: ({node}) ~>
+              node.style.backgroundColor = ldColor.web( @color )
+    }

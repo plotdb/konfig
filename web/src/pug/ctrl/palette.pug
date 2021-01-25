@@ -1,0 +1,22 @@
+//- module
++scope().ctrl
+  .flex-grow-1(ld="name") palette
+  .ldp.w-100(ld="palette")
+    .colors: .color(ld-each="color")
+  script(type="@plotdb/block"): :lsc
+    {
+      init: ({root}) ->
+        @pal = {name: "untiled", colors: <[#f00 #0f0 #00f]>}
+        @ldpp = new ldPalettePicker root: '[ldPalettePicker]', ldcv: true, palettes: ldPalettePicker.get('all')
+        @view = new ldView do
+          root: root
+          action: click:
+            palette: ({node}) ~>
+              @ldpp.get!then ~>
+                if !it => return
+                @pal = it; @view.render!
+          handler:
+            color:
+              list: ~> @pal.colors
+              handler: ({node, data}) -> node.style.backgroundColor = ldColor.web(data)
+    }

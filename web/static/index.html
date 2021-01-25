@@ -165,4 +165,73 @@
       }
     });
   }
-});</script></div></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>
+});</script></div></div><div class="d-none" id="ctrl-text"><div class="ctrl" ld-scope=""><div class="flex-grow-1" ld="name">text</div><input class="form-control" value="loading.io"></div></div><div class="d-none" id="ctrl-number"><div class="ctrl" ld-scope=""><div class="d-flex"><div class="flex-grow-1" ld="name">number</div><div ld="function"><i class="i-pen ml-2" ld="raw-edit"></i><i class="i-question-circle ml-2" ld="info"></i></div></div><div class="ldrs" ld="widget"></div><script type="@plotdb/block">({
+  init: function(arg$){
+    var root;
+    root = arg$.root;
+    return this.ldrs = new ldSlider({
+      root: root.querySelector('.ldrs')
+    });
+  }
+});</script></div></div><div class="d-none" id="ctrl-paragraph"><div class="ctrl" ld-scope=""><div class="d-flex"><div class="flex-grow-1" ld="name">paragraph</div></div><input class="form-control" ld="input"><div class="ldcv inline"><div class="base" ld="panel"><div class="inner"><div class="p-2"><textarea class="form-control" ld="textarea" rows="3"></textarea></div><div class="px-2 pb-2 text-right"><div class="btn btn-sm btn-outline-secondary" data-ldcv-set="">Cancel</div><div class="btn btn-sm btn-primary ml-2" data-ldcv-set="ok">OK</div></div></div></div></div><style type="@plotdb/block">.ldcv.inline {
+  position: absolute;
+}
+.ldcv.inline:before {
+  background: rgba(0,0,0,0.1);
+}
+.ldcv.inline:after {
+  display: none;
+}
+.ldcv.inline .base {
+  position: absolute;
+}
+</style><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.data = '';
+    this.ldcv = new ldCover({
+      root: root.querySelector('.ldcv')
+    });
+    return this.view = new ldView({
+      root: root,
+      action: {
+        click: {
+          input: function(){
+            var ibox, pbox;
+            ibox = this$.view.get('input').getBoundingClientRect();
+            pbox = this$.view.get('panel').getBoundingClientRect();
+            import$(this$.view.get('panel').style, {
+              width: ibox.width + "px",
+              left: ibox.left + "px",
+              top: ibox.top + "px"
+            });
+            return this$.ldcv.get().then(function(it){
+              if (it === 'ok') {
+                this$.data = this$.view.get('textarea').value;
+              }
+              return this$.view.render();
+            });
+          }
+        }
+      },
+      handler: {
+        textarea: function(arg$){
+          var node;
+          node = arg$.node;
+          return node.value = this$.data;
+        },
+        input: function(arg$){
+          var node;
+          node = arg$.node;
+          return node.value = this$.data;
+        }
+      }
+    });
+  }
+});
+function import$(obj, src){
+  var own = {}.hasOwnProperty;
+  for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+  return obj;
+}</script></div></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>
