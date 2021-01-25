@@ -14,17 +14,14 @@ config-editor = (opt={}) ->
   @opt = {} <<< opt
   @def = opt.def
   @evt-handler = {}
-  @init = proxise ~> if @inited => return Promise.resolve! else if !@initing => @_init!
+  @init = proxise.once ~> @_init!
   @
 
 config-editor.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
-  _init: ->
-    @initing = true
-    Promise.resolve!
-      .finally -> @initing = false
-      .then ~> @inited = true
+  _init: -> Promise.resolve!
+
   get: ->
   set: ->
   parse: ->

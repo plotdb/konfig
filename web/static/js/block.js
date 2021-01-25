@@ -15,6 +15,12 @@ bmgr.init().then(function(){
   ce = new configEditor({
     def: {}
   });
+  ce.init().then(function(){
+    return console.log('ok1');
+  });
+  ce.init().then(function(){
+    return console.log('ok2');
+  });
   return types.map(function(n){
     return bmgr.get({
       name: "ctrl-" + n,

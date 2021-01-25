@@ -11,6 +11,10 @@ bmgr.init!
 
     ce = new config-editor do
       def: {}
+    ce.init!
+      .then -> console.log \ok1
+    ce.init!
+      .then -> console.log \ok2
     types.map (n) ->
       bmgr.get {name: "ctrl-#n", version: "0.0.1"}
         .then -> it.create!

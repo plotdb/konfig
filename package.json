@@ -67,7 +67,7 @@
     "ldcolor": "0.0.1",
     "ldpalettepicker": "0.0.3",
     "ldslider": "^1.1.0",
-    "proxise": "0.0.1",
+    "proxise": "^0.1.1",
     "xl-fontload": "github:plotdb/xl-fontload"
   }
 }

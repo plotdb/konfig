@@ -37,34 +37,15 @@
     opt == null && (opt = {});
     this.hash = {};
     this.setRegistry(opt.registry);
-    this.inited = false;
-    this.initing = false;
-    this.init = proxise(function(){
-      if (this$.inited) {
-        return Promise.resolve();
-      } else if (!this$.initing) {
-        return this$._init();
-      }
+    this.init = proxise.once(function(){
+      return this$._init();
     });
     this.init();
     return this;
   };
   block.manager.prototype = import$(Object.create(Object.prototype), {
     _init: function(){
-      var this$ = this;
-      if (this.inited) {
-        return Promise.resolve();
-      }
-      this.initing = true;
-      return block.scope.init()['finally'](function(){
-        return this$.initing = false;
-      }).then(function(){
-        return this$.inited = true;
-      }).then(function(){
-        return this$.init.resolve();
-      })['catch'](function(){
-        return this$.init.reject();
-      });
+      return block.scope.init();
     },
     setRegistry: function(it){
       var ref$;
@@ -161,8 +142,6 @@
     opt == null && (opt = {});
     this.opt = opt;
     this.scope = "_" + Math.random().toString(36).substring(2);
-    this.inited = false;
-    this.initing = false;
     this.name = opt.name;
     this.version = opt.version;
     this.extend = opt.extend;
@@ -213,12 +192,8 @@
     this.datadom = new datadom({
       node: node
     });
-    this.init = proxise(function(){
-      if (this$.inited) {
-        return Promise.resolve();
-      } else if (!this$.initing) {
-        return this$._init();
-      }
+    this.init = proxise.once(function(){
+      return this$._init();
     });
     this.init();
     return this;
@@ -226,10 +201,6 @@
   block['class'].prototype = import$(Object.create(Object.prototype), {
     _init: function(){
       var this$ = this;
-      if (this.inited) {
-        return Promise.resolve();
-      }
-      this.initing = true;
       return this.datadom.init().then(function(){
         var ret, ref$, k, v;
         this$['interface'] = (this$.script instanceof Function
@@ -268,10 +239,6 @@
             return results$;
           }.call(this$));
         return block.scope.load(this$.dependencies);
-      }).then(function(){
-        return this$.inited = true, this$.initing = false, this$;
-      }).then(function(){
-        return this$.init.resolve();
       })['catch'](function(e){
         var node;
         console.error(e);
@@ -287,12 +254,8 @@
             return this;
           };
           this$.dependencies = [];
-          this$.inited = true;
-          this$.initing = false;
-          return this$.init.resolve();
+          return this$.inited = true, this$.initing = false, this$;
         });
-      })['catch'](function(){
-        return this$.init.reject();
       });
     },
     getDomNode: function(){
@@ -337,34 +300,19 @@
     this.block = opt.block;
     this.name = opt.name;
     this.version = opt.version;
-    this.inited = false;
-    this.initing = false;
-    this.init = proxise(function(){
-      if (this$.inited) {
-        return Promise.resolve();
-      } else if (!this$.initing) {
-        return this$._init();
-      }
+    this.init = proxise.once(function(){
+      return this$._init();
     });
     return this;
   };
   block.instance.prototype = import$(Object.create(Object.prototype), {
     _init: function(){
       var this$ = this;
-      if (this.inited) {
-        return Promise.resolve();
-      }
       return this.block.init().then(function(){
         this$.datadom = new datadom({
           data: JSON.parse(JSON.stringify(this$.block.getDomData()))
         });
         return this$.datadom.init();
-      }).then(function(){
-        return this$.inited = true, this$.initing = false, this$;
-      }).then(function(){
-        return this$.init.resolve();
-      })['catch'](function(){
-        return this$.init.reject();
       });
     },
     attach: function(arg$){
