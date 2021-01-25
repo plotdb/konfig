@@ -1,36 +1,27 @@
-var types;
-types = ['choice', 'boolean', 'palette', 'color', 'number', 'text', 'paragraph', 'upload', 'font'];
-bmgr.init().then(function(){
-  return Promise.all(types.map(function(n){
-    return bmgr.set({
-      name: "ctrl-" + n,
-      version: '0.0.1',
-      block: new block['class']({
-        root: "#ctrl-" + n
-      })
+var context;
+context = function(){
+  var this$ = this;
+  Promise.resolve().then(function(){
+    var ce;
+    this$.def = {};
+    configEditor.types.map(function(n){
+      return this$.def[n] = {
+        name: n,
+        type: n
+      };
     });
-  }));
-}).then(function(){
-  var ce;
-  ce = new configEditor({
-    def: {}
-  });
-  ce.init().then(function(){
-    return console.log('ok1');
-  });
-  ce.init().then(function(){
-    return console.log('ok2');
-  });
-  return types.map(function(n){
-    return bmgr.get({
-      name: "ctrl-" + n,
-      version: "0.0.1"
-    }).then(function(it){
-      return it.create();
-    }).then(function(it){
-      return it.attach({
-        root: container
-      });
+    this$.ce = ce = new configEditor({
+      def: this$.def,
+      root: container
     });
+    return ce.init();
+  }).then(function(){
+    return this$.ce.parse();
+  }).then(function(){
+    return this$.ce.render();
+  }).then(function(){
+    return console.log('done.');
   });
-});
+  return this;
+};
+new context();
