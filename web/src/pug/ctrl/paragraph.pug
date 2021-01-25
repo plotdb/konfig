@@ -1,0 +1,39 @@
+//- module
++scope().ctrl
+  .d-flex
+    .flex-grow-1(ld="name") paragraph
+  input.form-control(ld="input")
+  .ldcv.inline: .base(ld="panel"): .inner
+    .p-2: textarea.form-control(ld="textarea",rows="3")
+    .px-2.pb-2.text-right
+      .btn.btn-sm.btn-outline-secondary(data-ldcv-set="") Cancel
+      .btn.btn-sm.btn-primary.ml-2(data-ldcv-set="ok") OK
+  style(type="@plotdb/block"): :stylus
+    .ldcv.inline
+      position: absolute
+      &:before { background: rgba(0,0,0,.1) }
+      &:after { display: none }
+      .base { position: absolute }
+  script(type="@plotdb/block"): :lsc
+    {
+      init: ({root}) ->
+        @data = ''
+        @ldcv = new ldCover root: root.querySelector('.ldcv')
+        @view = new ldView do
+          root: root
+          action: click: do
+            input: ~>
+              ibox = @view.get('input').getBoundingClientRect!
+              pbox = @view.get('panel').getBoundingClientRect!
+              @view.get('panel').style <<< do
+                width: "#{ibox.width}px"
+                left: "#{ibox.left}px"
+                top: "#{ibox.top}px"
+              @ldcv.get!then ~>
+                if it == \ok => @data = @view.get('textarea').value
+                @view.render!
+          handler:
+            textarea: ({node}) ~> node.value = @data
+            input: ({node}) ~> node.value = @data
+            
+    }

@@ -1,5 +1,7 @@
+var types;
+types = ['choice', 'boolean', 'palette', 'color', 'number', 'text', 'paragraph', 'upload', 'font'];
 bmgr.init().then(function(){
-  return Promise.all(['choice', 'boolean', 'palette', 'color', 'number', 'text', 'paragraph'].map(function(n){
+  return Promise.all(types.map(function(n){
     return bmgr.set({
       name: "ctrl-" + n,
       version: '0.0.1',
@@ -13,7 +15,7 @@ bmgr.init().then(function(){
   ce = new configEditor({
     def: {}
   });
-  return ['choice', 'boolean', 'palette', 'color', 'number', 'text', 'paragraph'].map(function(n){
+  return types.map(function(n){
     return bmgr.get({
       name: "ctrl-" + n,
       version: "0.0.1"

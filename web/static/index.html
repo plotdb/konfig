@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldpalettepicker/main/ldpp.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldslider/main/ldrs.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">@font-face {
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldpalettepicker/main/ldpp.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldslider/main/ldrs.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/choosefont.js/main/choosefont.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">@font-face {
   font-family: 'ldi';
   font-weight: normal;
   font-style: normal;
@@ -234,4 +234,39 @@ function import$(obj, src){
   var own = {}.hasOwnProperty;
   for (var key in src) if (own.call(src, key)) obj[key] = src[key];
   return obj;
-}</script></div></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>
+}</script></div></div><div class="d-none" id="ctrl-upload"><div class="ctrl" ld-scope=""><div class="d-flex"><div class="flex-grow-1" ld="name">upload</div></div><div class="btn btn-outline-secondary btn-block btn-upload"><input type="file" ld="file" multiple><div class="d-flex align-items-center justify-content-center"><span ld="filename">upload</span><i class="i-upload ml-1"></i></div></div><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.files = [];
+    return this.view = new ldView({
+      root: root,
+      action: {
+        change: {
+          file: function(arg$){
+            var node;
+            node = arg$.node;
+            this$.files = [].concat(Array.from(node.files).map(function(it){
+              return it;
+            }));
+            return this$.view.render();
+          }
+        }
+      },
+      text: {
+        filename: function(arg$){
+          var node;
+          node = arg$.node;
+          if (!this$.files.length) {
+            return "upload";
+          }
+          if (this$.files.length === 1) {
+            return this$.files[0].name + "";
+          } else {
+            return this$.files.length + " files selected";
+          }
+        }
+      }
+    });
+  }
+});</script></div></div><div class="d-none" id="ctrl-font"></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/xl-fontload/main/xfl.min.js"></script><script type="text/javascript" src="/assets/lib/choosefont.js/main/choosefont.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>

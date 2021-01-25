@@ -1,0 +1,25 @@
+//- module
++scope().ctrl
+  .d-flex
+    .flex-grow-1(ld="name") upload
+  .btn.btn-outline-secondary.btn-block.btn-upload
+    input(name=name,type="file",ld="file",multiple)
+    .d-flex.align-items-center.justify-content-center
+      span(ld="filename") upload
+      i.i-upload.ml-1
+  script(type="@plotdb/block"): :lsc
+    {
+      init: ({root}) ->
+        @files = []
+        @view = new ldView do
+          root: root
+          action: change: do
+            file: ({node}) ~>
+              @files = [] ++ Array.from(node.files).map(->it)
+              @view.render!
+          text: do
+            filename: ({node}) ~>
+              if !@files.length => return "upload"
+              if @files.length == 1 => return "#{@files.0.name}"
+              else return "#{@files.length} files selected"
+    }
