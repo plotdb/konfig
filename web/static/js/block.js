@@ -7,7 +7,8 @@ context = function(){
     configEditor.types.map(function(n){
       return this$.def[n] = {
         name: n,
-        type: n
+        type: n,
+        group: n.substring(0, 1)
       };
     });
     this$.ce = ce = new configEditor({

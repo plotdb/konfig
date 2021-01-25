@@ -4,6 +4,7 @@ ctrl = function(opt){
   this.opt = import$({}, opt);
   this.name = opt.name;
   this.type = opt.type;
+  this.group = opt.group;
   this.evtHandler = {};
   return this;
 };
@@ -38,6 +39,7 @@ configEditor = function(opt){
   this.def = opt.def;
   this.evtHandler = {};
   this.ctrls = {};
+  this.groups = {};
   this.init = proxise.once(function(){
     return this$._init();
   });
@@ -83,43 +85,84 @@ configEditor.prototype = import$(Object.create(Object.prototype), {
   get: function(){},
   set: function(){},
   parse: function(){
-    var _, this$ = this;
-    _ = function(n){
-      var k, v;
+    var mkg, _, k, ref$, v, this$ = this, results$ = [];
+    this.groups[''] = {
+      child: {},
+      root: this.root,
+      key: ''
+    };
+    mkg = function(k, v){
+      var root;
+      root = document.createElement('div');
+      root.classList.add('group');
+      root.setAttribute('data-name', k);
+      return this$.groups[k] = import$({
+        child: {},
+        root: root,
+        key: k
+      }, v || {});
+    };
+    _ = function(n, g){
+      var k, v, results$ = [];
       for (k in n) {
         v = n[k];
+        if (g.key) {
+          v.group = g.key;
+        }
         if (!v) {
           continue;
         }
-        if (v.type === 'group') {
-          return _(v);
+        if (!this$.groups[v.group || '']) {
+          mkg(v.group || '', {});
         }
-        this$.ctrls[k] = new ctrl(v);
+        if (v.type === 'group') {
+          mkg(k, v);
+          _(v, this$.groups[k]);
+          continue;
+        }
+        results$.push(this$.ctrls[k] = new ctrl(v));
       }
+      return results$;
     };
-    return _(this.def);
+    _(this.def, this.groups['']);
+    for (k in ref$ = this.groups) {
+      v = ref$[k];
+      if (k) {
+        results$.push(this.groups[v.group || ''].root.appendChild(v.root));
+      }
+    }
+    return results$;
   },
   render: function(){
-    var ps, res$, k, ref$, v, n, this$ = this;
-    res$ = [];
-    for (k in ref$ = this.ctrls) {
-      v = ref$[k];
+    var ps, k, v, this$ = this;
+    ps = (function(){
+      var ref$, results$ = [];
+      for (k in ref$ = this.ctrls) {
+        v = ref$[k];
+        results$.push({
+          k: k,
+          v: v
+        });
+      }
+      return results$;
+    }.call(this)).map(function(arg$){
+      var k, v, n;
+      k = arg$.k, v = arg$.v;
       n = v.type;
-      res$.push(bmgr.get({
+      return bmgr.get({
         name: "ctrl-" + n,
         version: "0.0.1"
-      }).then(fn$).then(fn1$));
-    }
-    ps = res$;
-    return Promise.all(ps);
-    function fn$(it){
-      return it.create();
-    }
-    function fn1$(it){
-      return it.attach({
-        root: this$.root
+      }).then(function(it){
+        return it.create();
+      }).then(function(it){
+        var node;
+        node = this$.groups[v.group || ''].root;
+        return it.attach({
+          root: node
+        });
       });
-    }
+    });
+    return Promise.all(ps);
   }
 });
 function import$(obj, src){

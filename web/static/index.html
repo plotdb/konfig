@@ -269,4 +269,47 @@ function import$(obj, src){
       }
     });
   }
-});</script></div></div><div class="d-none" id="ctrl-font"></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/xl-fontload/main/xfl.min.js"></script><script type="text/javascript" src="/assets/lib/choosefont.js/main/choosefont.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>
+});</script></div></div><div class="d-none" id="ctrl-font"><div class="ctrl" ld-scope=""><div class="d-flex"><div class="flex-grow-1" ld="name">font</div></div><div class="btn btn-outline-secondary btn-block" ld="toggle">Font</div><div class="ldcv default-size"><div class="base"><div class="inner"><div class="choosefont toolbar"><div class="choosefont-head form-inline"><div class="dropdown mr-2"><div class="btn btn-outline-secondary dropdown-toggle" style="min-width:10em" data-toggle="dropdown" data-category-holder="true">Category ...</div><div class="dropdown-menu"><a class="dropdown-item" href="#" data-category="All">All</a><a class="dropdown-item" href="#" data-category="Serif">Serif</a><a class="dropdown-item" href="#" data-category="Sans Serif">Sans Serif</a><a class="dropdown-item" href="#" data-category="Display">Display</a><a class="dropdown-item" href="#" data-category="Handwriting">Handwriting</a><a class="dropdown-item" href="#" data-category="Monospace">Monospace</a><a class="dropdown-item" href="#" data-category="Chinese">Chinese</a></div></div><input class="form-control mr-2" placeholder="Search..."><div class="btn btn-text mx-2">or</div><div class="btn btn-outline-secondary btn-upload" data-action="upload">Use Your Own Font <i class="i-lock ml-1"></i><input type="file"></div></div><div class="choosefont-content"></div></div></div></div></div><script type="@plotdb/block">({
+  init: function(arg$){
+    var root, this$ = this;
+    root = arg$.root;
+    this.font = {};
+    this.cf = new ChooseFont({
+      root: root.querySelector('.ldcv .inner'),
+      metaUrl: '/assets/lib/choosefont.js/main/fontinfo/meta.json',
+      base: 'https://plotdb.github.io/xl-fontset/alpha'
+    });
+    this.cf.init();
+    this.cf.on('choose', function(it){
+      return this$.ldcv.set(it);
+    });
+    this.ldcv = new ldCover({
+      root: root.querySelector('.ldcv')
+    });
+    return this.view = new ldView({
+      root: root,
+      action: {
+        click: {
+          toggle: function(arg$){
+            var node;
+            node = arg$.node;
+            return this$.ldcv.get().then(function(it){
+              if (!it) {
+                return;
+              }
+              this$.font = it;
+              return this$.view.render();
+            });
+          }
+        }
+      },
+      text: {
+        toggle: function(arg$){
+          var node;
+          node = arg$.node;
+          return this$.font.name || 'Font';
+        }
+      }
+    });
+  }
+});</script></div></div><div class="w-480 rwd mx-auto my-4" id="container"></div><script type="text/javascript" src="/assets/lib/xl-fontload/main/xfl.min.js"></script><script type="text/javascript" src="/assets/lib/choosefont.js/main/choosefont.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldColor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.min.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/all.palettes.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/ldslider/main/ldrs.min.js"></script><script type="text/javascript" src="/js/index.js"></script><script type="text/javascript" src="/js/block.js"></script></body></html>

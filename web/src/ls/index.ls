@@ -1,6 +1,6 @@
 ctrl = (opt={}) ->
   @opt = {} <<< opt
-  @ <<< opt{name, type}
+  @ <<< opt{name, type, group}
   @evt-handler = {}
   @
 
@@ -17,6 +17,7 @@ config-editor = (opt={}) ->
   @def = opt.def
   @evt-handler = {}
   @ctrls = {}
+  @groups = {}
   @init = proxise.once ~> @_init!
   @init!
   @
@@ -38,17 +39,34 @@ config-editor.prototype = Object.create(Object.prototype) <<< do
   get: ->
   set: ->
   parse: ->
-    _ = (n) ~>
+    @groups[''] = {child: {}, root: @root, key: ''}
+    mkg = (k, v) ~>
+      root = document.createElement \div
+      root.classList.add \group
+      root.setAttribute \data-name, k
+      @groups[k] = {child: {}, root: root, key: k} <<< (v or {})
+
+    _ = (n,g) ~>
       for k,v of n =>
+        if g.key => v.group = g.key
         if !v => continue
-        if v.type == \group => return _(v)
+        if !@groups[v.group or ''] => mkg (v.group or ''), {}
+        if v.type == \group =>
+          mkg k,v
+          _(v, @groups[k])
+          continue
         @ctrls[k] = new ctrl(v)
-    _ @def
+    _ @def, @groups['']
+    for k,v of @groups => if k =>
+      @groups[v.group or ''].root.appendChild v.root
+
 
   render: ->
-    ps = for k,v of @ctrls =>
+    ps = [{k,v} for k,v of @ctrls].map ({k,v}) ~>
       n = v.type
       bmgr.get {name: "ctrl-#n", version: "0.0.1"}
         .then -> it.create!
-        .then ~> it.attach {root: @root}
+        .then ~>
+          node = @groups[v.group or ''].root
+          it.attach {root: node}
     Promise.all ps
