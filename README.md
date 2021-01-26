@@ -1,3 +1,3 @@
 # config ( tentative )
 
-config editor.
+loading.io style config editor.

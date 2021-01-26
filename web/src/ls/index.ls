@@ -38,6 +38,7 @@ config-editor.prototype = Object.create(Object.prototype) <<< do
 
   get: ->
   set: ->
+
   parse: ->
     @groups[''] = {child: {}, root: @root, key: ''}
     mkg = (k, v) ~>
