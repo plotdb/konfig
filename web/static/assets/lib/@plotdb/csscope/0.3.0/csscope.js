@@ -73,7 +73,7 @@
         return it.trim();
       }
       function fn3$(it){
-        var ref$, h, t;
+        var ref$, h, t, h1, h2;
         if (it === ":scope") {
           return scope;
         }
@@ -82,7 +82,10 @@
         }).filter(function(it){
           return it;
         }), h = ref$[0], t = slice$.call(ref$, 1);
-        return (scope + " :not(" + scopeTest + ") " + it + ",") + (scope + " > :not(" + scopeTest + ")" + h + " " + t.join(' '));
+        ref$ = /^[a-zA-Z]/.exec(h)
+          ? [h, '']
+          : ['', h], h1 = ref$[0], h2 = ref$[1];
+        return (scope + " :not(" + scopeTest + ") " + it + ",") + (scope + " > " + h1 + ":not(" + scopeTest + ")" + h2 + " " + t.join(' '));
       }
       function fn4$(it){
         return it + ":" + rule.style[it];

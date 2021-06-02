@@ -22,7 +22,7 @@
   "devDependencies": {
     "@loadingio/debounce.js": "0.0.1",
     "@loadingio/ldquery": "^2.0.0",
-    "@plotdb/csscope": "^0.3.0",
+    "@plotdb/csscope": "^0.3.1",
     "bootstrap": "^4.5.2",
     "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
     "bootstrap.native": "^3.0.13",
