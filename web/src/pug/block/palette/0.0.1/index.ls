@@ -15,14 +15,31 @@ block-factory =
       {url: "/assets/lib/ldpalettepicker/main/ldpp.js"}
     ]
   init: ({root, context, pubsub}) ->
-    @obj = obj = {}
+    {ldcolor,ldpp,ldCover} = context
+    @obj = obj = {evt-handler: {}}
+    @itf = itf =
+      get: -> obj.pal
+      on: (n, cb) -> obj.evt-handler.[][n].push cb
+      fire: (n, ...v) -> for cb in (obj.evt-handler[n] or []) => cb.apply @, v
     view = new ldView do
       root: root
-      action: click: ldp: -> obj.ldcv.get!then -> console.log it
+      action: click:
+        ldp: ->
+          obj.ldpp.get!then ->
+            if !it => return
+            obj.pal = it
+            view.render \color
+            itf.fire \change, obj.pal
       init: ldcv: ({node}) ->
-        obj.ldpp = new ldPalettePicker root: node
         obj.ldcv = new ldCover root: node
+        obj.ldpp = new ldpp root: node, ldcv: obj.ldcv
+        obj.pal = obj.ldpp.ldpe.get-pal!
+      handler:
+        color:
+          list: -> obj.{}pal.[]colors
+          key: -> ldcolor.web(it)
+          handler: ({node,data}) -> node.style.backgroundColor = ldcolor.web data
 
-  interface: -> {}
+  interface: -> @itf
 
 return block-factory

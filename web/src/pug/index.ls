@@ -9,6 +9,8 @@ block-prepare = ({name,root,data}) ->
     .then (bi) ->
       bi.attach {root} .then -> bi.interface!
     .then (item) ->
+      console.log item.get!
+      item.on \change, -> console.log it
 
 manager = new block.manager registry: ({name, version}) -> "/block/#name/#version/index.html"
 manager.init!then ~>
