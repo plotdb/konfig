@@ -60,13 +60,14 @@
     ]
   },
   "dependencies": {
-    "@loadingio/ldcolorpicker": "^1.1.0",
+    "@loadingio/ldcolorpicker": "^2.0.2",
+    "@plotdb/block": "^1.2.1",
     "@plotdb/datadom": "0.0.4",
-    "@plotdb/rescope": "^0.2.2",
+    "@plotdb/rescope": "^1.1.6",
     "choosefont.js": "^0.0.1",
     "ldcolor": "0.0.3",
-    "ldpalettepicker": "0.0.5",
-    "ldslider": "^1.1.1",
+    "ldpalettepicker": "1.0.1",
+    "ldslider": "^2.0.6",
     "proxise": "^0.1.2",
     "xl-fontload": "github:plotdb/xl-fontload"
   }

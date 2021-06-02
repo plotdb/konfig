@@ -1,0 +1,9 @@
+div
+  h1 hello
+  .ldp(ld="ldp")
+    .colors
+      each n in ["#f00","#0f0","#00f"]
+        .color(style=`background:${n}`)
+  include @/ldpalettepicker/dist/ldpp.pug
+  .ldcv.default-size(ld="ldcv"): .base: .inner.ldpp: +ldpp
+  script(type="@plotdb/block"): include:lsc index.ls
