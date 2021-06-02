@@ -1,4 +1,4 @@
-<div><div>choice</div><select ld="select"><option ld-each="option"></option></select><style type="text/css">[ld=select] {
+<div><div plug="config"><div>choice</div><select ld="select"><option ld-each="option"></option></select></div><style type="text/css">[ld=select] {
   width: 100%;
   height: 2em;
   border-radius: 0.25em;
@@ -13,36 +13,24 @@
     pkg: {
       name: 'choice',
       version: '0.0.1',
+      extend: {
+        name: 'base',
+        version: '0.0.1'
+      },
       dependencies: []
     },
     init: function(arg$){
-      var root, context, data, pubsub, obj, itf, view;
+      var root, context, data, pubsub, ldView, view;
       root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
-      this.obj = obj = {
-        evtHandler: {}
-      };
-      this.itf = itf = {
+      ldView = context.ldView;
+      pubsub.fire('init', {
         get: function(){
-          return import$({}, view.get('select').value);
+          return view.get('select').value;
         },
-        on: function(n, cb){
-          var ref$;
-          return ((ref$ = obj.evtHandler)[n] || (ref$[n] = [])).push(cb);
-        },
-        fire: function(n){
-          var v, res$, i$, to$, ref$, len$, cb, results$ = [];
-          res$ = [];
-          for (i$ = 1, to$ = arguments.length; i$ < to$; ++i$) {
-            res$.push(arguments[i$]);
-          }
-          v = res$;
-          for (i$ = 0, len$ = (ref$ = obj.evtHandler[n] || []).length; i$ < len$; ++i$) {
-            cb = ref$[i$];
-            results$.push(cb.apply(this, v));
-          }
-          return results$;
+        set: function(it){
+          return view.get('select').value = it;
         }
-      };
+      });
       return view = new ldView({
         root: root,
         action: {
@@ -50,7 +38,7 @@
             select: function(arg$){
               var node;
               node = arg$.node;
-              return itf.fire('change', node.value);
+              return pubsub.fire('event', 'change', node.value);
             }
           }
         },
@@ -71,15 +59,7 @@
           }
         }
       });
-    },
-    'interface': function(){
-      return this.itf;
     }
   };
   return blockFactory;
-});
-function import$(obj, src){
-  var own = {}.hasOwnProperty;
-  for (var key in src) if (own.call(src, key)) obj[key] = src[key];
-  return obj;
-}</script></div>
+});</script></div>

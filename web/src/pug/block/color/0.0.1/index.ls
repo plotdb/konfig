@@ -3,6 +3,7 @@
 block-factory =
   pkg:
     name: 'color', version: '0.0.1'
+    extend: name: 'base', version: '0.0.1'
     dependencies: [
       {url: "/assets/lib/ldcolor/main/ldcolor.min.js", async: false}
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"}
@@ -10,21 +11,17 @@ block-factory =
       #{url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css"}
     ]
   init: ({root, context, pubsub}) ->
-    {ldcolor} = context
-    @obj = obj = {color: '#fff', evt-handler: {}}
-    @itf = itf =
-      get: -> {} <<<  obj.color
-      on: (n, cb) -> obj.evt-handler.[][n].push cb
-      fire: (n, ...v) -> for cb in (obj.evt-handler[n] or []) => cb.apply @, v
+    {ldView,ldcolor} = context
+    pubsub.fire \init, do
+      get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
+      set: ~> @ldcp.set it
     view = new ldView do
       root: root
-      init: color: ({node}) ->
-        obj.ldcp = new ldcolorpicker node
-        node.style.backgroundColor = ldcolor.web obj.ldcp.get-color!
-        obj.ldcp.on \change, ->
-          itf.fire \change, it
+      init: color: ({node}) ~>
+        @ldcp = new ldcolorpicker node
+        node.style.backgroundColor = ldcolor.web @ldcp.get-color!
+        @ldcp.on \change, ~>
+          pubsub.fire \event, \change, it
           node.style.backgroundColor = ldcolor.web it
-
-  interface: -> @itf
 
 return block-factory

@@ -3,6 +3,7 @@
 block-factory =
   pkg:
     name: 'palette', version: '0.0.1'
+    extend: name: 'base', version: '0.0.1'
     dependencies: [
       {url: "/assets/lib/ldcover/main/ldcv.css", type: \css}
       {url: "/assets/lib/ldcover/main/ldcv.js"}
@@ -15,12 +16,13 @@ block-factory =
       {url: "/assets/lib/ldpalettepicker/main/ldpp.js"}
     ]
   init: ({root, context, pubsub}) ->
-    {ldcolor,ldpp,ldCover} = context
-    @obj = obj = {evt-handler: {}}
-    @itf = itf =
+    {ldView,ldcolor,ldpp,ldCover} = context
+    obj = {pal: null}
+    pubsub.fire \init, do
       get: -> obj.pal
-      on: (n, cb) -> obj.evt-handler.[][n].push cb
-      fire: (n, ...v) -> for cb in (obj.evt-handler[n] or []) => cb.apply @, v
+      set: ->
+        obj.pal = it
+        view.render!
     view = new ldView do
       root: root
       action: click:
@@ -29,7 +31,7 @@ block-factory =
             if !it => return
             obj.pal = it
             view.render \color
-            itf.fire \change, obj.pal
+            pubsub.fire \event, \change, obj.pal
       init: ldcv: ({node}) ->
         obj.ldcv = new ldCover root: node
         obj.ldpp = new ldpp root: node, ldcv: obj.ldcv
@@ -39,7 +41,5 @@ block-factory =
           list: -> obj.{}pal.[]colors
           key: -> ldcolor.web(it)
           handler: ({node,data}) -> node.style.backgroundColor = ldcolor.web data
-
-  interface: -> @itf
 
 return block-factory

@@ -1,8 +1,9 @@
 div
-  div palette
-  .ldp(ld="ldp")
-    .colors
-      .color(ld-each="color")
   include @/ldpalettepicker/dist/ldpp.pug
-  .ldcv.default-size(ld="ldcv"): .base: .inner.ldpp: +ldpp
+  div(plug="config")
+    div palette
+    .ldp(ld="ldp")
+      .colors
+        .color(ld-each="color")
+    .ldcv.default-size(ld="ldcv"): .base: .inner.ldpp: +ldpp
   script(type="@plotdb/block"): include:lsc index.ls

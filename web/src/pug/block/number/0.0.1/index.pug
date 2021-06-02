@@ -1,10 +1,10 @@
 div
-  div
+  div(plug="config")
     .d-flex
       .flex-grow-1 number
       div(ld="switch") switch
     input.ldrs(ld="ldrs")
   style(type="text/css"): :stylus
-    div input { width: 100% }
+    input { width: 100% }
   script(type="@plotdb/block"): include:lsc index.ls
 
