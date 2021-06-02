@@ -3,6 +3,7 @@
 @config =
   palette: name: \palette, type: \palette
   number: name: \number, type: \number
+  boolean: name: \boolean, type: \boolean
 
 block-prepare = ({name,root,data}) ->
   manager.get({name, version: "0.0.1"})

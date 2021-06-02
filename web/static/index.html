@@ -1,4 +1,9 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"></head><body><div class="w-1024 rwd mx-auto my-4"><div ld-each="config"></div></div><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script>(function(it){
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">.config {
+  margin: 1em;
+  flex: 1 1 200px;
+  height: 3em;
+}
+</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex align-items-center"><div class="config" ld-each="config"></div></div><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/ldview.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script>(function(it){
   return it.apply({});
 })(function(){
   var blockPrepare, manager, this$ = this;
@@ -10,6 +15,10 @@
     number: {
       name: 'number',
       type: 'number'
+    },
+    boolean: {
+      name: 'boolean',
+      type: 'boolean'
     }
   };
   blockPrepare = function(arg$){

@@ -11,7 +11,7 @@ block-factory =
     {ldrs} = context
     @obj = obj = {evt-handler: {}}
     @itf = itf =
-      get: -> obj.pal
+      get: -> obj.ldrs.get!
       on: (n, cb) -> obj.evt-handler.[][n].push cb
       fire: (n, ...v) -> for cb in (obj.evt-handler[n] or []) => cb.apply @, v
     view = new ldView do
@@ -20,6 +20,7 @@ block-factory =
         switch: -> obj.ldrs.edit!
       init: ldrs: ({node}) ->
         obj.ldrs = new ldslider root: node
+        obj.ldrs.on \change, -> itf.fire \change, it
 
   interface: -> @itf
 

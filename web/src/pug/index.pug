@@ -7,10 +7,16 @@ html
     +css("/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
     +css("/assets/lib/ldiconfont/main/ldif.min.css")
     +css("/css/index.css")
+    style(type="text/css"): :stylus
+      .config
+        margin: 1em
+        flex: 1 1 200px
+        height: 3em
+        
 
   body
-    .w-1024.rwd.mx-auto.my-4
-      div(ld-each="config")
+    .w-1024.rwd.mx-auto.my-4.d-flex.align-items-center
+      .config(ld-each="config")
     +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
     +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
     +script("/assets/lib/proxise/main/proxise.min.js")
