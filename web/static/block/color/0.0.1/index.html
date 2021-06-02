@@ -1,5 +1,9 @@
-<div><div><div class="d-flex"><div class="flex-grow-1">number</div><div ld="switch">switch</div></div><input class="ldrs" ld="ldrs"/></div><style type="text/css">div input {
+<div><div>color</div><div ld="color"></div><style type="text/css">[ld=color] {
   width: 100%;
+  height: 2em;
+  border-radius: 0.25em;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 </style><script type="@plotdb/block">(function(it){
   return it();
@@ -7,28 +11,28 @@
   var blockFactory;
   blockFactory = {
     pkg: {
-      name: 'number',
+      name: 'color',
       version: '0.0.1',
       dependencies: [
         {
-          url: "/assets/lib/ldslider/main/ldrs.css",
-          type: 'css'
-        }, {
-          url: "/assets/lib/ldslider/main/ldrs.js",
+          url: "/assets/lib/ldcolor/main/ldcolor.min.js",
           async: false
+        }, {
+          url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"
         }
       ]
     },
     init: function(arg$){
-      var root, context, data, pubsub, ldrs, obj, itf, view;
-      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
-      ldrs = context.ldrs;
+      var root, context, pubsub, ldcolor, obj, itf, view;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
+      ldcolor = context.ldcolor;
       this.obj = obj = {
+        color: '#fff',
         evtHandler: {}
       };
       this.itf = itf = {
         get: function(){
-          return obj.ldrs.get();
+          return import$({}, obj.color);
         },
         on: function(n, cb){
           var ref$;
@@ -50,22 +54,15 @@
       };
       return view = new ldView({
         root: root,
-        action: {
-          click: {
-            'switch': function(){
-              return obj.ldrs.edit();
-            }
-          }
-        },
         init: {
-          ldrs: function(arg$){
-            var node, ref$;
+          color: function(arg$){
+            var node;
             node = arg$.node;
-            obj.ldrs = new ldslider((ref$ = {
-              root: node
-            }, ref$.min = data.min, ref$.max = data.max, ref$.step = data.step, ref$.from = data.from, ref$.to = data.to, ref$.exp = data.exp, ref$.limitMax = data.limitMax, ref$.range = data.range, ref$.label = data.label, ref$.limitMax = data.limitMax, ref$));
-            return obj.ldrs.on('change', function(it){
-              return itf.fire('change', it);
+            obj.ldcp = new ldcolorpicker(node);
+            node.style.backgroundColor = ldcolor.web(obj.ldcp.getColor());
+            return obj.ldcp.on('change', function(it){
+              itf.fire('change', it);
+              return node.style.backgroundColor = ldcolor.web(it);
             });
           }
         }
@@ -76,4 +73,9 @@
     }
   };
   return blockFactory;
-});</script></div>
+});
+function import$(obj, src){
+  var own = {}.hasOwnProperty;
+  for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+  return obj;
+}</script></div>

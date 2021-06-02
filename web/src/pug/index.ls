@@ -2,8 +2,10 @@
 
 @config =
   palette: name: \palette, type: \palette
-  number: name: \number, type: \number
+  number: name: \number, type: \number, range: true, min: 0, max: 1, step: 0.01
   boolean: name: \boolean, type: \boolean
+  color: name: \color, type: \color
+  choice: name: \choice, type: \choice, values: <[top left right bottom]>
 
 block-prepare = ({name,root,data}) ->
   manager.get({name, version: "0.0.1"})

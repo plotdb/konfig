@@ -7,7 +7,7 @@ block-factory =
       {url: "/assets/lib/ldslider/main/ldrs.css", type: \css}
       {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
     ]
-  init: ({root, context, pubsub}) ->
+  init: ({root, context, data, pubsub}) ->
     {ldrs} = context
     @obj = obj = {evt-handler: {}}
     @itf = itf =
@@ -19,7 +19,7 @@ block-factory =
       action: click:
         switch: -> obj.ldrs.edit!
       init: ldrs: ({node}) ->
-        obj.ldrs = new ldslider root: node
+        obj.ldrs = new ldslider({root: node} <<< data{min,max,step,from,to,exp,limit-max,range,label,limit-max})
         obj.ldrs.on \change, -> itf.fire \change, it
 
   interface: -> @itf
