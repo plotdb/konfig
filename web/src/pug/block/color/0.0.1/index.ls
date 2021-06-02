@@ -7,8 +7,8 @@ block-factory =
     dependencies: [
       {url: "/assets/lib/ldcolor/main/ldcolor.min.js", async: false}
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"}
-      # this doesn't work since ldcp instance is outside scoped DOM!
-      #{url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css"}
+      # ldcp inject DOM into global space so we need it to be global.
+      {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css", global: true}
     ]
   init: ({root, context, pubsub}) ->
     {ldView,ldcolor} = context

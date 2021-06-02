@@ -200,6 +200,10 @@
     this.opt = opt;
     this.scope = "_" + Math.random().toString(36).substring(2);
     this._ctx = {};
+    this.csscope = {
+      global: [],
+      local: []
+    };
     this.name = opt.name;
     this.version = opt.version;
     this.extend = opt.extend;
