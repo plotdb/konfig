@@ -2,6 +2,7 @@
 
 @config =
   palette: name: \palette, type: \palette
+  number: name: \number, type: \number
 
 block-prepare = ({name,root,data}) ->
   manager.get({name, version: "0.0.1"})
