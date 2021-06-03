@@ -1,6 +1,28 @@
-<div><div plug="config"><div>text</div><input ld="input"/></div><style type="text/css">input {
+<div><div plug="config"><div>upload</div><div ld="button"><span>Upload</span><input type="file" ld="input"/></div></div><style type="text/css">[ld=button] {
+  cursor: pointer;
   width: 100%;
   height: 2em;
+  border: 1px solid #ccc;
+  border-radius: 0.25em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+[ld=button] input {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.001;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+::-webkit-file-upload-button {
+  cursor: pointer;
+  height: 100%;
+  border: 0;
 }
 </style><script type="@plotdb/block">(function(it){
   return it();
@@ -8,7 +30,7 @@
   var blockFactory;
   blockFactory = {
     pkg: {
-      name: 'text',
+      name: 'upload',
       version: '0.0.1',
       extend: {
         name: 'base',
@@ -34,22 +56,17 @@
           input: function(arg$){
             var node;
             node = arg$.node;
-            return node.value = data['default'] || '';
+            if (data.multiple) {
+              return node.setAttribute('multiple', true);
+            }
           }
         },
         action: {
-          input: {
-            input: function(arg$){
-              var node;
-              node = arg$.node;
-              return pubsub.fire('event', 'change', node.value);
-            }
-          },
           change: {
             input: function(arg$){
               var node;
               node = arg$.node;
-              return pubsub.fire('event', 'change', node.value);
+              return pubsub.fire('event', 'change', node.files);
             }
           }
         }

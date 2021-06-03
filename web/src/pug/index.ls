@@ -8,6 +8,8 @@
   choice: name: \choice, type: \choice, values: <[top left right bottom]>
   text: name: \text, type: \text, default: 'default text'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
+  upload: name: \upload, type: \upload, multiple: true
+  font: name: \font, type: \font
 
 block-prepare = ({name,root,data}) ->
   manager.get({name, version: "0.0.1"})
