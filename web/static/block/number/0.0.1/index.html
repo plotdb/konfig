@@ -24,9 +24,9 @@
       ]
     },
     init: function(arg$){
-      var root, context, data, pubsub, ldView, ldrs, obj, view;
+      var root, context, data, pubsub, ldview, ldrs, obj, view;
       root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
-      ldView = context.ldView, ldrs = context.ldrs;
+      ldview = context.ldview, ldrs = context.ldrs;
       obj = {};
       pubsub.fire('init', {
         get: function(){
@@ -36,7 +36,7 @@
           return obj.ldrs.set(it);
         }
       });
-      return view = new ldView({
+      return view = new ldview({
         root: root,
         action: {
           click: {

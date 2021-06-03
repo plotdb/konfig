@@ -16,14 +16,14 @@ block-factory =
       {url: "/assets/lib/ldpalettepicker/main/ldpp.js"}
     ]
   init: ({root, context, pubsub}) ->
-    {ldView,ldcolor,ldpp,ldCover} = context
+    {ldview,ldcolor,ldpp,ldCover} = context
     obj = {pal: null}
     pubsub.fire \init, do
       get: -> obj.pal
       set: ->
         obj.pal = it
         view.render!
-    view = new ldView do
+    view = new ldview do
       root: root
       action: click:
         ldp: ->

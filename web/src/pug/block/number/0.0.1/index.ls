@@ -9,12 +9,12 @@ block-factory =
       {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
     ]
   init: ({root, context, data, pubsub}) ->
-    {ldView,ldrs} = context
+    {ldview,ldrs} = context
     obj = {}
     pubsub.fire \init, do
       get: -> obj.ldrs.get!
       set: -> obj.ldrs.set it
-    view = new ldView do
+    view = new ldview do
       root: root
       action: click:
         switch: -> obj.ldrs.edit!

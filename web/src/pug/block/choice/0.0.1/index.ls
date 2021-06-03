@@ -6,11 +6,11 @@ block-factory =
     extend: name: 'base', version: '0.0.1'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
-    {ldView} = context
+    {ldview} = context
     pubsub.fire \init, do
       get: -> view.get('select').value
       set: -> view.get('select').value = it
-    view = new ldView do
+    view = new ldview do
       root: root
       action: change: select: ({node}) -> pubsub.fire \event, \change, node.value
       handler:

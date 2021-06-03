@@ -6,9 +6,13 @@
     pkg: {
       name: 'base',
       version: '0.0.1',
-      dependencies: [{
-        url: "/assets/lib/ldview/main/ldview.min.js"
-      }]
+      dependencies: [
+        {
+          url: "/assets/lib/ldview/main/index.min.js"
+        }, {
+          url: "/assets/lib/@loadingio/debounce.js/main/debounce.min.js"
+        }
+      ]
     },
     init: function(arg$){
       var root, context, data, pubsub, this$ = this;

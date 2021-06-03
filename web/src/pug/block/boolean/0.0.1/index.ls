@@ -6,12 +6,12 @@ block-factory =
     extend: name: 'base', version: '0.0.1'
     dependencies: []
   init: ({root, context, pubsub}) ->
-    {ldView} = context
+    {ldview} = context
     obj = {state: false}
     pubsub.fire \init, do
       get: -> obj.state
       set: -> obj.state = !!it
-    view = new ldView do
+    view = new ldview do
       root: root
       action: click:
         switch: ->

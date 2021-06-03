@@ -40,9 +40,9 @@
       ]
     },
     init: function(arg$){
-      var root, context, pubsub, ldView, ldcolor, ldpp, ldCover, obj, view;
+      var root, context, pubsub, ldview, ldcolor, ldpp, ldCover, obj, view;
       root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
-      ldView = context.ldView, ldcolor = context.ldcolor, ldpp = context.ldpp, ldCover = context.ldCover;
+      ldview = context.ldview, ldcolor = context.ldcolor, ldpp = context.ldpp, ldCover = context.ldCover;
       obj = {
         pal: null
       };
@@ -55,7 +55,7 @@
           return view.render();
         }
       });
-      return view = new ldView({
+      return view = new ldview({
         root: root,
         action: {
           click: {

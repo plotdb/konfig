@@ -11,11 +11,11 @@ block-factory =
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css", global: true}
     ]
   init: ({root, context, pubsub}) ->
-    {ldView,ldcolor} = context
+    {ldview,ldcolor} = context
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
       set: ~> @ldcp.set it
-    view = new ldView do
+    view = new ldview do
       root: root
       init: color: ({node}) ~>
         @ldcp = new ldcolorpicker node

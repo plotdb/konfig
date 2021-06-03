@@ -39,9 +39,9 @@
       dependencies: []
     },
     init: function(arg$){
-      var root, context, pubsub, ldView, obj, view;
+      var root, context, pubsub, ldview, obj, view;
       root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
-      ldView = context.ldView;
+      ldview = context.ldview;
       obj = {
         state: false
       };
@@ -53,7 +53,7 @@
           return obj.state = !!it;
         }
       });
-      return view = new ldView({
+      return view = new ldview({
         root: root,
         action: {
           click: {

@@ -30,9 +30,9 @@
       ]
     },
     init: function(arg$){
-      var root, context, pubsub, ldView, ldcolor, view, this$ = this;
+      var root, context, pubsub, ldview, ldcolor, view, this$ = this;
       root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
-      ldView = context.ldView, ldcolor = context.ldcolor;
+      ldview = context.ldview, ldcolor = context.ldcolor;
       pubsub.fire('init', {
         get: function(){
           if (this$.ldcp) {
@@ -43,7 +43,7 @@
           return this$.ldcp.set(it);
         }
       });
-      return view = new ldView({
+      return view = new ldview({
         root: root,
         init: {
           color: function(arg$){
