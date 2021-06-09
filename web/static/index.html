@@ -61,6 +61,9 @@
     sample.innerText = (this$.val.text || '') + '\n' + (this$.val.paragraph || '');
     return ref$ = sample.style, ref$.color = ldcolor.web(this$.val.color || '#000'), ref$.fontFamily = this$.val.font || 'sans serif', ref$.fontSize = this$.val.number + "px", ref$.whiteSpace = 'pre-line', ref$.textAlign = this$.val.choice || 'left', ref$;
   };
+  this.update.debounced = debounce(150, function(){
+    return this$.update();
+  });
   blockPrepare = function(arg$){
     var name, root, data;
     name = arg$.name, root = arg$.root, data = arg$.data;
@@ -78,7 +81,10 @@
         return bi['interface']();
       });
     }).then(function(item){
-      console.log(item.get());
+      var v;
+      this$.val[data.name] = v = item.get();
+      console.log(data.name + ": ", v);
+      this$.update.debounced();
       return item.on('change', function(it){
         this$.val[data.name] = it;
         this$.update();

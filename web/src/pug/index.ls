@@ -23,7 +23,7 @@ sample = ld$.find('#sample',0)
     whiteSpace: 'pre-line'
     textAlign: (@val.choice or 'left')
 
-  
+@update.debounced = debounce 150, ~> @update!
 
 block-prepare = ({name,root,data}) ~>
   manager.get({name, version: "0.0.1"})
@@ -31,7 +31,9 @@ block-prepare = ({name,root,data}) ~>
     .then (bi) ->
       bi.attach {root} .then -> bi.interface!
     .then (item) ~>
-      console.log item.get!
+      @val[data.name] = v = item.get!
+      console.log "#{data.name}: ", v
+      @update.debounced!
       item.on \change, ~>
         @val[data.name] = it
         @update!
