@@ -1,7 +1,7 @@
 doctype html
 html
   include /../../static/assets/lib/bootstrap.ldui/main/index.pug
-  include /../../static/assets/lib/ldview/main/ldview.pug
+  include /../../static/assets/lib/ldview/main/index.pug
   include /../../static/assets/lib/ldpalettepicker/main/ldpp.pug
   include /../../static/assets/lib/choosefont.js/main/choosefont.pug
   head
@@ -30,7 +30,7 @@ html
 
 
   body
-    .ldcv.default-size: .base: .inner: +ldPalettePicker
+    .ldcv.default-size: .base: .inner: +ldpp
 
     #ctrl-color.d-none: include ctrl/color.pug
     #ctrl-palette.d-none: include ctrl/palette.pug
@@ -53,7 +53,7 @@ html
     +script("/assets/lib/ldcolor/main/ldColor.min.js")
     +script("/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js")
     +script("/assets/lib/proxise/main/proxise.min.js")
-    +script("/assets/lib/ldview/main/ldview.min.js")
+    +script("/assets/lib/ldview/main/index.min.js")
     +script("/assets/lib/ldpalettepicker/main/ldpp.min.js")
     +script("/assets/lib/ldpalettepicker/main/all.palettes.js")
     +script("/assets/lib/@plotdb/datadom/main/datadom.js")
