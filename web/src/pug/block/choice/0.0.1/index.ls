@@ -6,6 +6,7 @@ block-factory =
     extend: name: 'base', version: '0.0.1'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
+    cfg = data
     {ldview} = context
     pubsub.fire \init, do
       get: -> view.get('select').value
@@ -15,8 +16,10 @@ block-factory =
       action: change: select: ({node}) -> pubsub.fire \event, \change, node.value
       handler:
         option:
-          list: -> data.values
+          list: -> cfg.values
           key: -> it
+          init: ({node, data}) ->
+            if cfg.default == data => node.setAttribute \selected, \selected
           handler: ({node,data}) ->
             node.setAttribute \value, data
             node.textContent = data

@@ -20,8 +20,9 @@
       dependencies: []
     },
     init: function(arg$){
-      var root, context, data, pubsub, ldview, view;
+      var root, context, data, pubsub, cfg, ldview, view;
       root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
+      cfg = data;
       ldview = context.ldview;
       pubsub.fire('init', {
         get: function(){
@@ -45,10 +46,17 @@
         handler: {
           option: {
             list: function(){
-              return data.values;
+              return cfg.values;
             },
             key: function(it){
               return it;
+            },
+            init: function(arg$){
+              var node, data;
+              node = arg$.node, data = arg$.data;
+              if (cfg['default'] === data) {
+                return node.setAttribute('selected', 'selected');
+              }
             },
             handler: function(arg$){
               var node, data;
