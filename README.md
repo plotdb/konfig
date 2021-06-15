@@ -1,3 +1,7 @@
-# config ( tentative )
+# @plotdb/config
 
-loading.io style config editor.
+Config editor.
+
+
+## Usage
+
