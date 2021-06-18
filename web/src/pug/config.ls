@@ -20,9 +20,8 @@ config.prototype = Object.create(Object.prototype) <<< do
             config:
               list: ~> [v for k,v of @cfg]
               key: -> it.name
-              init: ({node,data}) ~>
+              init: ({node, data}) ~>
                 @_prepare {name: data.type, root: node, data: data}
-
 
   _update: -> @fire \change, @value
   _prepare: ({name,root,data}) ->

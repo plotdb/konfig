@@ -3,7 +3,9 @@
   flex: 1 1 200px;
   height: 3em;
 }
-</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex align-items-center flex-wrap"><div class="config" ld-each="config"></div></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script>var config;
+</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex align-items-center flex-wrap"><div class="config" ld-each="config"></div><!--  .d-flex  .flex-grow-1(ld="name")
+  div(ld="opt")
+div(ld="root")--></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script>var config;
 config = function(opt){
   var this$ = this;
   opt == null && (opt = {});
@@ -73,6 +75,13 @@ config.prototype = import$(Object.create(Object.prototype), {
                 data: data
               });
             }
+            /*
+            view:
+              init: root: ({node,ctx}) ~>
+                @_prepare {name: ctx.type, root: node, data: ctx}
+              text: name: ({ctx}) -> ctx.name
+              action: click: opt: ->
+            */
           }
         }
       });
@@ -119,7 +128,8 @@ function import$(obj, src){
   this.config = {
     palette: {
       name: 'palette',
-      type: 'palette'
+      type: 'palette',
+      hint: "pick your favorite palette."
     },
     number: {
       name: 'number',
