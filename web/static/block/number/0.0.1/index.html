@@ -1,4 +1,4 @@
-<div><div plug="config"><div class="d-flex"><div class="flex-grow-1">number</div><div ld="switch">switch</div></div><input class="ldrs" ld="ldrs"/></div><style type="text/css">input {
+<div><div plug="config"><input class="ldrs" ld="ldrs"/></div><div plug="ctrl"><div ld="switch">switch</div></div><style type="text/css">input {
   width: 100%;
 }
 </style><script type="@plotdb/block">(function(it){
@@ -34,7 +34,8 @@
         },
         set: function(it){
           return obj.ldrs.set(it);
-        }
+        },
+        data: data
       });
       return view = new ldview({
         root: root,

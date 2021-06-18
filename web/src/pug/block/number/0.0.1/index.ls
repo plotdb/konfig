@@ -14,6 +14,7 @@ block-factory =
     pubsub.fire \init, do
       get: -> obj.ldrs.get!
       set: -> obj.ldrs.set it
+      data: data
     view = new ldview do
       root: root
       action: click:

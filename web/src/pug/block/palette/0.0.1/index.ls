@@ -15,10 +15,11 @@ block-factory =
       {url: "/assets/lib/ldpalettepicker/main/ldpp.css", type: \css}
       {url: "/assets/lib/ldpalettepicker/main/ldpp.js"}
     ]
-  init: ({root, context, pubsub}) ->
+  init: ({root, context, pubsub, data}) ->
     {ldview,ldcolor,ldpp,ldCover} = context
     obj = {pal: null}
     pubsub.fire \init, do
+      data: data
       get: -> obj.pal
       set: ->
         obj.pal = it
