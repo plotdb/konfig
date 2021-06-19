@@ -1,6 +1,6 @@
 {
   "author": "zbryikt",
-  "name": "config",
+  "name": "@plotdb/config",
   "license": "MIT",
   "description": "config tool",
   "version": "0.0.1",
@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@loadingio/ldcolorpicker": "^2.0.2",
-    "@plotdb/block": "^1.4.6",
+    "@plotdb/block": "^1.4.8",
     "@plotdb/csscope": "^0.4.0",
     "@plotdb/datadom": "^0.0.4",
     "@plotdb/rescope": "^1.1.7",

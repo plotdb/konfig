@@ -7,7 +7,7 @@ block-factory =
       {url: "/assets/lib/ldview/main/index.min.js"}
       {url: "/assets/lib/@loadingio/debounce.js/main/debounce.min.js"}
     ]
-  init: ({root, context, data, pubsub}) ->
+  init: ({root, context, data, pubsub, t}) ->
     @data = {}
     pubsub.on \init, (opt = {}) ~>
       @data = opt.data or {}
@@ -21,10 +21,10 @@ block-factory =
     pubsub.on \event, (n, ...v) ~> @itf.fire.apply @itf, [n] ++ v
     view = new ldview do
       root: root
-      text: name: -> data.name
+      text: name: -> t(data.name)
       handler: hint: ({node}) ~> node.classList.toggle \d-none, !@data.hint
       action: click: hint: ~>
-        alert(@data.hint or 'no hint')
+        alert(t(@data.hint or 'no hint'))
 
 
   interface: -> @itf

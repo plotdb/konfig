@@ -14,6 +14,7 @@
 cfg = new config do
   root: document.body
   config: @config
+
 cfg.on \change, ~> @update it
 cfg.init! 
   .then -> console.log \done.

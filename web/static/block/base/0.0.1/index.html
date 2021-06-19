@@ -26,8 +26,8 @@
       ]
     },
     init: function(arg$){
-      var root, context, data, pubsub, view, this$ = this;
-      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
+      var root, context, data, pubsub, t, view, this$ = this;
+      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub, t = arg$.t;
       this.data = {};
       pubsub.on('init', function(opt){
         var itf;
@@ -70,7 +70,7 @@
         root: root,
         text: {
           name: function(){
-            return data.name;
+            return t(data.name);
           }
         },
         handler: {
@@ -83,7 +83,7 @@
         action: {
           click: {
             hint: function(){
-              return alert(this$.data.hint || 'no hint');
+              return alert(t(this$.data.hint || 'no hint'));
             }
           }
         }

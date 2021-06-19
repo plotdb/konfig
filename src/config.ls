@@ -3,9 +3,11 @@ config = (opt={}) ->
   @evt-handler = {}
   @cfg = opt.config or {}
   @value = {}
+  @name = opt.name or null
+  opt.debug = true
   @mgr = new block.manager registry: (
     if opt.debug => ({name, version}) -> "/block/#name/#version/index.html"
-    else -> throw new Error("#name@#version is not supported")
+    else ({name, version}) -> throw new Error("#name@#version is not supported")
   )
   @init = proxise.once ~> @_init!
   @update = debounce 150, ~> @_update!
@@ -14,23 +16,30 @@ config = (opt={}) ->
 config.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
+  render: -> @view.render!
+  config: -> if it? => @cfg = it else @cfg
+
   _init: ->
     @mgr.init!
-      .then ~> config.pack
-      #  ld$.fetch "/assets/pack.json", {method: \GET}, {type: \json}
-      .then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
+      #.then ~> config.pack
+      #.then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
       .then ~>
         @view = new ldview do
           root: @root
           handler:
             config:
-              list: ~> [v for k,v of @cfg]
+              list: ~>
+                [{k,v} for k,v of @cfg].map ->
+                  ret = {} <<< it.v
+                  if !ret.name => ret.name = it.k
+                  ret
               key: -> it.name
               init: ({node, data}) ~>
                 @_prepare {name: data.type, root: node, data: data}
 
   _update: -> @fire \change, @value
   _prepare: ({name,root,data}) ->
+    if @name => name = @name(name)
     @mgr.get({name, version: "0.0.1"})
       .then -> it.create {data}
       .then (bi) ->

@@ -6,6 +6,7 @@ block-factory =
     extend: name: 'base', version: '0.0.1'
     dependencies: []
   init: ({root, context, pubsub}) ->
+    console.log context
     {ldview} = context
     obj = {state: false}
     pubsub.fire \init, do
