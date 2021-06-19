@@ -3,7 +3,10 @@ config = (opt={}) ->
   @evt-handler = {}
   @cfg = opt.config or {}
   @value = {}
-  @mgr = new block.manager registry: ({name, version}) -> "/block/#name/#version/index.html"
+  @mgr = new block.manager registry: (
+    if opt.debug => ({name, version}) -> "/block/#name/#version/index.html"
+    else -> throw new Error("#name@#version is not supported")
+  )
   @init = proxise.once ~> @_init!
   @update = debounce 150, ~> @_update!
   @
@@ -13,6 +16,9 @@ config.prototype = Object.create(Object.prototype) <<< do
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   _init: ->
     @mgr.init!
+      .then ~> config.pack
+      #  ld$.fetch "/assets/pack.json", {method: \GET}, {type: \json}
+      .then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
       .then ~>
         @view = new ldview do
           root: @root
@@ -35,3 +41,5 @@ config.prototype = Object.create(Object.prototype) <<< do
         item.on \change, ~>
           @value[data.name] = it
           @update!
+if module? => module.exports = config
+else if window? => window.config = config

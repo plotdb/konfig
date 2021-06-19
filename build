@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo "prepare..."
+rm -rf dist
+mkdir -p dist
+
+echo "building config.ls -> config.js ..."
+echo "(function(){" > dist/config.js
+./node_modules/.bin/lsc -cpb --no-header src/config.ls >> dist/config.js
+./node_modules/.bin/lsc tools/pack.ls >> dist/config.js
+echo "})();" >> dist/config.js
+echo "minify block.js -> block.min.js ..."
+./node_modules/.bin/uglifyjs dist/config.js > dist/config.min.js
+
+echo "copy dist to web ..."
+rm -rf web/static/assets/lib/@plotdb/config/dev/
+mkdir -p web/static/assets/lib/@plotdb/config/dev/
+cp -R dist/* web/static/assets/lib/@plotdb/config/dev/
+
