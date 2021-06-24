@@ -18,11 +18,10 @@ config.prototype = Object.create(Object.prototype) <<< do
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   render: -> @view.render!
   config: -> if it? => @cfg = it else @cfg
-
   _init: ->
     @mgr.init!
-      #.then ~> config.pack
-      #.then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
+      .then ~> config.pack
+      .then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
       .then ~>
         @view = new ldview do
           root: @root
