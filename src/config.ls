@@ -44,7 +44,7 @@ config.prototype = Object.create(Object.prototype) <<< do
   _prepare-tab: (tab) ->
     if @_tabobj[tab.id] => return @_tabobj[tab.id] <<< {tab}
     root = document.createElement('div')
-    @_tablist.push d = {root, tab}
+    @_tablist.push d = {root, tab, key: Math.random!toString(36).substring(2)}
     @_tabobj[tab.id] = d
 
   _prepare-ctrl: (meta, val, ctrl) ->
@@ -55,7 +55,8 @@ config.prototype = Object.create(Object.prototype) <<< do
       .then -> it.create {data: meta}
       .then (itf) ~>
         root = document.createElement(\div)
-        if !@_tabobj[meta.tab or 'default'] => @_prepare-tab {id: meta.tab or 'default'}
+        if !(meta.tab?) => meta.tab = 'default'
+        if !@_tabobj[meta.tab] => @_prepare-tab {id: meta.tab}
         @_ctrllist.push(ctrl[id] = {itf, meta, root, key: Math.random!toString(36).substring(2)})
         itf.attach {root} .then -> itf.interface!
       .then (item) ~>
@@ -75,10 +76,26 @@ config.prototype = Object.create(Object.prototype) <<< do
           key: -> it.key
           init: ({node, data}) ~> node.appendChild data.root
 
+  _view-alt: ->
+    @_tablist.sort (a,b) -> b.tab.order - a.tab.order
+    @view = new ldview do
+      root: @root
+      handler:
+        tab:
+          list: ~> @_tablist
+          key: -> it.key
+          view:
+            text: name: ({ctx}) -> return ctx.tab.id
+            handler:
+              config: 
+                list: ({ctx}) ~> @_ctrllist.filter -> it.meta.tab == ctx.tab.id
+                key: -> it.key
+                init: ({node, data}) ~> node.appendChild data.root
+
   build: (clear = false) ->
     @_build-tab clear
     @_build-ctrl clear
-      .then ~> @_view!
+      .then ~> @_view-alt!
 
   _build-ctrl: (clear = false) ->
     promises = []

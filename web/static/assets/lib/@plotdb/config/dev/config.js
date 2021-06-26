@@ -104,7 +104,8 @@ config.prototype = import$(Object.create(Object.prototype), {
     root = document.createElement('div');
     this._tablist.push(d = {
       root: root,
-      tab: tab
+      tab: tab,
+      key: Math.random().toString(36).substring(2)
     });
     return this._tabobj[tab.id] = d;
   },
@@ -133,9 +134,12 @@ config.prototype = import$(Object.create(Object.prototype), {
     }).then(function(itf){
       var root;
       root = document.createElement('div');
-      if (!this$._tabobj[meta.tab || 'default']) {
+      if (!(meta.tab != null)) {
+        meta.tab = 'default';
+      }
+      if (!this$._tabobj[meta.tab]) {
         this$._prepareTab({
-          id: meta.tab || 'default'
+          id: meta.tab
         });
       }
       this$._ctrllist.push(ctrl[id] = {
@@ -182,12 +186,59 @@ config.prototype = import$(Object.create(Object.prototype), {
       }
     });
   },
+  _viewAlt: function(){
+    var this$ = this;
+    this._tablist.sort(function(a, b){
+      return b.tab.order - a.tab.order;
+    });
+    return this.view = new ldview({
+      root: this.root,
+      handler: {
+        tab: {
+          list: function(){
+            return this$._tablist;
+          },
+          key: function(it){
+            return it.key;
+          },
+          view: {
+            text: {
+              name: function(arg$){
+                var ctx;
+                ctx = arg$.ctx;
+                return ctx.tab.id;
+              }
+            },
+            handler: {
+              config: {
+                list: function(arg$){
+                  var ctx;
+                  ctx = arg$.ctx;
+                  return this$._ctrllist.filter(function(it){
+                    return it.meta.tab === ctx.tab.id;
+                  });
+                },
+                key: function(it){
+                  return it.key;
+                },
+                init: function(arg$){
+                  var node, data;
+                  node = arg$.node, data = arg$.data;
+                  return node.appendChild(data.root);
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  },
   build: function(clear){
     var this$ = this;
     clear == null && (clear = false);
     this._buildTab(clear);
     return this._buildCtrl(clear).then(function(){
-      return this$._view();
+      return this$._viewAlt();
     });
   },
   _buildCtrl: function(clear){
