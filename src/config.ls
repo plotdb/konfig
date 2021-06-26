@@ -75,7 +75,6 @@ config.prototype = Object.create(Object.prototype) <<< do
           key: -> it.key
           init: ({node, data}) ~> node.appendChild data.root
 
-
   build: (clear = false) ->
     @_build-tab clear
     @_build-ctrl clear
