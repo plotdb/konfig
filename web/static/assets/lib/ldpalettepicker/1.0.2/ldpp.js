@@ -362,11 +362,8 @@
         return this$.tab('edit');
       }
     };
-    console.log(1);
-    console.log("]]", ldCover, opt.ldcv, this.root, n = ld$.parent(this.root, '.ldcv', document));
     if ((typeof ldCover != 'undefined' && ldCover !== null) && opt.ldcv) {
       if (n = ld$.parent(this.root, '.ldcv')) {
-        console.log(2);
         this.ldcv = new ldCover(import$({
           root: n
         }, typeof opt.ldcv === 'object'
@@ -374,7 +371,6 @@
           : {}));
       }
     }
-    console.log(3);
     this.tabDisplay = debounce(1000, function(){
       var idx;
       idx = this$.tabIdx;

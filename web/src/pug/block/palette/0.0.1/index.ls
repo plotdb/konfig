@@ -24,6 +24,7 @@ block-factory =
       set: ->
         obj.pal = it
         view.render!
+    root = ld$.find root, '[plug=config]', 0
     view = new ldview do
       root: root
       action: click:
@@ -34,13 +35,13 @@ block-factory =
             view.render \color
             pubsub.fire \event, \change, obj.pal
       init: ldcv: ({node}) ->
-        obj.ldcv = new ldCover root: node
-        obj.ldpp = new ldpp root: node, ldcv: obj.ldcv
+        obj.ldpp = new ldpp root: node, ldcv: true
         obj.pal = obj.ldpp.ldpe.get-pal!
       handler:
         color:
           list: -> obj.{}pal.[]colors
           key: -> ldcolor.web(it)
           handler: ({node,data}) -> node.style.backgroundColor = ldcolor.web data
+    setTimeout (-> view.render!), 2000
 
 return block-factory

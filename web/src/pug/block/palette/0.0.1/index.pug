@@ -1,8 +1,6 @@
 div
   include @/ldpalettepicker/dist/ldpp.pug
-  div(plug="config")
-    .ldp(ld="ldp")
-      .colors
-        .color(ld-each="color")
+  div(ld-scope,plug="config")
+    .ldp(ld="ldp"): .colors: .color(ld-each="color")
     .ldcv.default-size(ld="ldcv"): .base: .inner.ldpp: +ldpp
   script(type="@plotdb/block"): include:lsc index.ls

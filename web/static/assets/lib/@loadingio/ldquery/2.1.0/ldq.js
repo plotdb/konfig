@@ -46,7 +46,6 @@
       parent: function(s, e){
         var n;
         e == null && (e = null);
-        console.log("e: ", e);
         n = this;
         while (n && n !== e) {
           n = n.parentNode;

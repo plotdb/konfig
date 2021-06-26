@@ -1,6 +1,6 @@
 <- (->it.apply {}) _
 
-@config =
+@meta =
   palette: name: \palette, type: \palette, hint: "pick your favorite palette."
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1
   boolean: name: \boolean, type: \boolean
@@ -13,11 +13,12 @@
 
 cfg = new config do
   root: document.body
-  config: @config
+  meta: @meta
+  use-bundle: false
+  manager: new block.manager registry: ({name,version}) -> "/block/#name/#version/index.html"
 
 cfg.on \change, ~> @update it
-cfg.init! 
-  .then -> console.log \done.
+cfg.init!then -> console.log '@plotdb/config inited.'
 
 sample = ld$.find('#sample',0)
 

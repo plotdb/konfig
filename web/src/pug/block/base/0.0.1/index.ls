@@ -4,7 +4,7 @@ block-factory =
   pkg:
     name: 'base', version: '0.0.1'
     dependencies: [
-      {url: "/assets/lib/ldview/main/index.min.js"}
+      {url: "/assets/lib/ldview/main/index.js"}
       {url: "/assets/lib/@loadingio/debounce.js/main/debounce.min.js"}
     ]
   init: ({root, context, data, pubsub, t}) ->

@@ -7,7 +7,7 @@
   return it.apply({});
 })(function(){
   var cfg, sample, this$ = this;
-  this.config = {
+  this.meta = {
     palette: {
       name: 'palette',
       type: 'palette',
@@ -57,13 +57,21 @@
   };
   cfg = new config({
     root: document.body,
-    config: this.config
+    meta: this.meta,
+    useBundle: false,
+    manager: new block.manager({
+      registry: function(arg$){
+        var name, version;
+        name = arg$.name, version = arg$.version;
+        return "/block/" + name + "/" + version + "/index.html";
+      }
+    })
   });
   cfg.on('change', function(it){
     return this$.update(it);
   });
   cfg.init().then(function(){
-    return console.log('done.');
+    return console.log('@plotdb/config inited.');
   });
   sample = ld$.find('#sample', 0);
   this.val = {};
