@@ -1,0 +1,103 @@
+<div><div plug="config"><div ld="button"><span ld="font-name">...</span></div><div class="ldcv default-size" ld="ldcv"><div class="base"><div class="inner" ld="inner"><div class="choosefont toolbar"><div class="choosefont-head form-inline"><div class="dropdown mr-2"><div class="btn btn-outline-secondary dropdown-toggle" style="min-width:10em" data-toggle="dropdown" data-category-holder="true">Category ...</div><div class="dropdown-menu"><a class="dropdown-item" href="#" data-category="All">All</a><a class="dropdown-item" href="#" data-category="Serif">Serif</a><a class="dropdown-item" href="#" data-category="Sans Serif">Sans Serif</a><a class="dropdown-item" href="#" data-category="Display">Display</a><a class="dropdown-item" href="#" data-category="Handwriting">Handwriting</a><a class="dropdown-item" href="#" data-category="Monospace">Monospace</a><a class="dropdown-item" href="#" data-category="Chinese">Chinese</a></div></div><input class="form-control mr-2" placeholder="Search..."/><div class="btn btn-text mx-2">or</div><div class="btn btn-outline-secondary btn-upload" data-action="upload">Use Your Own Font <i class="i-lock ml-1"></i><input type="file"/></div></div><div class="choosefont-content"></div></div></div></div></div></div><style type="text/css">[ld=button] {
+  cursor: pointer;
+  width: 100%;
+  height: 2em;
+  border: 1px solid #ccc;
+  border-radius: 0.25em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.choosefont .item .img {
+  background-image: url("/assets/lib/choosefont.js/main/fontinfo/sprite.min.png");
+}
+</style><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      name: 'font',
+      version: '0.0.1',
+      extend: {
+        name: '@plotdb/config.widget.default',
+        version: '0.0.1',
+        path: 'base'
+      },
+      dependencies: [
+        {
+          url: "/assets/lib/choosefont.js/main/choosefont.min.js"
+        }, {
+          url: "/assets/lib/choosefont.js/main/choosefont.min.css",
+          global: true
+        }, {
+          url: "/assets/lib/ldcover/main/ldcv.min.js"
+        }, {
+          url: "/assets/lib/ldcover/main/ldcv.min.css"
+        }
+      ]
+    },
+    init: function(arg$){
+      var root, context, data, pubsub, ldview, ldcover, ChooseFont, obj, view;
+      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
+      ldview = context.ldview, ldcover = context.ldcover, ChooseFont = context.ChooseFont;
+      obj = {
+        font: {}
+      };
+      pubsub.fire('init', {
+        get: function(){
+          return obj.font;
+        },
+        set: function(it){
+          return obj.fontview.get('input').value = it || '';
+        }
+      });
+      return view = new ldview({
+        root: root,
+        init: {
+          ldcv: function(arg$){
+            var node;
+            node = arg$.node;
+            return obj.ldcv = new ldCover({
+              root: node
+            });
+          },
+          inner: function(arg$){
+            var node;
+            node = arg$.node;
+            obj.cf = new ChooseFont({
+              root: node,
+              metaUrl: '/assets/lib/choosefont.js/main/fontinfo/meta.json',
+              base: 'https://plotdb.github.io/xl-fontset/alpha'
+            });
+            return obj.cf.init().then(function(){
+              return obj.cf.on('choose', function(it){
+                console.log('ok123');
+                return obj.ldcv.set(it);
+              });
+            });
+          }
+        },
+        action: {
+          click: {
+            button: function(){
+              return obj.ldcv.get().then(function(it){
+                if (!it) {
+                  return;
+                }
+                return obj.font = it;
+              });
+            }
+          }
+        },
+        text: {
+          "font-name": function(){
+            return obj.font.name || 'Font';
+          }
+        }
+      });
+    }
+  };
+  return blockFactory;
+});</script></div>

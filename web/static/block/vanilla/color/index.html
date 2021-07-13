@@ -1,0 +1,65 @@
+<div><div plug="config"><div ld="color"></div></div><style type="text/css">[ld=color] {
+  width: 100%;
+  height: 2em;
+  border-radius: 0.25em;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+</style><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      name: 'color',
+      version: '0.0.1',
+      extend: {
+        name: '@plotdb/config.widget.default',
+        version: '0.0.1',
+        path: 'base'
+      },
+      dependencies: [
+        {
+          url: "/assets/lib/ldcolor/main/ldcolor.min.js",
+          async: false
+        }, {
+          url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"
+        }, {
+          url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css",
+          global: true
+        }
+      ]
+    },
+    init: function(arg$){
+      var root, context, pubsub, ldview, ldcolor, view, this$ = this;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
+      ldview = context.ldview, ldcolor = context.ldcolor;
+      pubsub.fire('init', {
+        get: function(){
+          if (this$.ldcp) {
+            return ldcolor.web(this$.ldcp.getColor());
+          }
+        },
+        set: function(it){
+          return this$.ldcp.set(it);
+        }
+      });
+      return view = new ldview({
+        root: root,
+        init: {
+          color: function(arg$){
+            var node;
+            node = arg$.node;
+            this$.ldcp = new ldcolorpicker(node);
+            node.style.backgroundColor = ldcolor.web(this$.ldcp.getColor());
+            return this$.ldcp.on('change', function(it){
+              pubsub.fire('event', 'change', it);
+              return node.style.backgroundColor = ldcolor.web(it);
+            });
+          }
+        }
+      });
+    }
+  };
+  return blockFactory;
+});</script></div>

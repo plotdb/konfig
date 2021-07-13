@@ -1,0 +1,78 @@
+<div><div plug="config"><div ld="switch"><div></div></div></div><style type="text/css">[ld=switch] {
+  width: 100%;
+  height: 2em;
+  background: #ccc;
+  display: flex;
+  justify-content: start;
+  border-radius: 0.25em;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  transition: all 0.15s ease-in-out;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+[ld=switch] div {
+  width: 50%;
+  margin-left: 0%;
+  background: #fff;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+}
+[ld=switch].on {
+  background: #0f0;
+}
+[ld=switch].on div {
+  margin-left: 50%;
+}
+</style><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      extend: {
+        name: '@plotdb/config.widget.default',
+        version: '0.0.1',
+        path: 'base'
+      },
+      dependencies: []
+    },
+    init: function(arg$){
+      var root, context, pubsub, ldview, obj, view;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
+      console.log(context);
+      ldview = context.ldview;
+      obj = {
+        state: false
+      };
+      pubsub.fire('init', {
+        get: function(){
+          return obj.state;
+        },
+        set: function(it){
+          return obj.state = !!it;
+        }
+      });
+      return view = new ldview({
+        root: root,
+        action: {
+          click: {
+            'switch': function(){
+              obj.state = !obj.state;
+              view.render('switch');
+              return pubsub.fire('event', 'change', obj.state);
+            }
+          }
+        },
+        handler: {
+          'switch': function(arg$){
+            var node;
+            node = arg$.node;
+            return node.classList.toggle('on', obj.state);
+          }
+        }
+      });
+    }
+  };
+  return blockFactory;
+});</script></div>

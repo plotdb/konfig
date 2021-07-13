@@ -61,10 +61,10 @@
   },
   "dependencies": {
     "@loadingio/ldcolorpicker": "^2.0.2",
-    "@plotdb/block": "^1.4.8",
+    "@plotdb/block": "^1.5.0",
     "@plotdb/csscope": "^0.4.0",
     "@plotdb/datadom": "^0.0.4",
-    "@plotdb/rescope": "^1.1.7",
+    "@plotdb/rescope": "^1.1.8",
     "choosefont.js": "^0.0.1",
     "ldcolor": "0.0.4",
     "ldpalettepicker": "1.0.2",

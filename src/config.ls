@@ -10,10 +10,12 @@ config = (opt={}) ->
   @_meta = opt.meta or {}
   @_tab = opt.tab or {}
   @_val = {}
-  if opt.manager => @mgr = opt.manager
-  else
-    @mgr = new block.manager registry: ({name, version}) ->
-      throw new Error("@plotdb/config: #name@#version is not supported")
+  @typemap = opt.typemap or null
+  @mgr = @mgr-fallback = new block.manager registry: ({name, version, path}) ->
+    throw new Error("@plotdb/config: #name@#version is not supported")
+  if opt.manager =>
+    @mgr = opt.manager
+    @mgr.set-fallback @mgr-fallback
   @init = proxise.once ~> @_init!
   @update = debounce 150, ~> @_update!
   @
@@ -50,8 +52,10 @@ config.prototype = Object.create(Object.prototype) <<< do
   _prepare-ctrl: (meta, val, ctrl) ->
     id = meta.id
     if ctrl[id] => return Promise.resolve!
-    {name,version} = if meta.block => meta.block{name,version} else {name: meta.name, version: "0.0.1"}
-    @mgr.get({name,version})
+    if meta.block => {name, version, path} = meta.block{name,version, path}
+    else if @typemap and (ret = @typemap(meta.name)) => {name, version, path} = ret
+    else [name, version, path] = [meta.name, "0.0.1", '']
+    @mgr.get({name,version,path})
       .then -> it.create {data: meta}
       .then (itf) ~>
         root = document.createElement(\div)

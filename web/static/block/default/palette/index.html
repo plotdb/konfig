@@ -1,0 +1,111 @@
+<div><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      name: 'palette',
+      version: '0.0.1',
+      extend: {
+        name: '@plotdb/config.widget.default',
+        version: '0.0.1',
+        path: 'base'
+      },
+      dependencies: [
+        {
+          url: "/assets/lib/ldcover/main/ldcv.css",
+          type: 'css'
+        }, {
+          url: "/assets/lib/ldcover/main/ldcv.js"
+        }, {
+          url: "/assets/lib/ldcolor/main/ldcolor.js",
+          async: false
+        }, {
+          url: "/assets/lib/ldslider/main/ldrs.css",
+          type: 'css'
+        }, {
+          url: "/assets/lib/ldslider/main/ldrs.js",
+          async: false
+        }, {
+          url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.css",
+          type: 'css'
+        }, {
+          url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.js",
+          async: false
+        }, {
+          url: "/assets/lib/ldpalettepicker/main/ldpp.css",
+          type: 'css'
+        }, {
+          url: "/assets/lib/ldpalettepicker/main/ldpp.js"
+        }
+      ]
+    },
+    init: function(arg$){
+      var root, context, pubsub, data, ldview, ldcolor, ldpp, ldCover, obj, view;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub, data = arg$.data;
+      ldview = context.ldview, ldcolor = context.ldcolor, ldpp = context.ldpp, ldCover = context.ldCover;
+      obj = {
+        pal: null
+      };
+      pubsub.fire('init', {
+        data: data,
+        get: function(){
+          return obj.pal;
+        },
+        set: function(it){
+          obj.pal = it;
+          return view.render();
+        }
+      });
+      root = ld$.find(root, '[plug=config]', 0);
+      view = new ldview({
+        root: root,
+        action: {
+          click: {
+            ldp: function(){
+              return obj.ldpp.get().then(function(it){
+                if (!it) {
+                  return;
+                }
+                obj.pal = it;
+                view.render('color');
+                return pubsub.fire('event', 'change', obj.pal);
+              });
+            }
+          }
+        },
+        init: {
+          ldcv: function(arg$){
+            var node;
+            node = arg$.node;
+            obj.ldpp = new ldpp({
+              root: node,
+              ldcv: true
+            });
+            return obj.pal = obj.ldpp.ldpe.getPal();
+          }
+        },
+        handler: {
+          color: {
+            list: function(){
+              var ref$;
+              return (ref$ = obj.pal || (obj.pal = {})).colors || (ref$.colors = []);
+            },
+            key: function(it){
+              return ldcolor.web(it);
+            },
+            handler: function(arg$){
+              var node, data;
+              node = arg$.node, data = arg$.data;
+              return node.style.backgroundColor = ldcolor.web(data);
+            }
+          }
+        }
+      });
+      return setTimeout(function(){
+        return view.render();
+      }, 2000);
+    }
+  };
+  return blockFactory;
+});</script></div>

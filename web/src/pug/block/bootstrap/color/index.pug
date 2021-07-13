@@ -1,0 +1,18 @@
+div
+  div(plug="config"): .btn.btn-outline-secondary.d-block.position-relative
+    span &nbsp;
+    div(ld="color")
+  style(type="text/css"): :stylus
+    [ld=color]
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      margin: auto
+      position: absolute
+      width: calc(100% - .5em)
+      height: calc(100% - .5em)
+      border-radius: .25em
+      
+  script(type="@plotdb/block"): include:lsc index.ls
+

@@ -1,0 +1,19 @@
+div
+  div(plug="config")
+    textarea.form-control(rows="1",ld="input")
+    .ldcv.inline(ld="ldcv"): .base(ld="panel"): .inner
+      .p-2: textarea.form-control(ld="textarea",rows="3")
+      .px-2.pb-2.text-right
+        .btn.btn-sm.btn-outline-secondary(data-ldcv-set="") Cancel
+        .btn.btn-sm.btn-primary.ml-2(data-ldcv-set="ok") OK
+
+  style(type="text/css"): :stylus
+    textarea[ld=input] { resize: none }
+    .ldcv.inline
+      position: absolute
+      &:before { background: rgba(0,0,0,.1) }
+      &:after { display: none }
+      .base { position: absolute }
+
+  script(type="@plotdb/block"): include:lsc index.ls
+

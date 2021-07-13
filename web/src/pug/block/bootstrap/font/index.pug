@@ -1,0 +1,18 @@
+div
+  div(plug="config")
+    include @/choosefont.js/dist/choosefont.pug
+    .btn.btn-outline-secondary.d-block(ld="button")
+      span(ld="font-name") ...
+    .ldcv.default-size(ld="ldcv"): .base: .inner(ld="inner")
+      +choosefont
+
+  style(type="text/css"): :stylus
+    [ld=button]
+      position: relative
+
+    .choosefont .item .img
+      background-image: url(/assets/lib/choosefont.js/main/fontinfo/sprite.min.png)
+
+
+  script(type="@plotdb/block"): include:lsc index.ls
+

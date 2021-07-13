@@ -1,0 +1,67 @@
+<div><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      name: 'choice',
+      version: '0.0.1',
+      extend: {
+        name: '@plotdb/config.widget.default',
+        version: '0.0.1',
+        path: 'base'
+      },
+      dependencies: []
+    },
+    init: function(arg$){
+      var root, context, data, pubsub, cfg, ldview, view;
+      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
+      cfg = data;
+      ldview = context.ldview;
+      pubsub.fire('init', {
+        get: function(){
+          return view.get('select').value;
+        },
+        set: function(it){
+          return view.get('select').value = it;
+        }
+      });
+      return view = new ldview({
+        root: root,
+        action: {
+          change: {
+            select: function(arg$){
+              var node;
+              node = arg$.node;
+              return pubsub.fire('event', 'change', node.value);
+            }
+          }
+        },
+        handler: {
+          option: {
+            list: function(){
+              return cfg.values;
+            },
+            key: function(it){
+              return it;
+            },
+            init: function(arg$){
+              var node, data;
+              node = arg$.node, data = arg$.data;
+              if (cfg['default'] === data) {
+                return node.setAttribute('selected', 'selected');
+              }
+            },
+            handler: function(arg$){
+              var node, data;
+              node = arg$.node, data = arg$.data;
+              node.setAttribute('value', data);
+              return node.textContent = data;
+            }
+          }
+        }
+      });
+    }
+  };
+  return blockFactory;
+});</script></div>

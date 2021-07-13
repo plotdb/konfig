@@ -1,0 +1,95 @@
+<div><div class="d-flex"><div class="flex-grow-1 d-flex align-items-center"><div ld="name"></div><div ld="hint">?</div></div><plug name="ctrl"></plug></div><plug name="config"></plug><style type="text/css">[ld=hint] {
+  margin-left: 0.5em;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+  font-size: 10px;
+  line-height: 1.1em;
+  text-align: center;
+  cursor: pointer;
+}
+</style><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      dependencies: [
+        {
+          url: "/assets/lib/ldview/main/index.js"
+        }, {
+          url: "/assets/lib/@loadingio/debounce.js/main/debounce.min.js"
+        }
+      ]
+    },
+    init: function(arg$){
+      var root, context, data, pubsub, t, view, this$ = this;
+      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub, t = arg$.t;
+      this.data = {};
+      pubsub.on('init', function(opt){
+        var itf;
+        opt == null && (opt = {});
+        this$.data = opt.data || {};
+        this$.itf = itf = {
+          evtHandler: {},
+          get: opt.get || function(){},
+          set: opt.set || function(){},
+          on: function(n, cb){
+            var ref$;
+            return ((ref$ = this.evtHandler)[n] || (ref$[n] = [])).push(cb);
+          },
+          fire: function(n){
+            var v, res$, i$, to$, ref$, len$, cb, results$ = [];
+            res$ = [];
+            for (i$ = 1, to$ = arguments.length; i$ < to$; ++i$) {
+              res$.push(arguments[i$]);
+            }
+            v = res$;
+            for (i$ = 0, len$ = (ref$ = this.evtHandler[n] || []).length; i$ < len$; ++i$) {
+              cb = ref$[i$];
+              results$.push(cb.apply(this, v));
+            }
+            return results$;
+          }
+        };
+        return view.render('hint');
+      });
+      pubsub.on('event', function(n){
+        var v, res$, i$, to$;
+        res$ = [];
+        for (i$ = 1, to$ = arguments.length; i$ < to$; ++i$) {
+          res$.push(arguments[i$]);
+        }
+        v = res$;
+        return this$.itf.fire.apply(this$.itf, [n].concat(v));
+      });
+      return view = new ldview({
+        root: root,
+        text: {
+          name: function(){
+            return t(data.name);
+          }
+        },
+        handler: {
+          hint: function(arg$){
+            var node;
+            node = arg$.node;
+            return node.classList.toggle('d-none', !this$.data.hint);
+          }
+        },
+        action: {
+          click: {
+            hint: function(){
+              return alert(t(this$.data.hint || 'no hint'));
+            }
+          }
+        }
+      });
+    },
+    'interface': function(){
+      return this.itf;
+    }
+  };
+  return blockFactory;
+});</script></div>

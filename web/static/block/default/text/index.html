@@ -1,0 +1,57 @@
+<div><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      name: 'text',
+      version: '0.0.1',
+      extend: {
+        name: '@plotdb/config.widget.default',
+        version: '0.0.1',
+        path: 'base'
+      },
+      dependencies: []
+    },
+    init: function(arg$){
+      var root, context, data, pubsub, ldview, view;
+      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
+      ldview = context.ldview;
+      pubsub.fire('init', {
+        get: function(){
+          return view.get('input').value || '';
+        },
+        set: function(it){
+          return view.get('input').value = it || '';
+        }
+      });
+      return view = new ldview({
+        root: root,
+        init: {
+          input: function(arg$){
+            var node;
+            node = arg$.node;
+            return node.value = data['default'] || '';
+          }
+        },
+        action: {
+          input: {
+            input: function(arg$){
+              var node;
+              node = arg$.node;
+              return pubsub.fire('event', 'change', node.value);
+            }
+          },
+          change: {
+            input: function(arg$){
+              var node;
+              node = arg$.node;
+              return pubsub.fire('event', 'change', node.value);
+            }
+          }
+        }
+      });
+    }
+  };
+  return blockFactory;
+});</script></div>
