@@ -6,12 +6,15 @@ mkdir -p dist
 
 echo "building config.ls -> config.js ..."
 ./node_modules/.bin/lsc -cpb --no-header src/config.ls > dist/config.js
-#echo "(function(){" > dist/config.js
-#./node_modules/.bin/lsc -cpb --no-header src/config.ls >> dist/config.js
-#./node_modules/.bin/lsc tools/pack.ls >> dist/config.js
-#echo "})();" >> dist/config.js
-echo "minify block.js -> block.min.js ..."
+echo "(function(){" > dist/config.js
+./node_modules/.bin/lsc -cpb --no-header src/config.ls >> dist/config.js
+./node_modules/.bin/lsc tools/pack.ls >> dist/config.js
+echo "})();" >> dist/config.js
+./node_modules/.bin/lsc tools/pack.ls -s bootstrap > dist/config.widget.bootstrap.js
+echo "minify config.js -> config.min.js ..."
 ./node_modules/.bin/uglifyjs dist/config.js > dist/config.min.js
+echo "minify config.widget.bootstrap.js -> config.widget.bootstrap.min.js ..."
+./node_modules/.bin/uglifyjs dist/config.widget.bootstrap.js > dist/config.widget.bootstrap.min.js
 
 echo "copy dist to web ..."
 rm -rf web/static/assets/lib/@plotdb/config/dev/

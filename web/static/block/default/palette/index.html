@@ -4,11 +4,9 @@
   var blockFactory;
   blockFactory = {
     pkg: {
-      name: 'palette',
-      version: '0.0.1',
       extend: {
         name: '@plotdb/config.widget.default',
-        version: '0.0.1',
+        version: 'master',
         path: 'base'
       },
       dependencies: [
@@ -102,9 +100,7 @@
           }
         }
       });
-      return setTimeout(function(){
-        return view.render();
-      }, 2000);
+      return view.render();
     }
   };
   return blockFactory;

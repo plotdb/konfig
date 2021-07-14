@@ -2,8 +2,7 @@
 
 block-factory =
   pkg:
-    name: 'paragraph', version: '0.0.1'
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
     dependencies: [
       {url: "/assets/lib/ldcover/main/ldcv.min.js"}
       {url: "/assets/lib/ldcover/main/ldcv.min.css"}

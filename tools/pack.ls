@@ -1,7 +1,28 @@
-require! <[fs]>
-files = fs.readdir-sync "web/static/block" .map -> [it, "web/static/block/#it/0.0.1/index.html"]
-ret = files.map (file) -> {name: file.0, version: "0.0.1", code:  (fs.read-file-sync file.1 .toString!)}
+require! <[fs yargs]>
+argv = yargs
+  .option \set, do
+    alias: \s
+    description: "set name. default `default`."
+    type: \string
+  .help \help
+  .alias \help, \h
+  .check (argv, options) -> return true
+  .argv
+
+set = argv.s or 'default'
+
+root = "web/static/block/#set"
+files = fs.readdir-sync root
+  .map -> [it, "#root/#it/index.html"]
+  .filter -> fs.exists-sync(it.1)
+ret = files.map (file) ->
+  {
+    name: "@plotdb/config.widget.#set"
+    version: "master"
+    path: file.0
+    code: (fs.read-file-sync file.1 .toString!)
+  }
 console.log """
-config.bundle = #{JSON.stringify(ret)};
+config.bundle = (config.bundle || []).concat(#{JSON.stringify(ret)});
 """
 

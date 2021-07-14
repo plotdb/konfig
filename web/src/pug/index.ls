@@ -14,15 +14,17 @@
 cfg = new config do
   root: document.body
   meta: @meta
+  /*
   use-bundle: false
   manager: new block.manager registry: ({name, version, path}) ->
     ret = /^@plotdb\/config.widget.(.+)$/.exec(name)
     return if !ret => "/block/#name/#version/index.html"
     else "/block/#{ret.1}/#path/index.html"
+  */
   typemap: (name) ->
     set = if name == \number => \bootstrap else \default
     set = \bootstrap
-    {name: "@plotdb/config.widget.#set", version: "0.0.1", path: name}
+    {name: "@plotdb/config.widget.#set", version: "master", path: name}
 
 cfg.on \change, ~> @update it
 cfg.init!then -> console.log '@plotdb/config inited.'

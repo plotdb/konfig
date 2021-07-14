@@ -2,10 +2,9 @@
 
 block-factory =
   pkg:
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
     dependencies: []
   init: ({root, context, pubsub}) ->
-    console.log context
     {ldview} = context
     obj = {state: false}
     pubsub.fire \init, do

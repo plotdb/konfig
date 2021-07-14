@@ -53,8 +53,8 @@ config.prototype = Object.create(Object.prototype) <<< do
     id = meta.id
     if ctrl[id] => return Promise.resolve!
     if meta.block => {name, version, path} = meta.block{name,version, path}
-    else if @typemap and (ret = @typemap(meta.name)) => {name, version, path} = ret
-    else [name, version, path] = [meta.name, "0.0.1", '']
+    else if @typemap and (ret = @typemap(meta.id)) => {name, version, path} = ret
+    else [name, version, path] = [meta.id, "master", '']
     @mgr.get({name,version,path})
       .then -> it.create {data: meta}
       .then (itf) ~>

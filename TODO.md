@@ -1,1 +1,3 @@
+ - extend timing issue ( check palette )
  - font image sprite url issue
+ - bundle still init ( thus fetch dependencies ), which may not need.

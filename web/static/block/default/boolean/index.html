@@ -6,7 +6,7 @@
     pkg: {
       extend: {
         name: '@plotdb/config.widget.default',
-        version: '0.0.1',
+        version: 'master',
         path: 'base'
       },
       dependencies: []
@@ -14,7 +14,6 @@
     init: function(arg$){
       var root, context, pubsub, ldview, obj, view;
       root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
-      console.log(context);
       ldview = context.ldview;
       obj = {
         state: false

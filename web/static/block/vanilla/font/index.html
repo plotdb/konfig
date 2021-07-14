@@ -73,7 +73,6 @@
             });
             return obj.cf.init().then(function(){
               return obj.cf.on('choose', function(it){
-                console.log('ok123');
                 return obj.ldcv.set(it);
               });
             });

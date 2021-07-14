@@ -1,3 +1,3 @@
 <-(->it!) _
 
-return pkg: extend: '@plotdb/config.widget.default', version: '0.0.1', path: 'base', dom: \overwrite
+return pkg: extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base', dom: \overwrite

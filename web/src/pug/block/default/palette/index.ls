@@ -2,8 +2,7 @@
 
 block-factory =
   pkg:
-    name: 'palette', version: '0.0.1'
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
     dependencies: [
       {url: "/assets/lib/ldcover/main/ldcv.css", type: \css}
       {url: "/assets/lib/ldcover/main/ldcv.js"}
@@ -42,6 +41,6 @@ block-factory =
           list: -> obj.{}pal.[]colors
           key: -> ldcolor.web(it)
           handler: ({node,data}) -> node.style.backgroundColor = ldcolor.web data
-    setTimeout (-> view.render!), 2000
+    view.render!
 
 return block-factory

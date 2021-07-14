@@ -1,1 +1,1 @@
--> pkg: extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'palette', dom: \overwrite
+-> pkg: extend: name: '@plotdb/config.widget.default', version: 'master', path: 'palette', dom: \overwrite

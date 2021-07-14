@@ -27,7 +27,6 @@ block-factory =
             base: 'https://plotdb.github.io/xl-fontset/alpha'
           obj.cf.init!then ->
             obj.cf.on \choose, ->
-              console.log \ok123
               obj.ldcv.set it
       action: click:
         button: ->

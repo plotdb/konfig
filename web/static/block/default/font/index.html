@@ -4,11 +4,9 @@
   var blockFactory;
   blockFactory = {
     pkg: {
-      name: 'font',
-      version: '0.0.1',
       extend: {
         name: '@plotdb/config.widget.default',
-        version: '0.0.1',
+        version: 'master',
         path: 'base'
       },
       dependencies: [
@@ -59,7 +57,6 @@
             });
             return obj.cf.init().then(function(){
               return obj.cf.on('choose', function(it){
-                console.log('ok123');
                 return obj.ldcv.set(it);
               });
             });

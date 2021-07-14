@@ -2,8 +2,7 @@
 
 block-factory =
   pkg:
-    name: 'choice', version: '0.0.1'
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     cfg = data

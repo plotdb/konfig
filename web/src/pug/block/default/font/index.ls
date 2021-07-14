@@ -2,8 +2,7 @@
 
 block-factory =
   pkg:
-    name: 'font', version: '0.0.1'
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
     dependencies: [
       {url: "/assets/lib/choosefont.js/main/choosefont.min.js"}
       {url: "/assets/lib/choosefont.js/main/choosefont.min.css", global: true}
@@ -27,7 +26,6 @@ block-factory =
             base: 'https://plotdb.github.io/xl-fontset/alpha'
           obj.cf.init!then ->
             obj.cf.on \choose, ->
-              console.log \ok123
               obj.ldcv.set it
       action: click:
         button: ->
