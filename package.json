@@ -1,16 +1,16 @@
 {
   "author": "zbryikt",
-  "name": "@plotdb/config",
+  "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
   "version": "0.0.1",
   "files": [
     "dist/**/*"
   ],
-  "homepage": "https://github.com/loadingio/config",
+  "homepage": "https://github.com/plotdb/konfig",
   "repository": {
     "type": "git",
-    "url": "https://github.com/loadingio/config"
+    "url": "https://github.com/plotdb/konfig"
   },
   "engines": {
     "node": ">=10.14.1",
