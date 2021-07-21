@@ -1,4 +1,4 @@
-# @plotdb/config
+# @plotdb/konfig
 
 Config editor.
 
