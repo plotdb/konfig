@@ -2,7 +2,7 @@
 
 block-factory =
   pkg:
-    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
       {url: "/assets/lib/ldcolor/main/ldcolor.min.js", async: false}
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"}

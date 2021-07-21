@@ -11,23 +11,23 @@
   upload: name: \upload, type: \upload, multiple: true
   font: name: \font, type: \font
 
-cfg = new config do
+cfg = new konfig do
   root: document.body
   meta: @meta
   /*
   use-bundle: false
   manager: new block.manager registry: ({name, version, path}) ->
-    ret = /^@plotdb\/config.widget.(.+)$/.exec(name)
+    ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
     return if !ret => "/block/#name/#version/index.html"
     else "/block/#{ret.1}/#path/index.html"
   */
   typemap: (name) ->
     set = if name == \number => \bootstrap else \default
     set = \bootstrap
-    {name: "@plotdb/config.widget.#set", version: "master", path: name}
+    {name: "@plotdb/konfig.widget.#set", version: "master", path: name}
 
 cfg.on \change, ~> @update it
-cfg.init!then -> console.log '@plotdb/config inited.'
+cfg.init!then -> console.log '@plotdb/konfig inited.'
 
 sample = ld$.find('#sample',0)
 

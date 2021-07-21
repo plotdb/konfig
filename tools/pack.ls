@@ -17,12 +17,12 @@ files = fs.readdir-sync root
   .filter -> fs.exists-sync(it.1)
 ret = files.map (file) ->
   {
-    name: "@plotdb/config.widget.#set"
+    name: "@plotdb/konfig.widget.#set"
     version: "master"
     path: file.0
     code: (fs.read-file-sync file.1 .toString!)
   }
 console.log """
-config.bundle = (config.bundle || []).concat(#{JSON.stringify(ret)});
+konfig.bundle = (konfig.bundle || []).concat(#{JSON.stringify(ret)});
 """
 

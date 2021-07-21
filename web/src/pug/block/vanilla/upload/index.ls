@@ -2,8 +2,7 @@
 
 block-factory =
   pkg:
-    name: 'upload', version: '0.0.1'
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     {ldview} = context

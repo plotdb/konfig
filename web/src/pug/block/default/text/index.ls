@@ -2,7 +2,7 @@
 
 block-factory =
   pkg:
-    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     {ldview} = context

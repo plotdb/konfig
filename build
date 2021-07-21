@@ -4,20 +4,20 @@ echo "prepare..."
 rm -rf dist
 mkdir -p dist
 
-echo "building config.ls -> config.js ..."
-./node_modules/.bin/lsc -cpb --no-header src/config.ls > dist/config.js
-echo "(function(){" > dist/config.js
-./node_modules/.bin/lsc -cpb --no-header src/config.ls >> dist/config.js
-./node_modules/.bin/lsc tools/pack.ls >> dist/config.js
-echo "})();" >> dist/config.js
-./node_modules/.bin/lsc tools/pack.ls -s bootstrap > dist/config.widget.bootstrap.js
-echo "minify config.js -> config.min.js ..."
-./node_modules/.bin/uglifyjs dist/config.js > dist/config.min.js
-echo "minify config.widget.bootstrap.js -> config.widget.bootstrap.min.js ..."
-./node_modules/.bin/uglifyjs dist/config.widget.bootstrap.js > dist/config.widget.bootstrap.min.js
+echo "building konfig.ls -> konfig.js ..."
+./node_modules/.bin/lsc -cpb --no-header src/konfig.ls > dist/konfig.js
+echo "(function(){" > dist/konfig.js
+./node_modules/.bin/lsc -cpb --no-header src/konfig.ls >> dist/konfig.js
+./node_modules/.bin/lsc tools/pack.ls >> dist/konfig.js
+echo "})();" >> dist/konfig.js
+./node_modules/.bin/lsc tools/pack.ls -s bootstrap > dist/konfig.widget.bootstrap.js
+echo "minify konfig.js -> konfig.min.js ..."
+./node_modules/.bin/uglifyjs dist/konfig.js > dist/konfig.min.js
+echo "minify konfig.widget.bootstrap.js -> konfig.widget.bootstrap.min.js ..."
+./node_modules/.bin/uglifyjs dist/konfig.widget.bootstrap.js > dist/konfig.widget.bootstrap.min.js
 
 echo "copy dist to web ..."
-rm -rf web/static/assets/lib/@plotdb/config/dev/
-mkdir -p web/static/assets/lib/@plotdb/config/dev/
-cp -R dist/* web/static/assets/lib/@plotdb/config/dev/
+rm -rf web/static/assets/lib/@plotdb/konfig/dev/
+mkdir -p web/static/assets/lib/@plotdb/konfig/dev/
+cp -R dist/* web/static/assets/lib/@plotdb/konfig/dev/
 

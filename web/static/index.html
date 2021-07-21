@@ -3,7 +3,7 @@
   flex: 1 1 200px;
   height: 3em;
 }
-</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex flex-wrap"><div class="tab mx-2 p-2 border rounded shadow-sm" ld-each="tab"><div class="text-center font-weight-bold p-1 mb-4 bg-secondary text-light rounded" ld="name"></div><div class="config" ld-each="config"></div></div></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/dev/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/config/dev/config.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/config/dev/config.widget.bootstrap.js"></script><script>(function(it){
+</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex flex-wrap"><div class="tab mx-2 p-2 border rounded shadow-sm" ld-each="tab"><div class="text-center font-weight-bold p-1 mb-4 bg-secondary text-light rounded" ld="name"></div><div class="config" ld-each="config"></div></div></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/dev/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>(function(it){
   return it.apply({});
 })(function(){
   var cfg, sample, this$ = this;
@@ -57,13 +57,13 @@
       type: 'font'
     }
   };
-  cfg = new config({
+  cfg = new konfig({
     root: document.body,
     meta: this.meta
     /*
     use-bundle: false
     manager: new block.manager registry: ({name, version, path}) ->
-      ret = /^@plotdb\/config.widget.(.+)$/.exec(name)
+      ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
       return if !ret => "/block/#name/#version/index.html"
       else "/block/#{ret.1}/#path/index.html"
     */,
@@ -72,7 +72,7 @@
       set = name === 'number' ? 'bootstrap' : 'default';
       set = 'bootstrap';
       return {
-        name: "@plotdb/config.widget." + set,
+        name: "@plotdb/konfig.widget." + set,
         version: "master",
         path: name
       };
@@ -82,7 +82,7 @@
     return this$.update(it);
   });
   cfg.init().then(function(){
-    return console.log('@plotdb/config inited.');
+    return console.log('@plotdb/konfig inited.');
   });
   sample = ld$.find('#sample', 0);
   this.val = {};

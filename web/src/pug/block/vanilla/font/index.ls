@@ -2,8 +2,7 @@
 
 block-factory =
   pkg:
-    name: 'font', version: '0.0.1'
-    extend: name: '@plotdb/config.widget.default', version: '0.0.1', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
       {url: "/assets/lib/choosefont.js/main/choosefont.min.js"}
       {url: "/assets/lib/choosefont.js/main/choosefont.min.css", global: true}

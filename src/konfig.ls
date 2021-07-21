@@ -1,4 +1,4 @@
-config = (opt={}) ->
+konfig = (opt={}) ->
   @root = if typeof(opt.root) == \string => document.querySelector(opt.root) else opt.root
   @opt = opt
   @evt-handler = {}
@@ -12,7 +12,7 @@ config = (opt={}) ->
   @_val = {}
   @typemap = opt.typemap or null
   @mgr = @mgr-fallback = new block.manager registry: ({name, version, path}) ->
-    throw new Error("@plotdb/config: #name@#version is not supported")
+    throw new Error("@plotdb/konfig: #name@#version is not supported")
   if opt.manager =>
     @mgr = opt.manager
     @mgr.set-fallback @mgr-fallback
@@ -20,7 +20,7 @@ config = (opt={}) ->
   @update = debounce 150, ~> @_update!
   @
 
-config.prototype = Object.create(Object.prototype) <<< do
+konfig.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   render: -> @view.render!
@@ -39,7 +39,7 @@ config.prototype = Object.create(Object.prototype) <<< do
   _update: -> @fire \change, @_val
   _init: ->
     @mgr.init!
-      .then ~> if @use-bundle => (config.bundle or []) else []
+      .then ~> if @use-bundle => (konfig.bundle or []) else []
       .then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
       .then ~> @build!
 
@@ -141,5 +141,5 @@ config.prototype = Object.create(Object.prototype) <<< do
         traverse item.child
     traverse @_tab
 
-if module? => module.exports = config
-else if window? => window.config = config
+if module? => module.exports = konfig
+else if window? => window.konfig = konfig

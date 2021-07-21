@@ -2,7 +2,7 @@
 
 block-factory =
   pkg:
-    extend: name: '@plotdb/config.widget.default', version: 'master', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
       {url: "/assets/lib/ldslider/main/ldrs.css", type: \css}
       {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
