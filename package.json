@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "dist/**/*"
   ],
@@ -48,8 +48,6 @@
       "@plotdb/block",
       "@plotdb/rescope",
       "@plotdb/csscope",
-      "choosefont.js",
-      "xl-fontload",
       "proxise",
       "ldpalettepicker",
       "@loadingio/ldcolorpicker",
@@ -66,11 +64,9 @@
     "@plotdb/csscope": "^0.4.0",
     "@plotdb/datadom": "^0.0.4",
     "@plotdb/rescope": "^1.1.8",
-    "choosefont.js": "^0.0.1",
     "ldcolor": "0.0.4",
     "ldpalettepicker": "1.0.2",
     "ldslider": "^2.0.6",
-    "proxise": "^0.1.2",
-    "xl-fontload": "github:plotdb/xl-fontload"
+    "proxise": "^0.1.2"
   }
 }
