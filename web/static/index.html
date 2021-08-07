@@ -1,12 +1,18 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">.config {
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">.config {
   margin: 0 0 1em;
   flex: 1 1 200px;
   height: 3em;
 }
-</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex flex-wrap"><div class="tab mx-2 p-2 border rounded shadow-sm" ld-each="tab"><div class="text-center font-weight-bold p-1 mb-4 bg-secondary text-light rounded" ld="name"></div><div class="config" ld-each="config"></div></div></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/dev/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>(function(it){
+</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex flex-wrap"><div class="tab mx-2 p-2 border rounded shadow-sm" ld-each="tab"><div class="text-center font-weight-bold p-1 mb-4 bg-secondary text-light rounded" ld="name"></div><div class="config" ld-each="config"></div></div></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><div class="ldcv default-size"><div class="base"><div class="inner"><h5>Dummy choices in a dummy popup</h5><div class="d-flex justify-content-around"><div class="btn btn-outline-secondary" data-ldcv-set="yes">Yes</div><div class="btn btn-outline-secondary" data-ldcv-set="no">No</div></div></div></div></div><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/dev/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>(function(it){
   return it.apply({});
 })(function(){
-  var cfg, sample, this$ = this;
+  var popup, cfg, sample, this$ = this;
+  popup = {
+    ldcv: new ldcover({
+      root: ld$.find('.ldcv', 0)
+    }),
+    data: 'yes'
+  };
   this.meta = {
     palette: {
       name: 'palette',
@@ -55,6 +61,27 @@
     font: {
       name: 'font',
       type: 'font'
+    },
+    popup: {
+      name: 'popup',
+      type: 'popup',
+      popup: {
+        get: function(){
+          return popup.ldcv.get();
+        },
+        'default': function(){
+          return popup.data;
+        },
+        data: function(d){
+          return Promise.resolve().then(function(){
+            if (d != null) {
+              return popup.data = d;
+            } else {
+              return popup.data;
+            }
+          });
+        }
+      }
     }
   };
   cfg = new konfig({
@@ -88,6 +115,7 @@
   this.val = {};
   return this.update = function(it){
     var ref$;
+    console.log(it);
     this$.val = it;
     sample.innerText = (this$.val.text || '') + '\n' + (this$.val.paragraph || '');
     return ref$ = sample.style, ref$.color = ldcolor.web(this$.val.color || '#000'), ref$.fontFamily = this$.val.font || 'sans serif', ref$.fontSize = this$.val.number + "px", ref$.whiteSpace = 'pre-line', ref$.textAlign = this$.val.choice || 'left', ref$;

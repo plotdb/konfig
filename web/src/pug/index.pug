@@ -5,6 +5,7 @@ html
   head
     +css("/assets/lib/bootstrap/main/css/bootstrap.min.css")
     +css("/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
+    +css("/assets/lib/ldcover/main/ldcv.min.css")
     +css("/assets/lib/ldiconfont/main/ldif.min.css")
     +css("/css/index.css")
     style(type="text/css"): :stylus
@@ -23,7 +24,13 @@ html
         .config(ld-each="config")
     .w-1024.rwd.mx-auto.p-3
       #sample.rounded.shadow-sm.border.p-4.my-4
+    .ldcv.default-size: .base: .inner
+      h5 Dummy choices in a dummy popup
+      .d-flex.justify-content-around
+        .btn.btn-outline-secondary(data-ldcv-set="yes") Yes
+        .btn.btn-outline-secondary(data-ldcv-set="no") No
     +script("/assets/lib/ldcolor/main/ldcolor.min.js")
+    +script("/assets/lib/ldcover/main/ldcv.min.js")
     +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
     +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
     +script("/assets/lib/proxise/main/proxise.min.js")

@@ -1,0 +1,78 @@
+<div><script type="@plotdb/block">(function(it){
+  return it();
+})(function(){
+  var blockFactory;
+  blockFactory = {
+    pkg: {
+      extend: {
+        name: '@plotdb/konfig.widget.default',
+        version: 'master',
+        path: 'base'
+      },
+      dependencies: [],
+      i18n: {
+        "zh-TW": {
+          "config": "設定"
+        }
+      }
+    },
+    init: function(arg$){
+      var root, context, data, pubsub, t, local, getData, setText, ldview, ldcolor, view;
+      root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub, t = arg$.t;
+      local = {};
+      getData = function(it){
+        var that;
+        if (that = it.data) {
+          return that;
+        } else {
+          return it;
+        }
+      };
+      setText = function(it){
+        var that;
+        local.text = (that = it.text)
+          ? that
+          : it + "";
+        return view.render('button');
+      };
+      ldview = context.ldview, ldcolor = context.ldcolor;
+      pubsub.fire('init', {
+        get: function(){
+          return data.popup.data().then(function(it){
+            return getData(it);
+          });
+        },
+        set: function(it){
+          data.popup.data(it);
+          return data.popup.data().then(function(it){
+            return setText(it);
+          });
+        }
+      });
+      return view = new ldview({
+        root: root,
+        action: {
+          click: {
+            button: function(){
+              return data.popup.get().then(function(it){
+                pubsub.fire('event', 'change', getData(it));
+                return setText(it);
+              });
+            }
+          }
+        },
+        text: {
+          button: function(){
+            var that;
+            if (that = local.text) {
+              return that;
+            } else {
+              return t("config");
+            }
+          }
+        }
+      });
+    }
+  };
+  return blockFactory;
+});</script></div>

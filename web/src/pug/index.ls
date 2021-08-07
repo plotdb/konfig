@@ -1,5 +1,9 @@
 <- (->it.apply {}) _
 
+popup = do
+  ldcv: new ldcover root: ld$.find('.ldcv', 0)
+  data: 'yes'
+
 @meta =
   palette: name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1
@@ -10,6 +14,10 @@
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
   upload: name: \upload, type: \upload, multiple: true
   font: name: \font, type: \font
+  popup: name: \popup, type: \popup, popup:
+    get: -> popup.ldcv.get!
+    default: -> popup.data
+    data: (d) -> Promise.resolve!then ~> if d? => popup.data = d else popup.data
 
 cfg = new konfig do
   root: document.body
@@ -33,6 +41,7 @@ sample = ld$.find('#sample',0)
 
 @val = {}
 @update = ~>
+  console.log it
   @val = it
   sample.innerText = (@val.text or '') + '\n' + (@val.paragraph or '')
   sample.style <<<
