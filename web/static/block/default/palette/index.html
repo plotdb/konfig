@@ -78,7 +78,9 @@
             node = arg$.node;
             obj.ldpp = new ldpp({
               root: node,
-              ldcv: true
+              ldcv: true,
+              palette: data.palette,
+              palettes: data.palettes
             });
             return obj.pal = obj.ldpp.ldpe.getPal();
           }
