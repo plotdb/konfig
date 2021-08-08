@@ -32,7 +32,7 @@
         var that;
         local.text = (that = it.text)
           ? that
-          : it + "";
+          : typeof it === 'string' ? it + "" : '...';
         return view.render('button');
       };
       ldview = context.ldview, ldcolor = context.ldcolor;

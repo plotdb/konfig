@@ -11,7 +11,7 @@ block-factory =
     local = {}
     get-data = -> if it.data => that else it
     set-text = ->
-      local.text = if it.text => that else "#{it}"
+      local.text = if it.text => that else if typeof(it) == \string => "#{it}" else '...'
       view.render \button
     {ldview,ldcolor} = context
     pubsub.fire \init, do

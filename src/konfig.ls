@@ -12,7 +12,7 @@ konfig = (opt={}) ->
   @_val = {}
   @typemap = opt.typemap or null
   @mgr = @mgr-fallback = new block.manager registry: ({name, version, path}) ->
-    throw new Error("@plotdb/konfig: #name@#version is not supported")
+    throw new Error("@plotdb/konfig: #name@#version/#path is not supported")
   if opt.manager =>
     @mgr = opt.manager
     @mgr.set-fallback @mgr-fallback
@@ -53,8 +53,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     id = meta.id
     if ctrl[id] => return Promise.resolve!
     if meta.block => {name, version, path} = meta.block{name,version, path}
-    else if @typemap and (ret = @typemap(meta.id)) => {name, version, path} = ret
-    else [name, version, path] = [meta.id, "master", '']
+    else if @typemap and (ret = @typemap(meta.type)) => {name, version, path} = ret
+    else [name, version, path] = [meta.type, "master", '']
     @mgr.get({name,version,path})
       .then -> it.create {data: meta}
       .then (itf) ~>
