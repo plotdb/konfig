@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.7 (upcoming)
+
+ - support `palette` and `palettes` in palette directive.
+
+
 ## v0.0.6
 
  - fix bug: popup.data should not be promise-based.
