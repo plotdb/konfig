@@ -15,10 +15,10 @@ block-factory =
       view.render \button
     {ldview,ldcolor} = context
     pubsub.fire \init, do
-      get: ~> data.popup.data!then -> get-data it
+      get: ~> data.popup.data!
       set: ~>
         data.popup.data it
-        data.popup.data!then -> set-text it
+        set-text data.popup.data!
     view = new ldview do
       root: root
       action: click: button: ->

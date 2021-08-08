@@ -38,15 +38,11 @@
       ldview = context.ldview, ldcolor = context.ldcolor;
       pubsub.fire('init', {
         get: function(){
-          return data.popup.data().then(function(it){
-            return getData(it);
-          });
+          return data.popup.data();
         },
         set: function(it){
           data.popup.data(it);
-          return data.popup.data().then(function(it){
-            return setText(it);
-          });
+          return setText(data.popup.data());
         }
       });
       return view = new ldview({

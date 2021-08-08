@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.6
+
+ - fix bug: popup.data should not be promise-based.
+
+
 ## v0.0.5
 
  - bug fix: block name should use `meta.type`, instead of `meta.id`
