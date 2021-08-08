@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.4
+
+ - add `popup` directive
+
+
 ## v0.0.3
 
  - correctly rename all config to konfig
