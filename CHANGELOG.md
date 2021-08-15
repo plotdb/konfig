@@ -1,8 +1,9 @@
 # Change Logs
 
-## v0.0.7 (upcoming)
+## v0.0.7
 
  - support `palette` and `palettes` in palette directive.
+ - upgrade modules for correct work in @plotdb/block
 
 
 ## v0.0.6

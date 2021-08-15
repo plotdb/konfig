@@ -22,9 +22,9 @@
       ]
     },
     init: function(arg$){
-      var root, context, pubsub, ldview, ldcolor, view, this$ = this;
+      var root, context, pubsub, ldview, ldcolor, ldcolorpicker, view, this$ = this;
       root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
-      ldview = context.ldview, ldcolor = context.ldcolor;
+      ldview = context.ldview, ldcolor = context.ldcolor, ldcolorpicker = context.ldcolorpicker;
       pubsub.fire('init', {
         get: function(){
           if (this$.ldcp) {

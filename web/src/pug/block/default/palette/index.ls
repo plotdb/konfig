@@ -4,18 +4,18 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/ldcover/main/ldcv.css", type: \css}
+      {url: "/assets/lib/ldcover/main/ldcv.css"}
       {url: "/assets/lib/ldcover/main/ldcv.js"}
       {url: "/assets/lib/ldcolor/main/ldcolor.js", async: false}
-      {url: "/assets/lib/ldslider/main/ldrs.css", type: \css}
+      {url: "/assets/lib/ldslider/main/ldrs.css"}
       {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
-      {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.css", type: \css}
+      {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.css"}
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.js", async: false}
-      {url: "/assets/lib/ldpalettepicker/main/ldpp.css", type: \css}
-      {url: "/assets/lib/ldpalettepicker/main/ldpp.js"}
+      {url: "/assets/lib/ldpalettepicker/main/index.css"}
+      {url: "/assets/lib/ldpalettepicker/main/index.js"}
     ]
   init: ({root, context, pubsub, data}) ->
-    {ldview,ldcolor,ldpp,ldCover} = context
+    {ldview,ldcolor,ldpp,ldcover} = context
     obj = {pal: null}
     pubsub.fire \init, do
       data: data

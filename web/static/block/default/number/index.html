@@ -11,18 +11,16 @@
       },
       dependencies: [
         {
-          url: "/assets/lib/ldslider/main/ldrs.css",
-          type: 'css'
+          url: "/assets/lib/ldslider/main/ldrs.css"
         }, {
-          url: "/assets/lib/ldslider/main/ldrs.js",
-          async: false
+          url: "/assets/lib/ldslider/main/ldrs.js"
         }
       ]
     },
     init: function(arg$){
-      var root, context, data, pubsub, ldview, ldrs, obj, view;
+      var root, context, data, pubsub, ldview, ldslider, obj, view;
       root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
-      ldview = context.ldview, ldrs = context.ldrs;
+      ldview = context.ldview, ldslider = context.ldslider;
       obj = {};
       pubsub.fire('init', {
         get: function(){

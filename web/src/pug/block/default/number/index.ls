@@ -4,11 +4,11 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/ldslider/main/ldrs.css", type: \css}
-      {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
+      {url: "/assets/lib/ldslider/main/ldrs.css"}
+      {url: "/assets/lib/ldslider/main/ldrs.js"}
     ]
   init: ({root, context, data, pubsub}) ->
-    {ldview,ldrs} = context
+    {ldview,ldslider} = context
     obj = {}
     pubsub.fire \init, do
       get: -> obj.ldrs.get!

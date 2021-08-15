@@ -60,12 +60,12 @@
   },
   "dependencies": {
     "@loadingio/ldcolorpicker": "^2.0.2",
-    "@plotdb/block": "^1.5.0",
-    "@plotdb/csscope": "^0.4.0",
+    "@plotdb/block": "^1.7.2",
+    "@plotdb/csscope": "^0.5.0",
     "@plotdb/datadom": "^0.0.4",
-    "@plotdb/rescope": "^1.1.8",
-    "ldcolor": "0.0.4",
-    "ldpalettepicker": "1.0.2",
+    "@plotdb/rescope": "^2.1.0",
+    "ldcolor": "^0.0.4",
+    "ldpalettepicker": "^3.0.1",
     "ldslider": "^2.0.6",
     "proxise": "^0.1.2"
   }

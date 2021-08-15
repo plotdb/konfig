@@ -10,7 +10,7 @@ block-factory =
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css", global: true}
     ]
   init: ({root, context, pubsub}) ->
-    {ldview,ldcolor} = context
+    {ldview,ldcolor,ldcolorpicker} = context
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
       set: ~> @ldcp.set it
