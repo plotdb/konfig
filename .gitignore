@@ -4,3 +4,4 @@ web/.view
 .swp
 secret.*
 *.log
+web/static/assets/lib/
