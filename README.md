@@ -5,8 +5,12 @@ Config editor.
 
 ## Usage
 
+    kfg = new konfig({...]);
+    kfg.on("change", function(cfg) { ... });
+    kfg.init().then(function() { ... });
 
-Constructor options: 
+
+### Constructor options
 
  - `root`: root node or CSS selector for root node.
    - root node is used to place root tab for this config.
@@ -17,7 +21,7 @@ Constructor options:
    - use default mgr if omitted, which always throw an Error except for blocks available in bundle.
 
 
-API:
+### API
 
  - `init()`: initialization. return Promise, resolved on initialized.
  - `render()`: re-render controls
@@ -29,7 +33,7 @@ API:
  - `fire(event, args...)`
 
 
-Events
+### Events
 
  - `change`: fired when value is changed. Params:
    - `value`: value object return by `get`.
