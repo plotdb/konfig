@@ -1,45 +1,105 @@
+# Overview
+
+`@plotdb/konfig` is for configuring with interface. For this purpose, we have:
+
+ - `ctrl`: a widget for user to input certain information
+   - `ctrl definition object`: config ( type, name, size, value range, ui order, etc ) for this ctrl
+   - `block`: logic + interface definition in `@plotdb/block` format.
+ - `meta`: a set of widgets in defined arrangement that defines how information are organized
+ - `tab`: a different view of ctrl, mainly for how ctrls are arranged in user interface.
+
+
 # Ctrl definition
 
 A control is a visually controllable widget for user to input anything, such as a number, string, a font or an animation.
 
-A control can be defined in an object and a corresponding block that implements it. Member for a single control:
+A control can be defined by:
 
- - `name`: string, verbose name for this control
+ - a ctrl definition object
+ - a block handling the specified type
+
+## Ctrl definition object
+
+This is an object with following fields:
+
+ - `name`: string, verbose name for this control. use `id` if omitted
  - `id`: string, id for this control. optional, may determined externally.
- - `type`: string, type of this control.
- - `block`: (TBD) more explicit definition which overwrite `type`. Object with following members:
+ - `type`: string, type of this control. mapped to a specific block internally.
+ - `block`: explicit definition of block. overwrite `type` if provided. this is an object with following members:
    - `name`: block name.
    - `version`: block version.
- - `tab`: string for if of the tab containing this control.
+   - `path`: block path.
+ - `tab`: id for - if any - a group containing this control.
  - `order`: number for order of this control in specific tab. optional. random order if omitted.
+   - lower order mean higher priority.
  - `hidden`: default false. true to disable this widget.
 
-Specific control can extend this interface but to prevent future conflict, implementation should avoid using words starting with `_`.
+Specific control can extend this interface but to prevent future conflict, implementation should *avoid using* words starting with `_`.
 
 
-The corresponding block of a control is implemented with the spec of `@plotdb/block`. A config block is responsible to
-and should provide an interface with following methods:
+## Ctrl type block 
+
+`@plotdb/konfig` identifies a specific `@plotdb/block` object via the `block` or `type` value in an ctrl definition object.
+
+This block follows `@plotdb/block` spec, and should provide an interface with following methods:
 
  - `get`: get current value
  - `set(value)`: set value of this control
  - `on(event, cb(args...))`: register event handler for events fired by this control
  - `fire(event, args...)`: fire an event to this control
 
+For detail about how to implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
 
-`@plotdb/config` provides a base block which has already implemented above methods. Yet after extending it, you should implement following mechanism:
 
- - init base block via `init` event through pubsub, with an object containing following:
+### Base block
+
+To make implementation easier, `@plotdb/konfig` provides a block set `@plotdb/konfig.widget.default` with a base block in path `base` which has already implemented above methods. Yet after extending it, you should still implement following mechanism:
+
+ - for logic: init base block via `init` event through pubsub, with an object containing following:
    - `get`: same with the above `get`.
    - `set`: same with the above `set`.
-   - `data` (TBD)
+ - for interface: fill corresponding DOM for following plugs if necessary:
+   - `config`: widget body
+   - `ctrl`: additional control in head bar.
 
-additionally, the base block provides two plugs for injecting DOM elements:
+Here is a sample implementation of a block for simple data reflection which extends `base` block ( in `pug` ):
 
- - `config`: widget body
- - `ctrl`: additional control in head bar.
+  div
+    div(plug="config"): div Some Tags
+    script(type="@plotdb/block").
+      (function() { return {
+        /* extent the base block */
+        pkg: {extent: {name: "@plotdb/konfig.widget.default", version: "master", path: "base"}},
+        init: function(opt) {
+          var local = {};
+          /* use pubsub to fire `init` event for passing interface object to base block */
+          opt.pubsub.fire(
+            "init", {
+              get: function() { return local.data; },
+              set: function(data) { local.data = data; },
+            }
+          );
+        }
+      }});
 
 
-## Set of Controls / Edit
+### UI Overwrite
+
+`@plotdb/konfig` has provided blocks for using with basic types such as `number`, `choice` in the `@plotdb/konfig.widget.default` package, and these blocks are implemented with UI / Logic separated, so you can simply extend corresponding widgets to overwrite their default interface without rewriting their logic.
+
+For example, this extends `number` block and overwrite its `config` plug with a simply `input` element:
+
+    div
+      div(plug="config"): input(ld="ldrs")
+      script(type="@plotdb/block").
+        (function() { return {
+          pkg: {extent: {name: "@plotdb/konfig.widget.default", version: "master", path: "number"}}
+        }});
+
+All widgets use `ldview` directive to separate interface from logic so you should still follow the spec of individual blocks to make things work.
+
+
+## Meta: Tree of Ctrls
 
 User can compose return values of a set of controls into a nested object by defining a meta object `meta` using hash keys as paths of value from specpfic control. For example, following `meta`:
 
@@ -80,7 +140,7 @@ which may provide following result:
     }
 
 
-alternatively, you can specify additional information, including `tab`, `order` and `hidden` for an entire subtree. To distinguish config with other controls, use `child` field to hold sub controls:
+Alternatively, you can specify additional information, including `tab`, `order` and `hidden` for an entire subtree. To distinguish config with other controls, use `child` field to hold sub controls:
 
     meta = {
       text: {
@@ -105,9 +165,11 @@ alternatively, you can specify additional information, including `tab`, `order` 
 Generally speaking, subtree without `child` is just a shorthand. Always put controls in `child` if you want to prevent ambiguity.
 
 
-## Group of controls / Tabs
+## Tab: Group of Ctrls 
 
-While meta are construct based on the hierarchy of the expected result object, we may want controls to be shown in different order or grouping. This is done by setting `tab` and `order` memebers in control's definition, yet tabs can also be nested, and defined similarly in a separated object:
+While meta are constructed based on the hierarchy of the expected result object, we may want controls to be shown in different order or grouping. This is done by setting `tab` and `order` members in ctrl definition object.
+
+Tabs can also be nested, and defined similarly in a separated object:
 
     [
       {id: "some-tab", name: "Some Tab", order: ...}, 
@@ -156,13 +218,8 @@ proposed improving: ( TBD )
       inp-b: { name: '...', type: '...', default: '...', priority: 0.5, tab: 'tab-a' }
     }
 
-## Current Status
+## TODO
 
- - 建構 `config-editor` 以使用
- - 控制項放在 src/pug/ctrl, 以 @plotdb/block 格式設計.
-   - 好處是
-     - 模組化, 好版控, 統一規格方便理解. 相依性容易解決.
-     - 不同介面如何客製? override or extend ?
  - 這個解析還需要再想: 定義 -> 控制項物件 -> 分組資訊
    - 分組如何分? 如何處理命名衝突? 多層式如何更新資料?
 
