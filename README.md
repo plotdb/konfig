@@ -38,6 +38,23 @@ Config editor.
  - `change`: fired when value is changed. Params:
    - `value`: value object return by `get`.
 
+### Sample Usage
+
+    kfg = new konfig({
+      root: document.body,
+      meta: {
+        showText: { type: 'boolean' },
+        textSize: { type: 'number', range: false, min: 10, max: 64, step: 1 },
+        textAlign: { type: 'choice', values: ["left", "right", "center"], default: 'left' },
+        textColor: { type: 'color', tab: 'color' }
+      }
+    });
+
+
+## Meta Specification
+
+Check `doc/spec.md` for more information.
+
 
 ## License
 
