@@ -18,7 +18,6 @@ block-factory =
     {ldview,ldcolor,ldpp,ldcover} = context
     obj = {pal: null}
     pubsub.fire \init, do
-      data: data
       get: -> obj.pal
       set: ->
         obj.pal = it

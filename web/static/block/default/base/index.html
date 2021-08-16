@@ -30,14 +30,24 @@
       pubsub.on('init', function(opt){
         var itf;
         opt == null && (opt = {});
-        this$.data = opt.data || {};
         this$.itf = itf = {
           evtHandler: {},
           get: opt.get || function(){},
           set: opt.set || function(){},
+          render: function(){
+            view.render();
+            if (opt.render) {
+              return opt.render();
+            }
+          },
           on: function(n, cb){
-            var ref$;
-            return ((ref$ = this.evtHandler)[n] || (ref$[n] = [])).push(cb);
+            var this$ = this;
+            return (Array.isArray(n)
+              ? n
+              : [n]).map(function(n){
+              var ref$;
+              return ((ref$ = this$.evtHandler)[n] || (ref$[n] = [])).push(cb);
+            });
           },
           fire: function(n){
             var v, res$, i$, to$, ref$, len$, cb, results$ = [];
@@ -68,20 +78,20 @@
         root: root,
         text: {
           name: function(){
-            return t(data.name);
+            return t(data.name || '');
           }
         },
         handler: {
           hint: function(arg$){
             var node;
             node = arg$.node;
-            return node.classList.toggle('d-none', !this$.data.hint);
+            return node.classList.toggle('d-none', !data.hint);
           }
         },
         action: {
           click: {
             hint: function(){
-              return alert(t(this$.data.hint || 'no hint'));
+              return alert(t(data.hint || 'no hint'));
             }
           }
         }

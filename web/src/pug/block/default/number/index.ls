@@ -13,13 +13,17 @@ block-factory =
     pubsub.fire \init, do
       get: -> obj.ldrs.get!
       set: -> obj.ldrs.set it
-      data: data
+      render: -> obj.ldrs.update!
     view = new ldview do
       root: root
       action: click:
         switch: -> obj.ldrs.edit!
       init: ldrs: ({node}) ->
-        obj.ldrs = new ldslider({root: node} <<< data{min,max,step,from,to,exp,limit-max,range,label,limit-max})
+        obj.ldrs = new ldslider(
+          {root: node} <<< Object.fromEntries(
+            <[min max step from to exp limitMax range label]>.map(-> [it, data[it]]).filter(->it.1?)
+          )
+        )
         obj.ldrs.on \change, -> pubsub.fire \event, \change, it
 
 return block-factory

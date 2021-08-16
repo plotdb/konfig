@@ -47,6 +47,7 @@ This block follows `@plotdb/block` spec, and should provide an interface with fo
  - `set(value)`: set value of this control
  - `on(event, cb(args...))`: register event handler for events fired by this control
  - `fire(event, args...)`: fire an event to this control
+ - `render()`: update ui of this control
 
 For detail about how to implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
 
@@ -58,6 +59,7 @@ To make implementation easier, `@plotdb/konfig` provides a block set `@plotdb/ko
  - for logic: init base block via `init` event through pubsub, with an object containing following:
    - `get`: same with the above `get`.
    - `set`: same with the above `set`.
+   - `render`: same with the above `set`.
  - for interface: fill corresponding DOM for following plugs if necessary:
    - `config`: widget body
    - `ctrl`: additional control in head bar.

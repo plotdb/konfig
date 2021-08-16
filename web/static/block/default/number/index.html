@@ -29,7 +29,9 @@
         set: function(it){
           return obj.ldrs.set(it);
         },
-        data: data
+        render: function(){
+          return obj.ldrs.update();
+        }
       });
       return view = new ldview({
         root: root,
@@ -42,11 +44,15 @@
         },
         init: {
           ldrs: function(arg$){
-            var node, ref$;
+            var node;
             node = arg$.node;
-            obj.ldrs = new ldslider((ref$ = {
+            obj.ldrs = new ldslider(import$({
               root: node
-            }, ref$.min = data.min, ref$.max = data.max, ref$.step = data.step, ref$.from = data.from, ref$.to = data.to, ref$.exp = data.exp, ref$.limitMax = data.limitMax, ref$.range = data.range, ref$.label = data.label, ref$.limitMax = data.limitMax, ref$));
+            }, Object.fromEntries(['min', 'max', 'step', 'from', 'to', 'exp', 'limitMax', 'range', 'label'].map(function(it){
+              return [it, data[it]];
+            }).filter(function(it){
+              return it[1] != null;
+            }))));
             return obj.ldrs.on('change', function(it){
               return pubsub.fire('event', 'change', it);
             });
@@ -56,4 +62,9 @@
     }
   };
   return blockFactory;
-});</script></div>
+});
+function import$(obj, src){
+  var own = {}.hasOwnProperty;
+  for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+  return obj;
+}</script></div>

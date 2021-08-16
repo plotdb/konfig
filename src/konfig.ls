@@ -57,12 +57,14 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     else [name, version, path] = [meta.type, "master", '']
     @mgr.get({name,version,path})
       .then -> it.create {data: meta}
-      .then (itf) ~>
+      .then (b) ~>
         root = document.createElement(\div)
         if !(meta.tab?) => meta.tab = 'default'
         if !@_tabobj[meta.tab] => @_prepare-tab {id: meta.tab}
-        @_ctrllist.push(ctrl[id] = {itf, meta, root, key: Math.random!toString(36).substring(2)})
-        itf.attach {root} .then -> itf.interface!
+        @_ctrllist.push(ctrl[id] = {block: b, meta, root, key: Math.random!toString(36).substring(2)})
+        b.attach {root}
+          .then -> b.interface!
+          .then -> return ctrl[id].itf = it
       .then (item) ~>
         val[id] = v = item.get!
         @update!
@@ -95,6 +97,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
                 list: ({ctx}) ~> @_ctrllist.filter -> it.meta.tab == ctx.tab.id
                 key: -> it.key
                 init: ({node, data}) ~> node.appendChild data.root
+                handler: ({node, data}) ~>
+                  data.itf.render!
 
   build: (clear = false) ->
     @_build-tab clear
@@ -115,8 +119,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         traverse(v, val{}[id], ctrl{}[id])
 
     if clear and @_ctrllist =>
-      @_ctrllist.map ({itf, root}) ->
-        if itf.destroy => itf.destroy!
+      @_ctrllist.map ({block, root}) ->
+        if block.destroy => block.destroy!
         if root.parentNode => root.parentNode.removeChild root
     if clear or !@_val => @_val = {}
     if clear or !@_ctrlobj => @_ctrlobj = {}
