@@ -3,6 +3,7 @@ konfig = (opt={}) ->
   @opt = opt
   @evt-handler = {}
   @use-bundle = if (opt.use-bundle?) => opt.use-bundle else true
+  @view = opt.view
   @_ctrlobj = {}
   @_ctrllist = []
   @_tabobj = {}
@@ -73,47 +74,49 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           @update!
       .then -> ctrl[id]
 
-  _view: ->
-    @view = new ldview do
-      root: @root
-      handler:
-        config:
-          list: ~> @_ctrllist
-          key: -> it.key
-          init: ({node, data}) ~> node.appendChild data.root
+  _view:
+    simple: ->
+      @view = new ldview do
+        root: @root
+        handler:
+          config:
+            list: ~> @_ctrllist
+            key: -> it.key
+            init: ({node, data}) ~> node.appendChild data.root
 
-  _view-alt: ->
-    @_tablist.sort (a,b) -> b.tab.order - a.tab.order
-    @view = new ldview do
-      root: @root
-      handler:
-        tab:
-          list: ~> @_tablist
-          key: -> it.key
-          view:
-            text: name: ({ctx}) -> return ctx.tab.id
-            handler:
-              config: 
-                list: ({ctx}) ~> @_ctrllist.filter -> it.meta.tab == ctx.tab.id
-                key: -> it.key
-                init: ({node, data}) ~> node.appendChild data.root
-                handler: ({node, data}) ~>
-                  data.itf.render!
+    default: ->
+      @view = new ldview do
+        root: @root
+        handler:
+          tab:
+            list: ~>
+              @_tablist.sort (a,b) -> b.tab.order - a.tab.order
+              @_tablist
+            key: -> it.key
+            view:
+              text: name: ({ctx}) -> return ctx.tab.id
+              handler:
+                config:
+                  list: ({ctx}) ~> @_ctrllist.filter -> it.meta.tab == ctx.tab.id
+                  key: -> it.key
+                  init: ({node, data}) ~> node.appendChild data.root
+                  handler: ({node, data}) ~>
+                    data.itf.render!
 
   build: (clear = false) ->
     @_build-tab clear
     @_build-ctrl clear
-      .then ~> @_view-alt!
+      .then ~> if @view => @_view[@view].apply @
 
   _build-ctrl: (clear = false) ->
     promises = []
     traverse = (meta, val = {}, ctrl = {}) ~>
-      if !meta => return
+      if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
       if !ctrls => return
       for id,v of ctrls =>
-        v <<< {id}
         if v.type =>
+          v <<< {id}
           promises.push @_prepare-ctrl(v, val, ctrl)
           continue
         traverse(v, val{}[id], ctrl{}[id])
@@ -135,7 +138,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if clear or !@_tab => @_tab = {}
 
     traverse = (tab) ~>
-      if !tab => return
+      if !(tab and (Array.isArray(tab) or typeof(tab) == \object)) => return
       list = if Array.isArray(tab) => tab
       else [{id,v} for id,v of tab].map ({id,v},i) ->
         if !(v.order?) => v.order = i

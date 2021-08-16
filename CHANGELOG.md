@@ -1,6 +1,6 @@
 # Change Logs
 
-## v0.0.8 (upcoming)
+## v0.0.8
 
  - add `render` interface and tweak `itf` and `block` naming in konfig design.
  - remove `data` interface since it's already passed directly into `base` block
@@ -8,6 +8,8 @@
  - prevent translating `undefined` in `base` block
  - support array of names in `base` block event handler
  - update documentation
+ - fix bug: don't traverse into non-object in prepare-ctrl / prepare-tab
+ - add `view` option for default view handler
 
 
 ## v0.0.7

@@ -19,6 +19,13 @@ Config editor.
  - `tab`: tab object. see spec for more information.
  - `mgr`: block manager for retrieving blocks
    - use default mgr if omitted, which always throw an Error except for blocks available in bundle.
+ - `view`: name of the view renderer to use. optional, default null. possible value:
+   - `simple`: simple list of control. sample DOM:
+     div(ld-each="config")
+   - `default`: controls with tabs. sample DOM:
+     div(ld-each="tab")
+       div(ld="name")
+       div(ld-each="config")
 
 
 ### API

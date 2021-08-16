@@ -78,7 +78,7 @@
         root: root,
         text: {
           name: function(){
-            return t(data.name || '');
+            return t(data.name || data.id || '');
           }
         },
         handler: {

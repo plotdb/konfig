@@ -22,7 +22,7 @@ block-factory =
     pubsub.on \event, (n, ...v) ~> @itf.fire.apply @itf, [n] ++ v
     view = new ldview do
       root: root
-      text: name: -> t(data.name or '')
+      text: name: -> t(data.name or data.id or '')
       handler: hint: ({node}) ~> node.classList.toggle \d-none, !data.hint
       action: click: hint: ~>
         alert(t(data.hint or 'no hint'))
