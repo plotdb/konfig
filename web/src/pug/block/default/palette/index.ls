@@ -33,7 +33,10 @@ block-factory =
             view.render \color
             pubsub.fire \event, \change, obj.pal
       init: ldcv: ({node}) ->
-        obj.ldpp = new ldpp root: node, ldcv: true, palette: data.palette, palettes: data.palettes
+        obj.ldpp = new ldpp {
+          root: node, ldcv: true, use-clusterizejs: true
+          palette: data.palette, palettes: data.palettes
+        }
         obj.pal = obj.ldpp.ldpe.get-pal!
       handler:
         color:
