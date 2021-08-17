@@ -1,0 +1,29 @@
+//- module
+doctype html
+html
+  include @/@loadingio/bootstrap.ext/dist/index.pug
+  include @/ldview/dist/index.pug
+  head
+    block prehead
+    +css("/assets/lib/bootstrap/main/css/bootstrap.min.css")
+    +css("/assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
+    +css("/assets/lib/ldcover/main/ldcv.min.css")
+    +css("/assets/lib/ldiconfont/main/ldif.min.css")
+    block head
+
+  body
+    block body
+    +script("/assets/lib/ldcolor/main/ldcolor.min.js")
+    +script("/assets/lib/ldcover/main/ldcv.min.js")
+    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
+    +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
+    +script("/assets/lib/proxise/main/proxise.min.js")
+    +script("/assets/lib/ldview/main/index.min.js")
+    +script("/assets/lib/@plotdb/rescope/main/rescope.js")
+    +script("/assets/lib/@plotdb/csscope/main/csscope.js")
+    +script("/assets/lib/@plotdb/datadom/main/datadom.js")
+    +script("/assets/lib/@plotdb/block/main/block.js")
+    +script("/assets/lib/@plotdb/konfig/dev/konfig.js")
+    +script("/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js")
+    block script
+
