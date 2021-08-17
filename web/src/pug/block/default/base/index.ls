@@ -3,8 +3,10 @@
 block-factory =
   pkg:
     dependencies: [
-      {url: "/assets/lib/ldview/main/index.js"}
-      {url: "/assets/lib/@loadingio/debounce.js/main/debounce.min.js"}
+      {name: "ldview", version: "main", path: "index.js"}
+      {name: "@loadingio/debounce.js", version: "main", path: "debounce.min.js"}
+      {name: "ldcover", version: "main", path: "ldcv.min.js"}
+      {name: "ldcover", version: "main", path: "ldcv.min.css"}
     ]
   init: ({root, context, data, pubsub, t}) ->
     @data = {}

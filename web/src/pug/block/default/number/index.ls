@@ -4,8 +4,8 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/ldslider/main/ldrs.css"}
-      {url: "/assets/lib/ldslider/main/ldrs.js"}
+      {name: "ldslider", version: "main", path: "ldrs.css"}
+      {name: "ldslider", version: "main", path: "ldrs.js"}
     ]
   init: ({root, context, data, pubsub}) ->
     {ldview,ldslider} = context

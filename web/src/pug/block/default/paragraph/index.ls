@@ -3,10 +3,7 @@
 block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
-    dependencies: [
-      {url: "/assets/lib/ldcover/main/ldcv.min.js"}
-      {url: "/assets/lib/ldcover/main/ldcv.min.css"}
-    ]
+    dependencies: []
   init: ({root, context, data, pubsub}) ->
     obj = {data: data.default or ''}
     {ldview, ldCover} = context

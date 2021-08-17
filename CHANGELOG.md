@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.10
+
+ - use semantic module naming in dependencies
+
+
 ## v0.0.9
 
  - by default enabling clusterizejs in palette picker. it will still be enabled only if clusterize.js is available.

@@ -4,10 +4,10 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/ldcolor/main/ldcolor.min.js", async: false}
-      {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.js"}
+      {name: "ldcolor", version: "main", path: "ldcolor.min.js", async: false}
+      {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.js"}
       # ldcp inject DOM into global space so we need it to be global.
-      {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.min.css", global: true}
+      {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.css", global: true}
     ]
   init: ({root, context, pubsub}) ->
     {ldview,ldcolor,ldcolorpicker} = context

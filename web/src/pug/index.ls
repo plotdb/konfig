@@ -23,6 +23,10 @@ cfg = new konfig do
   root: document.body
   meta: @meta
   view: \default
+  manager: new block.manager do
+    registry: ({name,version}) -> "/block/#name/#version/index.html"
+    moduleRegistry: ({name,version,path}) ->
+      return "/assets/lib/#name/#version/#path"
   /*
   use-bundle: false
   manager: new block.manager registry: ({name, version, path}) ->
