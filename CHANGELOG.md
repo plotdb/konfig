@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.9
+
+ - by default enabling clusterizejs in palette picker. it will still be enabled only if clusterize.js is available.
+
+
 ## v0.0.8
 
  - add `render` interface and tweak `itf` and `block` naming in konfig design.
