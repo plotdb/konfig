@@ -22,6 +22,7 @@ popup = do
 cfg = new konfig do
   root: document.body
   meta: @meta
+  view: \default
   /*
   use-bundle: false
   manager: new block.manager registry: ({name, version, path}) ->
