@@ -9,9 +9,9 @@ block-factory =
         "config": "設定"
   init: ({root, context, data, pubsub, t}) ->
     local = {}
-    get-data = -> if it.data => that else it
+    get-data = -> if !it => null else if it.data => that else it
     set-text = ->
-      local.text = if it.text => that else if typeof(it) == \string => "#{it}" else '...'
+      local.text = if it and it.text => that else if typeof(it) == \string => "#{it}" else '...'
       view.render \button
     {ldview,ldcolor} = context
     pubsub.fire \init, do

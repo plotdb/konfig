@@ -22,7 +22,9 @@
       local = {};
       getData = function(it){
         var that;
-        if (that = it.data) {
+        if (!it) {
+          return null;
+        } else if (that = it.data) {
           return that;
         } else {
           return it;
@@ -30,7 +32,7 @@
       };
       setText = function(it){
         var that;
-        local.text = (that = it.text)
+        local.text = (that = it && it.text)
           ? that
           : typeof it === 'string' ? it + "" : '...';
         return view.render('button');

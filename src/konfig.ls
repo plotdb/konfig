@@ -21,18 +21,49 @@ konfig = (opt={}) ->
   @update = debounce 150, ~> @_update!
   @
 
+konfig.views =
+  simple: ->
+    new ldview do
+      root: @root
+      init-render: false
+      handler:
+        config:
+          list: ~> @_ctrllist.filter -> !it.meta.hidden
+          key: -> it.key
+          init: ({node, data}) ~> node.appendChild data.root
+  default: ->
+    new ldview do
+      root: @root
+      init-render: false
+      handler:
+        tab:
+          list: ~>
+            @_tablist.sort (a,b) -> b.tab.order - a.tab.order
+            @_tablist
+          key: -> it.key
+          view:
+            text: name: ({ctx}) -> return ctx.tab.id
+            handler:
+              config:
+                list: ({ctx}) ~>
+                  @_ctrllist.filter -> it.meta.tab == ctx.tab.id and !it.meta.hidden
+                key: -> it.key
+                init: ({node, data}) ~> node.appendChild data.root
+                handler: ({node, data}) ~>
+                  data.itf.render!
+
 konfig.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
-  render: -> @view.render!
-  meta: ->
-    if !(it?) => return @_meta
-    @_meta = it
-    @render!
-  tab: ->
-    if !(it?) => return @_tab
-    @_tab = it
-    @render!
+  render: ->
+    if !@view => return
+    if !@_view => @_view = konfig.views[@view].apply @
+    @_view.render!
+
+  meta: ({meta, tab}) ->
+    if meta? => @_meta = meta
+    if tab? => @_tab = tab
+    @build!
   get: -> JSON.parse JSON.stringify @_val
   set: ->
     @_val = JSON.parse JSON.stringify it
@@ -74,39 +105,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           @update!
       .then -> ctrl[id]
 
-  _view:
-    simple: ->
-      @view = new ldview do
-        root: @root
-        handler:
-          config:
-            list: ~> @_ctrllist
-            key: -> it.key
-            init: ({node, data}) ~> node.appendChild data.root
-
-    default: ->
-      @view = new ldview do
-        root: @root
-        handler:
-          tab:
-            list: ~>
-              @_tablist.sort (a,b) -> b.tab.order - a.tab.order
-              @_tablist
-            key: -> it.key
-            view:
-              text: name: ({ctx}) -> return ctx.tab.id
-              handler:
-                config:
-                  list: ({ctx}) ~> @_ctrllist.filter -> it.meta.tab == ctx.tab.id
-                  key: -> it.key
-                  init: ({node, data}) ~> node.appendChild data.root
-                  handler: ({node, data}) ~>
-                    data.itf.render!
-
   build: (clear = false) ->
     @_build-tab clear
     @_build-ctrl clear
-      .then ~> if @view => @_view[@view].apply @
+      .then ~> @render!
 
   _build-ctrl: (clear = false) ->
     promises = []

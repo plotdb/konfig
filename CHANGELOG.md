@@ -1,5 +1,12 @@
 # Change Logs
 
+## v0.0.11
+
+ - move util view to class level.
+ - update render for actually rendering thing, and separate code from build
+ - fix bug in default popup block
+
+
 ## v0.0.10
 
  - use semantic module naming in dependencies
