@@ -3,6 +3,7 @@
 ## v0.0.14 (upcoming)
 
  - popup by default show `config` instead of `...`
+ - use ✎ for switch in bootstrap/number
 
 
 ## v0.0.13
