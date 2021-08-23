@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.14 (upcoming)
+
+ - popup by default show `config` instead of `...`
+
+
 ## v0.0.13
 
  - update for rebuild missed by 0.0.12

@@ -34,7 +34,9 @@
         var that;
         local.text = (that = it && it.text)
           ? that
-          : typeof it === 'string' ? it + "" : '...';
+          : typeof it === 'string'
+            ? it + ""
+            : t('config');
         return view.render('button');
       };
       ldview = context.ldview, ldcolor = context.ldcolor;
