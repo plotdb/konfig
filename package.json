@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "files": [
     "dist/**/*"
   ],
@@ -67,7 +67,7 @@
     "@plotdb/datadom": "^0.0.4",
     "@plotdb/rescope": "^2.1.0",
     "ldcolor": "^0.0.4",
-    "ldpalettepicker": "^3.0.1",
+    "ldpalettepicker": "^3.0.3",
     "ldslider": "^2.0.6",
     "proxise": "^0.1.2"
   }

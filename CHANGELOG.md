@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.12
+
+ - update palette for `ldpalettepicker` 3.0.3
+
+
 ## v0.0.11
 
  - move util view to class level.
