@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.13
+
+ - update for rebuild missed by 0.0.12
+
+
 ## v0.0.12
 
  - update palette for `ldpalettepicker` 3.0.3
