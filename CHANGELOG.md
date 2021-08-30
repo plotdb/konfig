@@ -1,6 +1,6 @@
 # Change Logs
 
-## v0.0.14 (upcoming)
+## v0.0.14
 
  - popup by default show `config` instead of `...`
  - use ✎ for switch in bootstrap/number
