@@ -12,7 +12,7 @@ block-factory =
       {name: "ldpalettepicker", version: "main", path: "index.min.js"}
       {name: "ldpalettepicker", version: "main", path: "index.min.css"}
     ]
-  init: ({root, context, pubsub, data}) ->
+  init: ({root, context, pubsub, data, i18n}) ->
     {ldview,ldcolor,ldpp,ldcover} = context
     obj = {pal: null}
     pubsub.fire \init, do
@@ -32,7 +32,7 @@ block-factory =
             pubsub.fire \event, \change, obj.pal
       init: ldcv: ({node}) ->
         obj.ldpp = new ldpp {
-          root: node, ldcv: true, use-clusterizejs: true
+          root: node, ldcv: true, use-clusterizejs: true, i18n: i18n
           palette: data.palette, palettes: data.palettes
         }
         obj.pal = obj.ldpp.ldpe.get-pal!

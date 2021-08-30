@@ -45,8 +45,8 @@
       ]
     },
     init: function(arg$){
-      var root, context, pubsub, data, ldview, ldcolor, ldpp, ldcover, obj, view;
-      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub, data = arg$.data;
+      var root, context, pubsub, data, i18n, ldview, ldcolor, ldpp, ldcover, obj, view;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub, data = arg$.data, i18n = arg$.i18n;
       ldview = context.ldview, ldcolor = context.ldcolor, ldpp = context.ldpp, ldcover = context.ldcover;
       obj = {
         pal: null
@@ -85,6 +85,7 @@
               root: node,
               ldcv: true,
               useClusterizejs: true,
+              i18n: i18n,
               palette: data.palette,
               palettes: data.palettes
             });

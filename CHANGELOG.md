@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.15
+
+ - upgrade ldpalettepicker and rebuild palette widget
+
+
 ## v0.0.14
 
  - popup by default show `config` instead of `...`
