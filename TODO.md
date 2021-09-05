@@ -1,2 +1,2 @@
  - font image sprite url issue
- - bundle still init ( thus fetch dependencies ), which may not need.
+ - bundle still init ( thus fetch dependencies ), which may not need. we should implement it as `init on demand`.
