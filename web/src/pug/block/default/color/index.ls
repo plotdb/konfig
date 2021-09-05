@@ -14,13 +14,18 @@ block-factory =
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
       set: ~> @ldcp.set it
+    @ldcp = new ldcolorpicker root, className: "round shadow-sm round flat compact-palette no-button no-empty-color"
     view = new ldview do
+      ctx: {color: ldcolor.web @ldcp.get-color!}
       root: root
-      init: color: ({node}) ~>
-        @ldcp = new ldcolorpicker node
-        node.style.backgroundColor = ldcolor.web @ldcp.get-color!
-        @ldcp.on \change, ~>
-          pubsub.fire \event, \change, it
-          node.style.backgroundColor = ldcolor.web it
+      handler:
+        color: ({node, ctx}) ->
+          if node.nodeName.toLowerCase! == \input => node.value = ctx.color
+          else node.style.backgroundColor = ctx.color
+    @ldcp.on \change, ~>
+      color = ldcolor.web it
+      pubsub.fire \event, \change, color
+      view.setCtx {color}
+      view.render!
 
 return block-factory

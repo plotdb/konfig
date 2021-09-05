@@ -41,20 +41,34 @@
           return this$.ldcp.set(it);
         }
       });
-      return view = new ldview({
+      this.ldcp = new ldcolorpicker(root, {
+        className: "round shadow-sm round flat compact-palette no-button no-empty-color"
+      });
+      view = new ldview({
+        ctx: {
+          color: ldcolor.web(this.ldcp.getColor())
+        },
         root: root,
-        init: {
+        handler: {
           color: function(arg$){
-            var node;
-            node = arg$.node;
-            this$.ldcp = new ldcolorpicker(node);
-            node.style.backgroundColor = ldcolor.web(this$.ldcp.getColor());
-            return this$.ldcp.on('change', function(it){
-              pubsub.fire('event', 'change', it);
-              return node.style.backgroundColor = ldcolor.web(it);
-            });
+            var node, ctx;
+            node = arg$.node, ctx = arg$.ctx;
+            if (node.nodeName.toLowerCase() === 'input') {
+              return node.value = ctx.color;
+            } else {
+              return node.style.backgroundColor = ctx.color;
+            }
           }
         }
+      });
+      return this.ldcp.on('change', function(it){
+        var color;
+        color = ldcolor.web(it);
+        pubsub.fire('event', 'change', color);
+        view.setCtx({
+          color: color
+        });
+        return view.render();
       });
     }
   };

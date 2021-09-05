@@ -1,5 +1,10 @@
 # Change Logs
 
+## v0.0.17
+
+ - tweak `color` config
+
+
 ## v0.0.16
 
  - upgrade ldpalettepicker and rebuild palette widget ( to 3.1.1 )
