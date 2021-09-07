@@ -63,7 +63,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
   meta: ({meta, tab}) ->
     if meta? => @_meta = meta
     if tab? => @_tab = tab
-    @build!
+    @build true
   get: -> JSON.parse JSON.stringify @_val
   set: ->
     @_val = JSON.parse JSON.stringify it
@@ -135,10 +135,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   _build-tab: (clear = false) ->
     if @render-mode == \ctrl => return
-    if clear and @_tablist => @_tablist.map ({root}) -> root.parentNode.removeChild root
+    if clear and @_tablist => @_tablist.map ({root}) -> if root.parentNode => root.parentNode.removeChild root
     if clear or !@_tablist => @_tablist = []
     if clear or !@_tab => @_tab = {}
-
+    if clear => @_tabobj = {}
     traverse = (tab) ~>
       if !(tab and (Array.isArray(tab) or typeof(tab) == \object)) => return
       list = if Array.isArray(tab) => tab

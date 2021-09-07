@@ -152,7 +152,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     if (tab != null) {
       this._tab = tab;
     }
-    return this.build();
+    return this.build(true);
   },
   get: function(){
     return JSON.parse(JSON.stringify(this._val));
@@ -322,7 +322,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       this._tablist.map(function(arg$){
         var root;
         root = arg$.root;
-        return root.parentNode.removeChild(root);
+        if (root.parentNode) {
+          return root.parentNode.removeChild(root);
+        }
       });
     }
     if (clear || !this._tablist) {
@@ -330,6 +332,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     }
     if (clear || !this._tab) {
       this._tab = {};
+    }
+    if (clear) {
+      this._tabobj = {};
     }
     traverse = function(tab){
       var list, id, v, i$, len$, item, results$ = [];

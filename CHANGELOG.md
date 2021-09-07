@@ -1,5 +1,12 @@
 # Change Logs
 
+## v0.0.18
+
+ - fix bug: check parentNode for existence before using it
+ - clear also tabobj when force cleaning
+ - force clean when rebuild
+
+
 ## v0.0.17
 
  - tweak `color` config
