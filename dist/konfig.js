@@ -18,7 +18,7 @@ konfig = function(opt){
   this._tab = opt.tab || {};
   this._val = {};
   this.typemap = opt.typemap || null;
-  this.mgr = this.mgrFallback = new block.manager({
+  this.mgr = this.mgrChain = new block.manager({
     registry: function(arg$){
       var name, version, path;
       name = arg$.name, version = arg$.version, path = arg$.path;
@@ -27,7 +27,7 @@ konfig = function(opt){
   });
   if (opt.manager) {
     this.mgr = opt.manager;
-    this.mgr.setFallback(this.mgrFallback);
+    this.mgr.chain(this.mgrChain);
   }
   this.init = proxise.once(function(){
     return this$._init();
@@ -44,7 +44,7 @@ konfig.views = {
       root: this.root,
       initRender: false,
       handler: {
-        config: {
+        ctrl: {
           list: function(){
             return this$._ctrllist.filter(function(it){
               return !it.meta.hidden;
@@ -87,7 +87,7 @@ konfig.views = {
               }
             },
             handler: {
-              config: {
+              ctrl: {
                 list: function(arg$){
                   var ctx;
                   ctx = arg$.ctx;

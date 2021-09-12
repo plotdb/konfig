@@ -12,11 +12,11 @@ konfig = (opt={}) ->
   @_tab = opt.tab or {}
   @_val = {}
   @typemap = opt.typemap or null
-  @mgr = @mgr-fallback = new block.manager registry: ({name, version, path}) ->
+  @mgr = @mgr-chain = new block.manager registry: ({name, version, path}) ->
     throw new Error("@plotdb/konfig: #name@#version/#path is not supported")
   if opt.manager =>
     @mgr = opt.manager
-    @mgr.set-fallback @mgr-fallback
+    @mgr.chain @mgr-chain
   @init = proxise.once ~> @_init!
   @update = debounce 150, ~> @_update!
   @
@@ -27,7 +27,7 @@ konfig.views =
       root: @root
       init-render: false
       handler:
-        config:
+        ctrl:
           list: ~> @_ctrllist.filter -> !it.meta.hidden
           key: -> it.key
           init: ({node, data}) ~> node.appendChild data.root
@@ -44,7 +44,7 @@ konfig.views =
           view:
             text: name: ({ctx}) -> return ctx.tab.id
             handler:
-              config:
+              ctrl:
                 list: ({ctx}) ~>
                   @_ctrllist.filter -> it.meta.tab == ctx.tab.id and !it.meta.hidden
                 key: -> it.key

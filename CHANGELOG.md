@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.0.0 (upcoming)
+
+ - rename `config` in view presets to `ctrl` to better align the spec naming 
+ - update block dependency to `2.0.2`
+
+
 ## v0.0.18
 
  - fix bug: check parentNode for existence before using it

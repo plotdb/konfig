@@ -154,7 +154,7 @@ Alternatively, you can specify additional information, including `tab`, `order` 
       }, ...
     }
 
-`@plotdb/config` use `type` to recognize a control, and use `child` to recognize such subtree so you should avoid using `type` and `child` as control id. However, you can still define a control with id `child` by putting it in `child`:
+`@plotdb/konfig` use `type` to recognize a control, and use `child` to recognize such subtree so you should avoid using `type` and `child` as control id. However, you can still define a control with id `child` by putting it in `child`:
 
     meta = {
       text: {
@@ -192,7 +192,7 @@ where a tab object contains following members:
  - `child`: tab list as subtab of this tab.
  - `order`: order of this tab in its parent. default the order of this tab in its parent's child list.
 
-Providing a `tabs` object and a `meta` object, one can manually construct an edit panel, or use `@plotdb/config` to construct one.
+Providing a `tabs` object and a `meta` object, one can manually construct an edit panel, or use `@plotdb/konfig` to construct one.
 
 
 ## Draft
