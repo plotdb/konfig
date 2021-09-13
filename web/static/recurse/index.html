@@ -1,0 +1,39 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/bootstrap.ext/main/index.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"></head><body><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><div class="w-1024 rwd mx-auto my-4"><div ld-scope="" ld="kfg"><div ld-each="tab"><div ld-each="config"></div></div></div></div><script>var view;
+view = new ldview({
+  root: document.body,
+  init: {
+    kfg: function(arg$){
+      var node, kfg;
+      node = arg$.node;
+      console.log('here');
+      kfg = new konfig({
+        root: node,
+        view: 'default',
+        manager: new block.manager({
+          registry: function(arg$){
+            var name, version, path, type;
+            name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
+            if (type === 'block') {
+              return "/assets/block/" + name + "/" + version + "/" + (path || 'index.html');
+            }
+            return "/assets/lib/" + name + "/" + version + "/" + path;
+          }
+        }),
+        typemap: function(name){
+          return {
+            name: "@plotdb/konfig.widget.bootstrap",
+            version: "master",
+            path: name
+          };
+        },
+        meta: {
+          number: {
+            type: 'number'
+          }
+        }
+      });
+      return kfg.init().then(function(){});
+    }
+  }
+});
+view.render();</script></body></html>
