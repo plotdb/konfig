@@ -5,7 +5,9 @@ popup = do
   data: 'yes'
 
 @meta =
-  palette: name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
+  palette:
+    name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
+    palettes: ldpp.get('default')
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1
   boolean: name: \boolean, type: \boolean
   color: name: \color, type: \color, tab: 'color'
