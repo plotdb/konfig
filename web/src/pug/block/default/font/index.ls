@@ -4,8 +4,8 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {name: "choosefont.js", version: "main", path: "choosefont.min.js"}
-      {name: "choosefont.js", version: "main", path: "choosefont.min.css", global: true}
+      {name: "@plotdb/choose", version: "main", path: "index.min.js"}
+      {name: "@plotdb/choose", version: "main", path: "index.min.css", global: true}
     ]
   init: ({root, context, data, pubsub}) ->
     {ldview,ldcover,ChooseFont} = context
