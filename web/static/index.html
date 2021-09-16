@@ -87,14 +87,13 @@
     view: 'default',
     manager: new block.manager({
       registry: function(arg$){
-        var name, version;
-        name = arg$.name, version = arg$.version;
-        return "/block/" + name + "/" + version + "/index.html";
-      },
-      moduleRegistry: function(arg$){
-        var name, version, path;
-        name = arg$.name, version = arg$.version, path = arg$.path;
-        return "/assets/lib/" + name + "/" + version + "/" + path;
+        var name, version, path, type;
+        name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
+        if (type === 'block') {
+          return "/block/" + name + "/" + version + "/" + (path || 'index.html');
+        } else {
+          return "/assets/lib/" + name + "/" + version + "/" + (path || '');
+        }
       }
     })
     /*

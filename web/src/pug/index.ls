@@ -26,9 +26,9 @@ cfg = new konfig do
   meta: @meta
   view: \default
   manager: new block.manager do
-    registry: ({name,version}) -> "/block/#name/#version/index.html"
-    moduleRegistry: ({name,version,path}) ->
-      return "/assets/lib/#name/#version/#path"
+    registry: ({name,version,path,type}) ->
+      if type == \block => "/block/#name/#version/#{path or 'index.html'}"
+      else "/assets/lib/#name/#version/#{path or ''}"
   /*
   use-bundle: false
   manager: new block.manager registry: ({name, version, path}) ->
