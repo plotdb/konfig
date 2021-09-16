@@ -139,7 +139,11 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       return;
     }
     if (!this._view) {
-      this._view = konfig.views[this.view].apply(this);
+      if (typeof this.view === 'string') {
+        this._view = konfig.views[this.view].apply(this);
+      } else {
+        this._view = this.view;
+      }
     }
     return this._view.render();
   },
@@ -267,20 +271,25 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     clear == null && (clear = false);
     promises = [];
     traverse = function(meta, val, ctrl){
-      var ctrls, id, v, results$ = [];
+      var ctrls, tab, id, v, results$ = [];
       val == null && (val = {});
       ctrl == null && (ctrl = {});
       if (!(meta && typeof meta === 'object')) {
         return;
       }
       ctrls = meta.child ? meta.child : meta;
+      tab = meta.child ? meta.tab : null;
       if (!ctrls) {
         return;
       }
       for (id in ctrls) {
         v = ctrls[id];
         if (v.type) {
-          v.id = id;
+          import$((v.id = id, v), tab && !v.tab
+            ? {
+              tab: tab
+            }
+            : {});
           promises.push(this$._prepareCtrl(v, val, ctrl));
           continue;
         }
@@ -336,8 +345,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     if (clear) {
       this._tabobj = {};
     }
-    traverse = function(tab){
+    traverse = function(tab, parent){
       var list, id, v, i$, len$, item, results$ = [];
+      parent == null && (parent = {});
       if (!(tab && (Array.isArray(tab) || typeof tab === 'object'))) {
         return;
       }
@@ -359,12 +369,16 @@ konfig.prototype = import$(Object.create(Object.prototype), {
           if (!(v.order != null)) {
             v.order = i;
           }
-          return v.id = id, v;
+          return import$((v.id = id, v.parent = parent, v), !v.name
+            ? {
+              name: id
+            }
+            : {});
         });
       for (i$ = 0, len$ = list.length; i$ < len$; ++i$) {
         item = list[i$];
         this$._prepareTab(item);
-        results$.push(traverse(item.child));
+        results$.push(traverse(item.child, item));
       }
       return results$;
     };

@@ -57,7 +57,9 @@ konfig.prototype = Object.create(Object.prototype) <<< do
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   render: ->
     if !@view => return
-    if !@_view => @_view = konfig.views[@view].apply @
+    if !@_view =>
+      if typeof(@view) == \string => @_view = konfig.views[@view].apply @
+      else @_view = @view
     @_view.render!
 
   meta: ({meta, tab}) ->
@@ -115,10 +117,11 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     traverse = (meta, val = {}, ctrl = {}) ~>
       if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
+      tab = if meta.child => meta.tab else null
       if !ctrls => return
       for id,v of ctrls =>
         if v.type =>
-          v <<< {id}
+          v <<< {id} <<< (if tab and !v.tab => {tab} else {})
           promises.push @_prepare-ctrl(v, val, ctrl)
           continue
         traverse(v, val{}[id], ctrl{}[id])
@@ -139,15 +142,15 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if clear or !@_tablist => @_tablist = []
     if clear or !@_tab => @_tab = {}
     if clear => @_tabobj = {}
-    traverse = (tab) ~>
+    traverse = (tab, parent = {}) ~>
       if !(tab and (Array.isArray(tab) or typeof(tab) == \object)) => return
       list = if Array.isArray(tab) => tab
       else [{id,v} for id,v of tab].map ({id,v},i) ->
         if !(v.order?) => v.order = i
-        v <<< {id}
+        v <<< {id, parent} <<< if !(v.name) => {name: id} else {}
       for item in list =>
         @_prepare-tab item
-        traverse item.child
+        traverse item.child, item
     traverse @_tab
 
 if module? => module.exports = konfig

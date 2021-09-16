@@ -1,14 +1,79 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/bootstrap.ext/main/index.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"></head><body><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><div class="w-1024 rwd mx-auto my-4"><div ld-scope="" ld="kfg"><div ld-each="tab"><div ld-each="config"></div></div></div></div><script>var view;
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/bootstrap.ext/main/index.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"></head><body><div class="w-1024 rwd mx-auto my-4"><div ld-scope="" ld="kfg"><div class="p-4 border rounded shadow-sm my-4" template><div class="mb-4 font-weight-bold" ld="name"></div><div class="mb-4" ld-each="ctrl"></div><div class="mb-4" ld-each="tab"></div></div></div></div><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>var view;
 view = new ldview({
   root: document.body,
   init: {
     kfg: function(arg$){
-      var node, kfg;
+      var node, template, rview, opt, kfg;
       node = arg$.node;
-      console.log('here');
+      template = ld$.find('[template]', 0);
+      template.parentNode.removeChild(template);
+      template.removeAttribute('ld-scope');
+      rview = new ldview(import$(opt = {}, {
+        ctx: {
+          tab: {
+            id: 'default'
+          }
+        },
+        template: template,
+        root: node,
+        initRender: false,
+        text: {
+          name: function(arg$){
+            var ctx;
+            ctx = arg$.ctx;
+            return ctx.tab ? ctx.tab.id : '';
+          }
+        },
+        handler: {
+          tab: {
+            list: function(arg$){
+              var ctx, tabs;
+              ctx = arg$.ctx;
+              tabs = kfg._tablist.filter(function(it){
+                return !(it.tab.parent || ctx.tab) || (it.tab.parent && ctx.tab && it.tab.parent.id === ctx.tab.id);
+              });
+              tabs.sort(function(a, b){
+                return b.tab.order - a.tab.order;
+              });
+              return tabs;
+            },
+            key: function(it){
+              return it.key;
+            },
+            view: opt
+          },
+          ctrl: {
+            list: function(arg$){
+              var ctx, ret;
+              ctx = arg$.ctx;
+              ret = kfg._ctrllist.filter(function(it){
+                if (!ctx.tab) {
+                  return false;
+                }
+                return it.meta.tab === ctx.tab.id && !it.meta.hidden;
+              });
+              console.log(">", ret);
+              return ret;
+            },
+            key: function(it){
+              return it.key;
+            },
+            init: function(arg$){
+              var node, data;
+              node = arg$.node, data = arg$.data;
+              return node.appendChild(data.root);
+            },
+            handler: function(arg$){
+              var node, data;
+              node = arg$.node, data = arg$.data;
+              return data.itf.render();
+            }
+          }
+        }
+      }));
       kfg = new konfig({
         root: node,
-        view: 'default',
+        view: rview,
         manager: new block.manager({
           registry: function(arg$){
             var name, version, path, type;
@@ -27,8 +92,64 @@ view = new ldview({
           };
         },
         meta: {
-          number: {
-            type: 'number'
+          font: {
+            tab: 'font',
+            child: {
+              size: {
+                type: 'number'
+              },
+              family: {
+                type: 'choice',
+                values: ["sans serif", "serif", "monospace", "handwriting", "fantasy"]
+              }
+            }
+          },
+          flex: {
+            tab: 'flex',
+            child: {
+              wrap: {
+                type: 'choice',
+                values: ["wrap", "nowrap"]
+              },
+              direction: {
+                type: 'choice',
+                values: ["column", "row", "column-reverse", "row-reverse"]
+              }
+            }
+          },
+          axis: {
+            tab: 'axis',
+            child: {
+              padding: {
+                tab: 'padding',
+                child: {
+                  inner: {
+                    type: 'number'
+                  },
+                  outer: {
+                    type: 'number'
+                  }
+                }
+              },
+              direction: {
+                type: 'choice',
+                values: ['horizontal', 'vertical']
+              }
+            }
+          }
+        },
+        tab: {
+          'default': {
+            name: 'default',
+            child: {
+              flex: {},
+              font: {},
+              axis: {
+                child: {
+                  padding: {}
+                }
+              }
+            }
           }
         }
       });
@@ -36,4 +157,9 @@ view = new ldview({
     }
   }
 });
-view.render();</script></body></html>
+view.render();
+function import$(obj, src){
+  var own = {}.hasOwnProperty;
+  for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+  return obj;
+}</script></body></html>
