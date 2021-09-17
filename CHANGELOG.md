@@ -1,6 +1,6 @@
 # Change Logs
 
-## v1.0.0 (upcoming)
+## v1.0.0
 
  - rename `config` in view presets to `ctrl` to better align the spec naming 
  - update block dependency to `2.0.5`, which uses new registry syntax ( breaking change ).
