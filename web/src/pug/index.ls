@@ -22,7 +22,7 @@ popup = do
     data: (d) -> Promise.resolve!then ~> if d? => popup.data = d else popup.data
 
 cfg = new konfig do
-  root: document.body
+  root: ld$.find('[ld=kfg]', 0)
   meta: @meta
   view: \default
   manager: new block.manager do

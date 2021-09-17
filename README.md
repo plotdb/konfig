@@ -19,23 +19,26 @@ Config editor.
  - `tab`: tab object. see spec for more information.
  - `mgr`: block manager for retrieving blocks
    - use default mgr if omitted, which always throw an Error except for blocks available in bundle.
- - `view`: name of the view renderer to use. optional, default null. possible value:
-   - `simple`: simple list of control. sample DOM:
+ - `view`: view to use for rendering. option, default null. can be an object or string:
+   - object: based on duck typing, it can be anything with following method:
+     - `render()`: called when `@plotdb/konfig` renders tabs and ctrls.
+   - string: name of the bundled views to use. possible names:
+     - `simple`: simple list of control. sample DOM:
 
-     div(ld-each="ctrl")
-
-   - `default`: controls with tabs. sample DOM:
-
-     div(ld-each="tab")
-       div(ld="name")
        div(ld-each="ctrl")
 
-   - `recurse`: controls in recursive tabs. sample DOM:
+     - `default`: controls with tabs. sample DOM:
 
-     div(ld="template")
-       div(ld="name")
-       div(ld="ctrl")
-       div(ld="tab")
+       div(ld-each="tab")
+         div(ld="name")
+         div(ld-each="ctrl")
+
+     - `recurse`: controls in recursive tabs. sample DOM:
+
+       div(ld="template")
+         div(ld="name")
+         div(ld="ctrl")
+         div(ld="tab")
 
 
 ### API

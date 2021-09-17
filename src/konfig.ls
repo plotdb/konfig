@@ -55,14 +55,13 @@ konfig.views =
     template = ld$.find(@root, '[ld=template]', 0)
     template.parentNode.removeChild template
     template.removeAttribute \ld-scope
-    view = new ldview (opt = {}) <<< do
+    new ldview (opt = {}) <<< do
       ctx: {tab: id: null}
       template: template
       root: @root
       init-render: false
-      text: name: ({ctx}) -> return if ctx.tab => "#{ctx.tab.depth or 0} / #{ctx.tab.id}" else ''
+      text: name: ({ctx}) -> return if ctx.tab => "#{ctx.tab.name or ''}" else ''
       handler:
-        "@": ({node, ctx}) -> if !ctx.tab.id => node.classList.add \root
         tab:
           list: ({ctx}) ~>
             tabs = @_tablist.filter ->
@@ -81,7 +80,7 @@ konfig.views =
           key: -> it.key
           init: ({node, data}) ~> node.appendChild data.root
           handler: ({node, data}) ~>
-            node.style.flex = "1 0 #{16 * (data.meta.weight or 1)}%"
+            node.style.flex = "1 1 #{16 * (data.meta.weight or 1)}%"
             data.itf.render!
 
 

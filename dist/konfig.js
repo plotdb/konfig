@@ -116,11 +116,11 @@ konfig.views = {
     });
   },
   recurse: function(){
-    var template, view, opt, this$ = this;
+    var template, opt, this$ = this;
     template = ld$.find(this.root, '[ld=template]', 0);
     template.parentNode.removeChild(template);
     template.removeAttribute('ld-scope');
-    return view = new ldview(import$(opt = {}, {
+    return new ldview(import$(opt = {}, {
       ctx: {
         tab: {
           id: null
@@ -133,17 +133,10 @@ konfig.views = {
         name: function(arg$){
           var ctx;
           ctx = arg$.ctx;
-          return ctx.tab ? (ctx.tab.depth || 0) + " / " + ctx.tab.id : '';
+          return ctx.tab ? (ctx.tab.name || '') + "" : '';
         }
       },
       handler: {
-        "@": function(arg$){
-          var node, ctx;
-          node = arg$.node, ctx = arg$.ctx;
-          if (!ctx.tab.id) {
-            return node.classList.add('root');
-          }
-        },
         tab: {
           list: function(arg$){
             var ctx, tabs;
@@ -184,7 +177,7 @@ konfig.views = {
           handler: function(arg$){
             var node, data;
             node = arg$.node, data = arg$.data;
-            node.style.flex = "1 0 " + 16 * (data.meta.weight || 1) + "%";
+            node.style.flex = "1 1 " + 16 * (data.meta.weight || 1) + "%";
             return data.itf.render();
           }
         }
