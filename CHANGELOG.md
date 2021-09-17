@@ -7,6 +7,8 @@
  - support customized views
  - add nested (parent) information in tab
  - add recursive config panel example
+ - add depth info in tab
+ - reorg tab builder code for supporting both list and object type tab metadata.
 
 
 ## v0.0.18

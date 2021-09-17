@@ -345,8 +345,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     if (clear) {
       this._tabobj = {};
     }
-    traverse = function(tab, parent){
-      var list, id, v, i$, len$, item, results$ = [];
+    traverse = function(tab, depth, parent){
+      var list, id, v, i$, to$, order, item, results$ = [];
+      depth == null && (depth = 0);
       parent == null && (parent = {});
       if (!(tab && (Array.isArray(tab) || typeof tab === 'object'))) {
         return;
@@ -366,22 +367,27 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         }()).map(function(arg$, i){
           var id, v;
           id = arg$.id, v = arg$.v;
-          if (!(v.order != null)) {
-            v.order = i;
-          }
-          return import$((v.id = id, v.parent = parent, v), !v.name
-            ? {
-              name: id
-            }
-            : {});
+          return v.id = id, v;
         });
-      for (i$ = 0, len$ = list.length; i$ < len$; ++i$) {
-        item = list[i$];
+      for (i$ = 0, to$ = list.length; i$ < to$; ++i$) {
+        order = i$;
+        item = list[order];
+        import$((item.depth = depth, item.parent = parent, item), !v.name
+          ? {
+            name: item.id
+          }.a
+          : {});
+        import$(item, !(v.order != null)
+          ? {
+            order: order
+          }
+          : {});
         this$._prepareTab(item);
-        results$.push(traverse(item.child, item));
+        results$.push(traverse(item.child, (item.depth || 0) + 1, item));
       }
       return results$;
     };
+    console.log(this._tab);
     return traverse(this._tab);
   }
 });

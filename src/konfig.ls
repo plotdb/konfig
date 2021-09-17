@@ -142,15 +142,16 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if clear or !@_tablist => @_tablist = []
     if clear or !@_tab => @_tab = {}
     if clear => @_tabobj = {}
-    traverse = (tab, parent = {}) ~>
+    traverse = (tab, depth = 0, parent = {}) ~>
       if !(tab and (Array.isArray(tab) or typeof(tab) == \object)) => return
       list = if Array.isArray(tab) => tab
-      else [{id,v} for id,v of tab].map ({id,v},i) ->
-        if !(v.order?) => v.order = i
-        v <<< {id, parent} <<< if !(v.name) => {name: id} else {}
-      for item in list =>
+      else [{id,v} for id,v of tab].map ({id,v},i) -> v <<< {id}
+      for order from 0 til list.length =>
+        item = list[order]
+        item <<< {depth, parent} <<< (if !(v.name) => {name: item.id}a else {})
+        item <<< if !(v.order?) => {order} else {}
         @_prepare-tab item
-        traverse item.child, item
+        traverse item.child, ((item.depth or 0) + 1), item
     traverse @_tab
 
 if module? => module.exports = konfig

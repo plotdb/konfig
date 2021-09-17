@@ -6,16 +6,17 @@ view = new ldview do
       template.parentNode.removeChild template
       template.removeAttribute \ld-scope
       rview = new ldview (opt = {}) <<< do
-        ctx: {tab: id: \default}
+        ctx: {tab: id: null}
         template: template
         root: node
         init-render: false
-        text: name: ({ctx}) -> return if ctx.tab => ctx.tab.id else ''
+        text: name: ({ctx}) -> return if ctx.tab => "#{ctx.tab.depth or 0} / #{ctx.tab.id}" else ''
         handler:
+          "@": ({node, ctx}) -> if !ctx.tab.id => node.classList.add \root
           tab:
             list: ({ctx}) ~>
               tabs = kfg._tablist.filter ->
-                !(it.tab.parent or ctx.tab) or
+                !(it.tab.parent.id or ctx.tab.id) or
                 (it.tab.parent and ctx.tab and it.tab.parent.id == ctx.tab.id)
               tabs.sort (a,b) -> b.tab.order - a.tab.order
               tabs
@@ -72,7 +73,7 @@ view = new ldview do
             child: 
               flex: {}
               font: {}
-              axis: {child: padding: {}}
+          axis: {child: padding: {}}
 
 
       kfg.init!

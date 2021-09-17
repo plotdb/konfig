@@ -1,8 +1,16 @@
 extends /base.pug
+block head
+  style(type="text/css"): :stylus
+    .root > div
+      border: none!important
+      box-shadow: none!important
+      padding: 0!important
+      & > .name
+        display: none
 block body
   .w-1024.rwd.mx-auto.my-4
     +scope()(ld="kfg"): .p-4.border.rounded.shadow-sm.my-4(template)
-      .mb-4.font-weight-bold(ld="name")
+      .name.mb-4.font-weight-bold(ld="name")
       .d-flex.flex-wrap(style="gap:1.5em")
         .mb-2(ld-each="ctrl")
       .mb-4(ld-each="tab")

@@ -1,4 +1,12 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/bootstrap.ext/main/index.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"></head><body><div class="w-1024 rwd mx-auto my-4"><div ld-scope="" ld="kfg"><div class="p-4 border rounded shadow-sm my-4" template><div class="mb-4 font-weight-bold" ld="name"></div><div class="d-flex flex-wrap" style="gap:1.5em"><div class="mb-2" ld-each="ctrl"></div></div><div class="mb-4" ld-each="tab"></div></div></div></div><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>var view;
+<!DOCTYPE html><html><head><link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/main/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/@loadingio/bootstrap.ext/main/index.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldcover/main/ldcv.min.css"><link rel="stylesheet" type="text/css" href="/assets/lib/ldiconfont/main/ldif.min.css"><style type="text/css">.root > div {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.root > div > .name {
+  display: none;
+}
+</style></head><body><div class="w-1024 rwd mx-auto my-4"><div ld-scope="" ld="kfg"><div class="p-4 border rounded shadow-sm my-4" template><div class="name mb-4 font-weight-bold" ld="name"></div><div class="d-flex flex-wrap" style="gap:1.5em"><div class="mb-2" ld-each="ctrl"></div></div><div class="mb-4" ld-each="tab"></div></div></div></div><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/ldcv.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>var view;
 view = new ldview({
   root: document.body,
   init: {
@@ -11,7 +19,7 @@ view = new ldview({
       rview = new ldview(import$(opt = {}, {
         ctx: {
           tab: {
-            id: 'default'
+            id: null
           }
         },
         template: template,
@@ -21,16 +29,23 @@ view = new ldview({
           name: function(arg$){
             var ctx;
             ctx = arg$.ctx;
-            return ctx.tab ? ctx.tab.id : '';
+            return ctx.tab ? (ctx.tab.depth || 0) + " / " + ctx.tab.id : '';
           }
         },
         handler: {
+          "@": function(arg$){
+            var node, ctx;
+            node = arg$.node, ctx = arg$.ctx;
+            if (!ctx.tab.id) {
+              return node.classList.add('root');
+            }
+          },
           tab: {
             list: function(arg$){
               var ctx, tabs;
               ctx = arg$.ctx;
               tabs = kfg._tablist.filter(function(it){
-                return !(it.tab.parent || ctx.tab) || (it.tab.parent && ctx.tab && it.tab.parent.id === ctx.tab.id);
+                return !(it.tab.parent.id || ctx.tab.id) || (it.tab.parent && ctx.tab && it.tab.parent.id === ctx.tab.id);
               });
               tabs.sort(function(a, b){
                 return b.tab.order - a.tab.order;
@@ -156,12 +171,12 @@ view = new ldview({
             name: 'default',
             child: {
               flex: {},
-              font: {},
-              axis: {
-                child: {
-                  padding: {}
-                }
-              }
+              font: {}
+            }
+          },
+          axis: {
+            child: {
+              padding: {}
             }
           }
         }
