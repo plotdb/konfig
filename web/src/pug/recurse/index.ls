@@ -26,11 +26,11 @@ view = new ldview do
               ret = kfg._ctrllist.filter ->
                 if !ctx.tab => return false
                 it.meta.tab == ctx.tab.id and !it.meta.hidden
-              console.log ">", ret
               return ret
             key: -> it.key
             init: ({node, data}) ~> node.appendChild data.root
             handler: ({node, data}) ~>
+              node.style.flex = "1 0 #{16 * (data.meta.weight or 1)}%"
               data.itf.render!
 
 
@@ -59,8 +59,12 @@ view = new ldview do
               padding:
                 tab: \padding
                 child: 
-                  inner: type: \number
+                  inner: type: \number, weight: 2
                   outer: type: \number
+                  top: type: \number
+                  bottom: type: \number
+                  letter: type: \number
+                  caption: type: \number
               direction: type: \choice, values: <[horizontal vertical]>
         tab:
           default:

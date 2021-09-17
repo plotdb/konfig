@@ -22,7 +22,10 @@ A control can be defined by:
 
 This is an object with following fields:
 
- - `name`: string, verbose name for this control. use `id` if omitted
+ - `name`: verbose name for this control. use `id` if omitted
+ - `desc`: detail description of this field. optional
+ - `hint`: hint of this field. optional. kinda secondary description, compared to `desc`.
+ - `weight`: relative size of this ctrl. hint for rendering. default 1. optional
  - `id`: string, id for this control. optional, may determined externally.
  - `type`: string, type of this control. mapped to a specific block internally.
  - `block`: explicit definition of block. overwrite `type` if provided. this is an object with following members:
@@ -33,6 +36,8 @@ This is an object with following fields:
  - `order`: number for order of this control in specific tab. optional. random order if omitted.
    - lower order mean higher priority.
  - `hidden`: default false. true to disable this widget.
+
+`name`, `desc` and `hint` are up to view about rendering.
 
 Specific control can extend this interface but to prevent future conflict, implementation should *avoid using* words starting with `_`.
 
@@ -189,8 +194,12 @@ where a tab object contains following members:
 
  - `id`: id of this tab, used to be referred by controls with `tab` field.
  - `name`: verbose name of a tab.
+ - `desc`: detail description of this field. optional
+ - `hint`: hint of this field. optional. kinda secondary description, compared to `desc`.
  - `child`: tab list as subtab of this tab.
  - `order`: order of this tab in its parent. default the order of this tab in its parent's child list.
+
+`name`, `desc` and `hint` are up to view about rendering.
 
 Providing a `tabs` object and a `meta` object, one can manually construct an edit panel, or use `@plotdb/konfig` to construct one.
 
