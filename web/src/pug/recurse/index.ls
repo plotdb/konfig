@@ -2,6 +2,7 @@ view = new ldview do
   root: document.body
   init:
     kfg: ({node}) ->
+      /*
       template = ld$.find('[template]', 0)
       template.parentNode.removeChild template
       template.removeAttribute \ld-scope
@@ -33,11 +34,11 @@ view = new ldview do
             handler: ({node, data}) ~>
               node.style.flex = "1 0 #{16 * (data.meta.weight or 1)}%"
               data.itf.render!
-
+      */
 
       kfg = new konfig do
         root: node
-        view: rview
+        view: 'recurse'
         manager: new block.manager do
           registry: ({name, version, path, type}) ->
             if type == \block => return "/assets/block/#name/#version/#{path or 'index.html'}"

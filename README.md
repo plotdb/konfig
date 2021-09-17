@@ -21,11 +21,21 @@ Config editor.
    - use default mgr if omitted, which always throw an Error except for blocks available in bundle.
  - `view`: name of the view renderer to use. optional, default null. possible value:
    - `simple`: simple list of control. sample DOM:
-     div(ld-each="config")
+
+     div(ld-each="ctrl")
+
    - `default`: controls with tabs. sample DOM:
+
      div(ld-each="tab")
        div(ld="name")
-       div(ld-each="config")
+       div(ld-each="ctrl")
+
+   - `recurse`: controls in recursive tabs. sample DOM:
+
+     div(ld="template")
+       div(ld="name")
+       div(ld="ctrl")
+       div(ld="tab")
 
 
 ### API

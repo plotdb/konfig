@@ -114,6 +114,82 @@ konfig.views = {
         }
       }
     });
+  },
+  recurse: function(){
+    var template, view, opt, this$ = this;
+    template = ld$.find(this.root, '[ld=template]', 0);
+    template.parentNode.removeChild(template);
+    template.removeAttribute('ld-scope');
+    return view = new ldview(import$(opt = {}, {
+      ctx: {
+        tab: {
+          id: null
+        }
+      },
+      template: template,
+      root: this.root,
+      initRender: false,
+      text: {
+        name: function(arg$){
+          var ctx;
+          ctx = arg$.ctx;
+          return ctx.tab ? (ctx.tab.depth || 0) + " / " + ctx.tab.id : '';
+        }
+      },
+      handler: {
+        "@": function(arg$){
+          var node, ctx;
+          node = arg$.node, ctx = arg$.ctx;
+          if (!ctx.tab.id) {
+            return node.classList.add('root');
+          }
+        },
+        tab: {
+          list: function(arg$){
+            var ctx, tabs;
+            ctx = arg$.ctx;
+            tabs = this$._tablist.filter(function(it){
+              return !(it.tab.parent.id || ctx.tab.id) || (it.tab.parent && ctx.tab && it.tab.parent.id === ctx.tab.id);
+            });
+            tabs.sort(function(a, b){
+              return b.tab.order - a.tab.order;
+            });
+            return tabs;
+          },
+          key: function(it){
+            return it.key;
+          },
+          view: opt
+        },
+        ctrl: {
+          list: function(arg$){
+            var ctx, ret;
+            ctx = arg$.ctx;
+            ret = this$._ctrllist.filter(function(it){
+              if (!ctx.tab) {
+                return false;
+              }
+              return it.meta.tab === ctx.tab.id && !it.meta.hidden;
+            });
+            return ret;
+          },
+          key: function(it){
+            return it.key;
+          },
+          init: function(arg$){
+            var node, data;
+            node = arg$.node, data = arg$.data;
+            return node.appendChild(data.root);
+          },
+          handler: function(arg$){
+            var node, data;
+            node = arg$.node, data = arg$.data;
+            node.style.flex = "1 0 " + 16 * (data.meta.weight || 1) + "%";
+            return data.itf.render();
+          }
+        }
+      }
+    }));
   }
 };
 konfig.prototype = import$(Object.create(Object.prototype), {
@@ -387,7 +463,6 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
       return results$;
     };
-    console.log(this._tab);
     return traverse(this._tab);
   }
 });

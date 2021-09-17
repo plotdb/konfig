@@ -9,6 +9,8 @@
  - add recursive config panel example
  - add depth info in tab
  - reorg tab builder code for supporting both list and object type tab metadata.
+ - add recurse view
+ - update README for recursive view and fix some incorrect information
 
 
 ## v0.0.18

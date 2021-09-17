@@ -9,7 +9,7 @@ block head
         display: none
 block body
   .w-1024.rwd.mx-auto.my-4
-    +scope()(ld="kfg"): .p-4.border.rounded.shadow-sm.my-4(template)
+    +scope()(ld="kfg"): .p-4.border.rounded.shadow-sm.my-4(ld="template")
       .name.mb-4.font-weight-bold(ld="name")
       .d-flex.flex-wrap(style="gap:1.5em")
         .mb-2(ld-each="ctrl")
