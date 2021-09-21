@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.0.1
+
+ - fix typo
+ - add missing attributes in implicit tab object
+
+
 ## v1.0.0
 
  - rename `config` in view presets to `ctrl` to better align the spec naming 

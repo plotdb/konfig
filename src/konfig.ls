@@ -127,7 +127,9 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then (b) ~>
         root = document.createElement(\div)
         if !(meta.tab?) => meta.tab = 'default'
-        if !@_tabobj[meta.tab] => @_prepare-tab {id: meta.tab}
+        if !@_tabobj[meta.tab] =>
+          @_prepare-tab {id: meta.tab, name: meta.tab, depth: 0, parent: {}}
+
         @_ctrllist.push(ctrl[id] = {block: b, meta, root, key: Math.random!toString(36).substring(2)})
         b.attach {root}
           .then -> b.interface!
@@ -181,7 +183,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       else [{id,v} for id,v of tab].map ({id,v},i) -> v <<< {id}
       for order from 0 til list.length =>
         item = list[order]
-        item <<< {depth, parent} <<< (if !(v.name) => {name: item.id}a else {})
+        item <<< {depth, parent} <<< (if !(v.name) => {name: item.id} else {})
         item <<< if !(v.order?) => {order} else {}
         @_prepare-tab item
         traverse item.child, ((item.depth or 0) + 1), item

@@ -299,7 +299,10 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
       if (!this$._tabobj[meta.tab]) {
         this$._prepareTab({
-          id: meta.tab
+          id: meta.tab,
+          name: meta.tab,
+          depth: 0,
+          parent: {}
         });
       }
       this$._ctrllist.push(ctrl[id] = {
@@ -444,7 +447,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         import$((item.depth = depth, item.parent = parent, item), !v.name
           ? {
             name: item.id
-          }.a
+          }
           : {});
         import$(item, !(v.order != null)
           ? {
