@@ -15,6 +15,7 @@ Config editor.
  - `root`: root node or CSS selector for root node.
    - root node is used to place root tab for this config.
  - `useBundle`: true if use bundle blocks, if availale. default true.
+ - `debounce`: true to debounce updating. default true.
  - `meta`: meta object. see spec for more information.
  - `tab`: tab object. see spec for more information.
  - `mgr`: block manager for retrieving blocks

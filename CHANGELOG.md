@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.0.2
+
+ - enable debouncing switch
+
+
 ## v1.0.1
 
  - fix typo

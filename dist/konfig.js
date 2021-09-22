@@ -32,9 +32,17 @@ konfig = function(opt){
   this.init = proxise.once(function(){
     return this$._init();
   });
-  this.update = debounce(150, function(){
+  this._updateDebounced = debounce(150, function(){
     return this$._update();
   });
+  this.doDebounce = !(opt.debounce != null) || opt.debounce;
+  this.update = function(){
+    if (this$.doDebounce) {
+      return this$._updateDebounced();
+    } else {
+      return this$._update();
+    }
+  };
   return this;
 };
 konfig.views = {

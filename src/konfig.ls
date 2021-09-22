@@ -18,7 +18,11 @@ konfig = (opt={}) ->
     @mgr = opt.manager
     @mgr.chain @mgr-chain
   @init = proxise.once ~> @_init!
-  @update = debounce 150, ~> @_update!
+  @_update-debounced = debounce 150, ~> @_update!
+  @do-debounce = !(opt.debounce?) or opt.debounce
+  @update = ~>
+    if @do-debounce => @_update-debounced!
+    else @_update!
   @
 
 konfig.views =
