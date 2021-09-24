@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.0.3
+
+ - upgrade dependencies
+
+
 ## v1.0.2
 
  - enable debouncing switch
