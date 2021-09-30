@@ -16,7 +16,7 @@ block-factory =
     view = new ldview do
       root: root
       init:
-        ldcv: ({node}) -> obj.ldcv = new ldCover root: node
+        ldcv: ({node}) -> obj.ldcv = new ldcover root: node
         inner: ({node}) ->
           obj.cf = new ChooseFont do
             root: node

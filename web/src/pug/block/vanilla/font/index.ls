@@ -6,8 +6,6 @@ block-factory =
     dependencies: [
       {url: "/assets/lib/choosefont.js/main/choosefont.min.js"}
       {url: "/assets/lib/choosefont.js/main/choosefont.min.css", global: true}
-      {url: "/assets/lib/ldcover/main/ldcv.min.js"}
-      {url: "/assets/lib/ldcover/main/ldcv.min.css"}
     ]
   init: ({root, context, data, pubsub}) ->
     {ldview,ldcover,ChooseFont} = context
@@ -18,7 +16,7 @@ block-factory =
     view = new ldview do
       root: root
       init:
-        ldcv: ({node}) -> obj.ldcv = new ldCover root: node
+        ldcv: ({node}) -> obj.ldcv = new ldcover root: node
         inner: ({node}) ->
           obj.cf = new ChooseFont do
             root: node

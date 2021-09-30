@@ -29,10 +29,6 @@
         }, {
           url: "/assets/lib/choosefont.js/main/choosefont.min.css",
           global: true
-        }, {
-          url: "/assets/lib/ldcover/main/ldcv.min.js"
-        }, {
-          url: "/assets/lib/ldcover/main/ldcv.min.css"
         }
       ]
     },
@@ -57,7 +53,7 @@
           ldcv: function(arg$){
             var node;
             node = arg$.node;
-            return obj.ldcv = new ldCover({
+            return obj.ldcv = new ldcover({
               root: node
             });
           },

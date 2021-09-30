@@ -4,12 +4,10 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/ldcover/main/ldcv.min.js"}
-      {url: "/assets/lib/ldcover/main/ldcv.min.css"}
     ]
   init: ({root, context, data, pubsub}) ->
     obj = {data: data.default or ''}
-    {ldview, ldCover} = context
+    {ldview, ldcover} = context
     pubsub.fire \init, do
       get: -> obj.data or ''
       set: ->
@@ -17,7 +15,7 @@ block-factory =
         view.render!
     view = new ldview do
       root: root
-      init: ldcv: ({node}) -> obj.ldcv = new ldCover root: node
+      init: ldcv: ({node}) -> obj.ldcv = new ldcover root: node
       handler:
         panel: ({node}) ->
         input: ({node}) -> node.value = obj.data or ''

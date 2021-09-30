@@ -6,7 +6,7 @@ block-factory =
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     obj = {data: data.default or ''}
-    {ldview, ldCover} = context
+    {ldview, ldcover} = context
     pubsub.fire \init, do
       get: -> obj.data or ''
       set: ->
@@ -14,7 +14,7 @@ block-factory =
         view.render!
     view = new ldview do
       root: root
-      init: ldcv: ({node}) -> obj.ldcv = new ldCover root: node
+      init: ldcv: ({node}) -> obj.ldcv = new ldcover root: node
       handler:
         panel: ({node}) ->
         input: ({node}) -> node.value = obj.data or ''

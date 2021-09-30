@@ -12,12 +12,12 @@
       dependencies: []
     },
     init: function(arg$){
-      var root, context, data, pubsub, obj, ldview, ldCover, view;
+      var root, context, data, pubsub, obj, ldview, ldcover, view;
       root = arg$.root, context = arg$.context, data = arg$.data, pubsub = arg$.pubsub;
       obj = {
         data: data['default'] || ''
       };
-      ldview = context.ldview, ldCover = context.ldCover;
+      ldview = context.ldview, ldcover = context.ldcover;
       pubsub.fire('init', {
         get: function(){
           return obj.data || '';
@@ -33,7 +33,7 @@
           ldcv: function(arg$){
             var node;
             node = arg$.node;
-            return obj.ldcv = new ldCover({
+            return obj.ldcv = new ldcover({
               root: node
             });
           }

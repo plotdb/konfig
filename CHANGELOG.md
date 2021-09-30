@@ -1,5 +1,12 @@
 # Change Logs
 
+## v1.1.0
+
+ - upgrade dependencies.
+ - change ldCover to ldcover due to ldcover upgrade.
+ - remove unnecessary dependencies and fix ldcover module path.
+
+
 ## v1.0.3
 
  - upgrade dependencies

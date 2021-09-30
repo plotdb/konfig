@@ -5,8 +5,8 @@ block-factory =
     dependencies: [
       {name: "ldview", version: "main", path: "index.js"}
       {name: "@loadingio/debounce.js", version: "main", path: "debounce.min.js"}
-      {name: "ldcover", version: "main", path: "ldcv.min.js"}
-      {name: "ldcover", version: "main", path: "ldcv.min.css"}
+      {name: "ldcover", version: "main", path: "index.min.js"}
+      {name: "ldcover", version: "main", path: "index.min.css"}
     ]
   init: ({root, context, data, pubsub, t}) ->
     @data = {}
