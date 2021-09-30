@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.2.0
+
+ - make all bootstrap config size relative to container font size
+ - add config for panel font size to see the relative size effect
+
+
 ## v1.1.0
 
  - upgrade dependencies.
