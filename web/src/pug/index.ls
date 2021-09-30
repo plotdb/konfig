@@ -4,6 +4,11 @@ popup = do
   ldcv: new ldcover root: ld$.find('.ldcv', 0)
   data: 'yes'
 
+@manager = new block.manager do
+  registry: ({name,version,path,type}) ->
+    if type == \block => "/block/#name/#version/#{path or 'index.html'}"
+    else "/assets/lib/#name/#version/#{path or ''}"
+
 @meta =
   palette:
     name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
@@ -23,12 +28,11 @@ popup = do
 
 cfg = new konfig do
   root: ld$.find('[ld=kfg]', 0)
+  debounce: false
   meta: @meta
   view: \default
-  manager: new block.manager do
-    registry: ({name,version,path,type}) ->
-      if type == \block => "/block/#name/#version/#{path or 'index.html'}"
-      else "/assets/lib/#name/#version/#{path or ''}"
+  manager: @manager
+
   /*
   use-bundle: false
   manager: new block.manager registry: ({name, version, path}) ->
@@ -36,19 +40,26 @@ cfg = new konfig do
     return if !ret => "/block/#name/#version/index.html"
     else "/block/#{ret.1}/#path/index.html"
   */
-  typemap: (name) ->
-    set = if name == \number => \bootstrap else \default
-    set = \bootstrap
-    {name: "@plotdb/konfig.widget.#set", version: "master", path: name}
+  typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
 
 cfg.on \change, ~> @update it
-cfg.init!then -> console.log '@plotdb/konfig inited.'
+cfg.init!then -> console.log '@plotdb/konfig cfg inited.'
+
+cfg-alt = new konfig do
+  root: ld$.find('[ld=kfg-alt]', 0)
+  debounce: false
+  meta: size: type: \number, min: 10, max: 32, step: 1, from: 10
+  view: \default
+  manager: @manager
+  typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
+
+cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size}px"
+cfg-alt.init!then -> console.log "@plotdb/konfig cfg-alt inited."
 
 sample = ld$.find('#sample',0)
 
 @val = {}
 @update = ~>
-  console.log it
   @val = it
   sample.innerText = (@val.text or '') + '\n' + (@val.paragraph or '')
   sample.style <<<

@@ -7,12 +7,16 @@ block head
       flex: 1 1 200px
       height: 3em
 block body      
-  .w-1024.rwd.mx-auto.my-4.d-flex.flex-wrap(ld="kfg")
-    .tab.mx-2.p-2.border.rounded.shadow-sm(ld-each="tab",style="min-width:15em")
-      .text-center.font-weight-bold.p-1.mb-4.bg-secondary.text-light.rounded(ld="name")
-      .config.mb-4(ld-each="ctrl")
-  .w-1024.rwd.mx-auto.p-3
-    #sample.rounded.shadow-sm.border.p-4.my-4
+  .w-1024.rwd.mx-auto.my-4.d-flex.flex-column(style="gap:1em")
+    .border.rounded.shadow-sm.p-4(ld="kfg-alt")
+      div(ld-each="tab"): div(ld-each="ctrl")
+    .d-flex.flex-grow-1(style="gap:1em")
+      .d-flex.flex-wrap(ld="kfg",style="gap:1em")
+        .tab.p-2.border.rounded.shadow-sm(ld-each="tab",style="min-width:15em")
+          .text-center.font-weight-bold.p-1.mb-4.bg-secondary.text-light.rounded(ld="name")
+          .config.mb-4(ld-each="ctrl")
+      .flex-grow-1
+        #sample.rounded.shadow-sm.border.p-4.w-100.h-100
   .ldcv.default-size: .base: .inner
     h5 Dummy choices in a dummy popup
     .d-flex.justify-content-around

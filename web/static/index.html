@@ -3,16 +3,27 @@
   flex: 1 1 200px;
   height: 3em;
 }
-</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex flex-wrap" ld="kfg"><div class="tab mx-2 p-2 border rounded shadow-sm" ld-each="tab" style="min-width:15em"><div class="text-center font-weight-bold p-1 mb-4 bg-secondary text-light rounded" ld="name"></div><div class="config mb-4" ld-each="ctrl"></div></div></div><div class="w-1024 rwd mx-auto p-3"><div class="rounded shadow-sm border p-4 my-4" id="sample"></div></div><div class="ldcv default-size"><div class="base"><div class="inner"><h5>Dummy choices in a dummy popup</h5><div class="d-flex justify-content-around"><div class="btn btn-outline-secondary" data-ldcv-set="yes">Yes</div><div class="btn btn-outline-secondary" data-ldcv-set="no">No</div></div></div></div></div><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>(function(it){
+</style></head><body><div class="w-1024 rwd mx-auto my-4 d-flex flex-column" style="gap:1em"><div class="border rounded shadow-sm p-4" ld="kfg-alt"><div ld-each="tab"><div ld-each="ctrl"></div></div></div><div class="d-flex flex-grow-1" style="gap:1em"><div class="d-flex flex-wrap" ld="kfg" style="gap:1em"><div class="tab p-2 border rounded shadow-sm" ld-each="tab" style="min-width:15em"><div class="text-center font-weight-bold p-1 mb-4 bg-secondary text-light rounded" ld="name"></div><div class="config mb-4" ld-each="ctrl"></div></div></div><div class="flex-grow-1"><div class="rounded shadow-sm border p-4 w-100 h-100" id="sample"></div></div></div></div><div class="ldcv default-size"><div class="base"><div class="inner"><h5>Dummy choices in a dummy popup</h5><div class="d-flex justify-content-around"><div class="btn btn-outline-secondary" data-ldcv-set="yes">Yes</div><div class="btn btn-outline-secondary" data-ldcv-set="no">No</div></div></div></div></div><script type="text/javascript" src="/assets/lib/bootstrap.native/main/bootstrap-native-v4.min.js"></script><script type="text/javascript" src="/assets/lib/ldcolor/main/ldcolor.min.js"></script><script type="text/javascript" src="/assets/lib/ldcover/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/ldquery/main/ldq.min.js"></script><script type="text/javascript" src="/assets/lib/@loadingio/debounce.js/main/debounce.min.js"></script><script type="text/javascript" src="/assets/lib/proxise/main/proxise.min.js"></script><script type="text/javascript" src="/assets/lib/ldview/main/index.min.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/rescope/main/rescope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/csscope/main/csscope.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/datadom/main/datadom.js"></script><script type="text/javascript" src="/assets/lib/ldpalettepicker/main/ldpp.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/block/main/block.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.js"></script><script type="text/javascript" src="/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js"></script><script>(function(it){
   return it.apply({});
 })(function(){
-  var popup, cfg, sample, this$ = this;
+  var popup, cfg, cfgAlt, sample, this$ = this;
   popup = {
     ldcv: new ldcover({
       root: ld$.find('.ldcv', 0)
     }),
     data: 'yes'
   };
+  this.manager = new block.manager({
+    registry: function(arg$){
+      var name, version, path, type;
+      name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
+      if (type === 'block') {
+        return "/block/" + name + "/" + version + "/" + (path || 'index.html');
+      } else {
+        return "/assets/lib/" + name + "/" + version + "/" + (path || '');
+      }
+    }
+  });
   this.meta = {
     palette: {
       name: 'palette',
@@ -83,19 +94,10 @@
   };
   cfg = new konfig({
     root: ld$.find('[ld=kfg]', 0),
+    debounce: false,
     meta: this.meta,
     view: 'default',
-    manager: new block.manager({
-      registry: function(arg$){
-        var name, version, path, type;
-        name = arg$.name, version = arg$.version, path = arg$.path, type = arg$.type;
-        if (type === 'block') {
-          return "/block/" + name + "/" + version + "/" + (path || 'index.html');
-        } else {
-          return "/assets/lib/" + name + "/" + version + "/" + (path || '');
-        }
-      }
-    })
+    manager: this.manager
     /*
     use-bundle: false
     manager: new block.manager registry: ({name, version, path}) ->
@@ -104,11 +106,8 @@
       else "/block/#{ret.1}/#path/index.html"
     */,
     typemap: function(name){
-      var set;
-      set = name === 'number' ? 'bootstrap' : 'default';
-      set = 'bootstrap';
       return {
-        name: "@plotdb/konfig.widget." + set,
+        name: "@plotdb/konfig.widget.bootstrap",
         version: "master",
         path: name
       };
@@ -118,13 +117,40 @@
     return this$.update(it);
   });
   cfg.init().then(function(){
-    return console.log('@plotdb/konfig inited.');
+    return console.log('@plotdb/konfig cfg inited.');
+  });
+  cfgAlt = new konfig({
+    root: ld$.find('[ld=kfg-alt]', 0),
+    debounce: false,
+    meta: {
+      size: {
+        type: 'number',
+        min: 10,
+        max: 32,
+        step: 1,
+        from: 10
+      }
+    },
+    view: 'default',
+    manager: this.manager,
+    typemap: function(name){
+      return {
+        name: "@plotdb/konfig.widget.bootstrap",
+        version: "master",
+        path: name
+      };
+    }
+  });
+  cfgAlt.on('change', function(it){
+    return ld$.find('[ld=kfg]', 0).style.fontSize = it.size + "px";
+  });
+  cfgAlt.init().then(function(){
+    return console.log("@plotdb/konfig cfg-alt inited.");
   });
   sample = ld$.find('#sample', 0);
   this.val = {};
   return this.update = function(it){
     var ref$;
-    console.log(it);
     this$.val = it;
     sample.innerText = (this$.val.text || '') + '\n' + (this$.val.paragraph || '');
     return ref$ = sample.style, ref$.color = ldcolor.web(this$.val.color || '#000'), ref$.fontFamily = this$.val.font || 'sans serif', ref$.fontSize = this$.val.number + "px", ref$.whiteSpace = 'pre-line', ref$.textAlign = this$.val.choice || 'left', ref$;
