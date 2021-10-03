@@ -1,6 +1,6 @@
 # Change Logs
 
-## v1.2.1 (upcoming)
+## v1.2.1
 
  - support default value in boolean ( default false )
  - support default value in color ( default black )
