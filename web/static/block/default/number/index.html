@@ -37,9 +37,15 @@
           return obj.ldrs.update();
         }
       });
-      if (data['default']) {
-        console.warn("[@plotdb/konfig] number ctrl uses `from` and `to` for default value, instead of `default`.\nplease update your config to comply with it.");
-        data.from = data['default'];
+      if (data.from != null) {
+        console.warn("[@plotdb/konfig] ctrl should use `default` for default value.\nplease update your config to comply with it.");
+      }
+      if (data['default'] != null) {
+        if (typeof data['default'] === 'object') {
+          import$(data, data['default']);
+        } else if (typeof data['default'] === 'number') {
+          data.from = data['default'];
+        }
       }
       return view = new ldview({
         root: root,

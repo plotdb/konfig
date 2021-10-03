@@ -14,11 +14,13 @@ block-factory =
       get: -> obj.ldrs.get!
       set: -> obj.ldrs.set it
       render: -> obj.ldrs.update!
-    if data.default =>
+    if data.from? =>
       console.warn """
-      [@plotdb/konfig] number ctrl uses `from` and `to` for default value, instead of `default`.
+      [@plotdb/konfig] ctrl should use `default` for default value.
       please update your config to comply with it."""
-      data.from = data.default
+    if data.default? =>
+      if typeof(data.default) == \object => data <<< data.default
+      else if typeof(data.default) == \number => data.from = data.default
     view = new ldview do
       root: root
       action: click:

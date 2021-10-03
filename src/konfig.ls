@@ -17,7 +17,7 @@ konfig = (opt={}) ->
   if opt.manager =>
     @mgr = opt.manager
     @mgr.chain @mgr-chain
-  @init = proxise.once ~> @_init!
+  @init = proxise.once (~> @_init!), (~> @_val)
   @_update-debounced = debounce 150, ~> @_update!
   @do-debounce = !(opt.debounce?) or opt.debounce
   @update = ~>
@@ -113,6 +113,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then ~> if @use-bundle => (konfig.bundle or []) else []
       .then (data) ~> @mgr.set data.map (d) ~> new block.class(d <<< {manager: @mgr})
       .then ~> @build!
+      .then ~> return @_val
 
   _prepare-tab: (tab) ->
     if @_tabobj[tab.id] => return @_tabobj[tab.id] <<< {tab}
@@ -140,7 +141,6 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           .then -> return ctrl[id].itf = it
       .then (item) ~>
         val[id] = v = item.get!
-        @update!
         item.on \change, ~>
           val[id] = it
           @update!
@@ -150,6 +150,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     @_build-tab clear
     @_build-ctrl clear
       .then ~> @render!
+      .then ~> @update!
 
   _build-ctrl: (clear = false) ->
     promises = []

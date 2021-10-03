@@ -6,7 +6,11 @@
  - support default value in color ( default black )
  - support context in colorpicker ( default random )
  - add default palette for colorpicker
- - show warning if use `default` in number ( which should be `from` )
+ - show warning if use `from` in number ( which should be `default` )
+ - in number ctrl, pass `default` as `from` ( and optionally `to` if default is an object ) to ldslider
+ - when calling `build`, update only after built, not in between each `prepare-ctrl`.
+ - resolve config object for init call. ( based on proxise 0.1.3 )
+ - upgrade proxise dependency to 0.1.3
 
 
 ## v1.2.0

@@ -44,7 +44,8 @@ Config editor.
 
 ### API
 
- - `init()`: initialization. return Promise, resolved on initialized.
+ - `init()`: initialization.
+    - return Promise, resolved initial config on initialized.
  - `render()`: re-render controls
  - `get()`: get value object.
  - `set(v)`: set value object to `v`.

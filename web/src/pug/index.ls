@@ -13,7 +13,7 @@ popup = do
   palette:
     name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
     palettes: ldpp.get('default')
-  number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, from: 24
+  number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, default: 24
   boolean: name: \boolean, type: \boolean, default: true
   color: name: \color, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, default: \#000
   color2: name: \color2, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, context: \c
@@ -45,7 +45,8 @@ cfg = new konfig do
   typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
 
 cfg.on \change, ~> @update it
-cfg.init!then -> console.log '@plotdb/konfig cfg inited.'
+cfg.init!then ->
+  console.log '@plotdb/konfig cfg inited with init config:', it
 
 cfg-alt = new konfig do
   root: ld$.find('[ld=kfg-alt]', 0)

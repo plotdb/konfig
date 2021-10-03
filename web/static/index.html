@@ -45,7 +45,7 @@
       min: 10,
       max: 64,
       step: 1,
-      from: 24
+      'default': 24
     },
     boolean: {
       name: 'boolean',
@@ -140,8 +140,8 @@
   cfg.on('change', function(it){
     return this$.update(it);
   });
-  cfg.init().then(function(){
-    return console.log('@plotdb/konfig cfg inited.');
+  cfg.init().then(function(it){
+    return console.log('@plotdb/konfig cfg inited with init config:', it);
   });
   cfgAlt = new konfig({
     root: ld$.find('[ld=kfg-alt]', 0),
