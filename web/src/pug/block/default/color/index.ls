@@ -16,7 +16,7 @@ block-factory =
       set: ~> @ldcp.set it
     @ldcp = new ldcolorpicker(
       root,
-      className: "round shadow-sm round flat compact-palette no-button no-empty-color"
+      className: "round shadow-sm round flat compact-palette no-button no-empty-color vertical"
       palette: (if data.default => [data.default] else []) ++ (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
       context: data.context or 'random'
       exclusive: if data.exclusive? => data.exclusive else true

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.3
+
+ - enable auto direction detection in ldcolorpicker
+
+
 ## v1.2.2
 
  - support autotab ( use group id as name )

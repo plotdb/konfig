@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "files": [
     "dist/**/*"
   ],
@@ -61,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "@loadingio/ldcolorpicker": "^2.0.3",
+    "@loadingio/ldcolorpicker": "^2.0.4",
     "@plotdb/block": "^2.0.7",
     "@plotdb/csscope": "^2.0.0",
     "@plotdb/datadom": "^0.0.4",
