@@ -46,7 +46,8 @@
         palette: (data['default']
           ? [data['default']]
           : []).concat(data.palette || ['#cc0505', '#f5b70f', '#9bcc31', '#089ccc']),
-        context: data.context || 'random'
+        context: data.context || 'random',
+        exclusive: data.exclusive != null ? data.exclusive : true
       });
       view = new ldview({
         ctx: {
