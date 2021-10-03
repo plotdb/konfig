@@ -5,7 +5,7 @@ Config editor.
 
 ## Usage
 
-    kfg = new konfig({...]);
+    kfg = new konfig({...});
     kfg.on("change", function(cfg) { ... });
     kfg.init().then(function() { ... });
 

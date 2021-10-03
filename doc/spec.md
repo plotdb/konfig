@@ -36,6 +36,10 @@ This is an object with following fields:
  - `order`: number for order of this control in specific tab. optional. random order if omitted.
    - lower order mean higher priority.
  - `hidden`: default false. true to disable this widget.
+ - `default`: default value for this config.
+   - values here should be serialized data such as plain object, string, number, etc.
+   - this ensures a default object reconstruction via object tree traverse, even without using `@plotdb/konfig`.
+   - it's still possible to have computed value from ctrls. users should be always aware of this.
 
 `name`, `desc` and `hint` are up to view about rendering.
 
