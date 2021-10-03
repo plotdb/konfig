@@ -9,12 +9,17 @@ block-factory =
       # ldcp inject DOM into global space so we need it to be global.
       {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.css", global: true}
     ]
-  init: ({root, context, pubsub}) ->
+  init: ({root, context, pubsub, data}) ->
     {ldview,ldcolor,ldcolorpicker} = context
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
       set: ~> @ldcp.set it
-    @ldcp = new ldcolorpicker root, className: "round shadow-sm round flat compact-palette no-button no-empty-color"
+    @ldcp = new ldcolorpicker(
+      root,
+      className: "round shadow-sm round flat compact-palette no-button no-empty-color"
+      palette: [data.default or '#000'] ++ <[#cc0505 #f5b70f #9bcc31 #089ccc]>
+      context: data.context or 'random'
+    )
     view = new ldview do
       ctx: {color: ldcolor.web @ldcp.get-color!}
       root: root

@@ -13,9 +13,9 @@ popup = do
   palette:
     name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
     palettes: ldpp.get('default')
-  number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1
-  boolean: name: \boolean, type: \boolean
-  color: name: \color, type: \color, tab: 'color'
+  number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, from: 24
+  boolean: name: \boolean, type: \boolean, default: true
+  color: name: \color, type: \color, tab: 'color', default: \#000000
   choice: name: \choice, type: \choice, values: <[left right center]>, default: \left
   text: name: \text, type: \text, default: 'default text'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'

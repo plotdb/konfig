@@ -61,14 +61,14 @@
     ]
   },
   "dependencies": {
-    "@loadingio/ldcolorpicker": "^2.0.2",
+    "@loadingio/ldcolorpicker": "^2.0.3",
     "@plotdb/block": "^2.0.7",
     "@plotdb/csscope": "^2.0.0",
     "@plotdb/datadom": "^0.0.4",
     "@plotdb/rescope": "^3.0.0",
     "ldcolor": "^0.0.4",
     "ldcover": "^2.0.0",
-    "ldpalettepicker": "^3.1.1",
+    "ldpalettepicker": "^3.1.2",
     "ldslider": "^2.0.6",
     "proxise": "^0.1.2"
   }

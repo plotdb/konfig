@@ -28,8 +28,8 @@
       ]
     },
     init: function(arg$){
-      var root, context, pubsub, ldview, ldcolor, ldcolorpicker, view, this$ = this;
-      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
+      var root, context, pubsub, data, ldview, ldcolor, ldcolorpicker, view, this$ = this;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub, data = arg$.data;
       ldview = context.ldview, ldcolor = context.ldcolor, ldcolorpicker = context.ldcolorpicker;
       pubsub.fire('init', {
         get: function(){
@@ -42,7 +42,9 @@
         }
       });
       this.ldcp = new ldcolorpicker(root, {
-        className: "round shadow-sm round flat compact-palette no-button no-empty-color"
+        className: "round shadow-sm round flat compact-palette no-button no-empty-color",
+        palette: [data['default'] || '#000'].concat(['#cc0505', '#f5b70f', '#9bcc31', '#089ccc']),
+        context: data.context || 'random'
       });
       view = new ldview({
         ctx: {

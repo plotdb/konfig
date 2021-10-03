@@ -12,11 +12,11 @@
       dependencies: []
     },
     init: function(arg$){
-      var root, context, pubsub, ldview, obj, view;
-      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub;
+      var root, context, pubsub, data, ldview, obj, view;
+      root = arg$.root, context = arg$.context, pubsub = arg$.pubsub, data = arg$.data;
       ldview = context.ldview;
       obj = {
-        state: false
+        state: data['default'] || false
       };
       pubsub.fire('init', {
         get: function(){
