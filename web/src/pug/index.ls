@@ -16,6 +16,8 @@ popup = do
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, from: 24
   boolean: name: \boolean, type: \boolean, default: true
   color: name: \color, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, default: \#000
+  color2: name: \color2, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, context: \c
+  color3: name: \color3, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, context: \c
   choice: name: \choice, type: \choice, values: <[left right center]>, default: \left
   text: name: \text, type: \text, default: 'default text'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
