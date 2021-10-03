@@ -17,7 +17,7 @@ block-factory =
     @ldcp = new ldcolorpicker(
       root,
       className: "round shadow-sm round flat compact-palette no-button no-empty-color"
-      palette: [data.default or '#000'] ++ <[#cc0505 #f5b70f #9bcc31 #089ccc]>
+      palette: (if data.default => [data.default] else []) ++ (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
       context: data.context or 'random'
     )
     view = new ldview do

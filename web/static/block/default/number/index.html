@@ -37,6 +37,10 @@
           return obj.ldrs.update();
         }
       });
+      if (data['default']) {
+        console.warn("[@plotdb/konfig] number ctrl uses `from` and `to` for default value, instead of `default`.\nplease update your config to comply with it.");
+        data.from = data['default'];
+      }
       return view = new ldview({
         root: root,
         action: {

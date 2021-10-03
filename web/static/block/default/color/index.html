@@ -43,7 +43,9 @@
       });
       this.ldcp = new ldcolorpicker(root, {
         className: "round shadow-sm round flat compact-palette no-button no-empty-color",
-        palette: [data['default'] || '#000'].concat(['#cc0505', '#f5b70f', '#9bcc31', '#089ccc']),
+        palette: (data['default']
+          ? [data['default']]
+          : []).concat(data.palette || ['#cc0505', '#f5b70f', '#9bcc31', '#089ccc']),
         context: data.context || 'random'
       });
       view = new ldview({

@@ -1,5 +1,14 @@
 # Change Logs
 
+## v1.2.1 (upcoming)
+
+ - support default value in boolean ( default false )
+ - support default value in color ( default black )
+ - support context in colorpicker ( default random )
+ - add default palette for colorpicker
+ - show warning if use `default` in number ( which should be `from` )
+
+
 ## v1.2.0
 
  - make all bootstrap config size relative to container font size

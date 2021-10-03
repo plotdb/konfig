@@ -15,7 +15,7 @@ popup = do
     palettes: ldpp.get('default')
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, from: 24
   boolean: name: \boolean, type: \boolean, default: true
-  color: name: \color, type: \color, tab: 'color', default: \#000000
+  color: name: \color, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, default: \#000
   choice: name: \choice, type: \choice, values: <[left right center]>, default: \left
   text: name: \text, type: \text, default: 'default text'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
@@ -48,7 +48,7 @@ cfg.init!then -> console.log '@plotdb/konfig cfg inited.'
 cfg-alt = new konfig do
   root: ld$.find('[ld=kfg-alt]', 0)
   debounce: false
-  meta: size: type: \number, min: 10, max: 32, step: 1, from: 10
+  meta: size: type: \number, min: 10, max: 32, step: 1, default: 14
   view: \default
   manager: @manager
   typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
