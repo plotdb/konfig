@@ -1,3 +1,3 @@
  - font image sprite url issue
- - bundle still init ( thus fetch dependencies ), which may not need. we should implement it as `init on demand`.
- - ldcp popup exclusively
+ - now update before initialized, which seems awkward. 
+   - since we have passed value after init, perhaps the init update is totally unnecessary?
