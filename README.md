@@ -16,6 +16,7 @@ Config editor.
    - root node is used to place root tab for this config.
  - `useBundle`: true if use bundle blocks, if availale. default true.
  - `debounce`: true to debounce updating. default true.
+ - `autotab`: true to use meta object field key as tab name by default. default false
  - `meta`: meta object. see spec for more information.
  - `tab`: tab object. see spec for more information.
  - `mgr`: block manager for retrieving blocks

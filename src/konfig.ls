@@ -4,6 +4,7 @@ konfig = (opt={}) ->
   @evt-handler = {}
   @use-bundle = if (opt.use-bundle?) => opt.use-bundle else true
   @view = opt.view
+  @autotab = (opt.autotab or false)
   @_ctrlobj = {}
   @_ctrllist = []
   @_tabobj = {}
@@ -154,17 +155,18 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   _build-ctrl: (clear = false) ->
     promises = []
-    traverse = (meta, val = {}, ctrl = {}) ~>
+    traverse = (meta, val = {}, ctrl = {}, pid) ~>
       if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
       tab = if meta.child => meta.tab else null
+      if !tab and @autotab and pid => tab = pid
       if !ctrls => return
       for id,v of ctrls =>
         if v.type =>
           v <<< {id} <<< (if tab and !v.tab => {tab} else {})
           promises.push @_prepare-ctrl(v, val, ctrl)
           continue
-        traverse(v, val{}[id], ctrl{}[id])
+        traverse(v, val{}[id], ctrl{}[id], id)
 
     if clear and @_ctrllist =>
       @_ctrllist.map ({block, root}) ->
@@ -173,7 +175,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if clear or !@_val => @_val = {}
     if clear or !@_ctrlobj => @_ctrlobj = {}
     if clear or !@_ctrllist => @_ctrllist = []
-    traverse @_meta, @_val, @_ctrlobj
+    traverse @_meta, @_val, @_ctrlobj, null
     Promise.all promises
 
   _build-tab: (clear = false) ->

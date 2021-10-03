@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.2
+
+ - support autotab ( use group id as name )
+
+
 ## v1.2.1
 
  - support default value in boolean ( default false )

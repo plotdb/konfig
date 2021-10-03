@@ -10,6 +10,7 @@ konfig = function(opt){
   this.evtHandler = {};
   this.useBundle = opt.useBundle != null ? opt.useBundle : true;
   this.view = opt.view;
+  this.autotab = opt.autotab || false;
   this._ctrlobj = {};
   this._ctrllist = [];
   this._tabobj = {};
@@ -355,7 +356,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     var promises, traverse, this$ = this;
     clear == null && (clear = false);
     promises = [];
-    traverse = function(meta, val, ctrl){
+    traverse = function(meta, val, ctrl, pid){
       var ctrls, tab, id, v, results$ = [];
       val == null && (val = {});
       ctrl == null && (ctrl = {});
@@ -364,6 +365,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
       ctrls = meta.child ? meta.child : meta;
       tab = meta.child ? meta.tab : null;
+      if (!tab && this$.autotab && pid) {
+        tab = pid;
+      }
       if (!ctrls) {
         return;
       }
@@ -378,7 +382,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
           promises.push(this$._prepareCtrl(v, val, ctrl));
           continue;
         }
-        results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {})));
+        results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
       }
       return results$;
     };
@@ -403,7 +407,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     if (clear || !this._ctrllist) {
       this._ctrllist = [];
     }
-    traverse(this._meta, this._val, this._ctrlobj);
+    traverse(this._meta, this._val, this._ctrlobj, null);
     return Promise.all(promises);
   },
   _buildTab: function(clear){
