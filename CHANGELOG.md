@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.4
+
+ - add button ctrl
+
+
 ## v1.2.3
 
  - enable auto direction detection in ldcolorpicker

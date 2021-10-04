@@ -15,6 +15,7 @@ popup = do
     palettes: ldpp.get('default')
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, default: 24
   boolean: name: \boolean, type: \boolean, default: true
+  button: name: \button, type: \button, text: \action, default: 0, cb: (-> console.log \clicked; return Math.random!)
   color: name: \color, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, default: \#000
   color2: name: \color2, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, context: \c
   color3: name: \color3, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, context: \c

@@ -52,6 +52,16 @@
       type: 'boolean',
       'default': true
     },
+    button: {
+      name: 'button',
+      type: 'button',
+      text: 'action',
+      'default': 0,
+      cb: function(){
+        console.log('clicked');
+        return Math.random();
+      }
+    },
     color: {
       name: 'color',
       type: 'color',
