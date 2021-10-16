@@ -36,11 +36,16 @@
         }, {
           name: "ldpalettepicker",
           version: "main",
-          path: "index.min.js"
+          path: "index.min.css"
         }, {
           name: "ldpalettepicker",
           version: "main",
-          path: "index.min.css"
+          path: "index.min.js",
+          async: false
+        }, {
+          name: "ldpalettepicker",
+          version: "main",
+          path: "all.palettes.js"
         }
       ]
     },
@@ -79,15 +84,20 @@
         },
         init: {
           ldcv: function(arg$){
-            var node;
+            var node, pals;
             node = arg$.node;
+            pals = Array.isArray(data.palettes)
+              ? data.palettes
+              : typeof data.palettes === 'string'
+                ? ldpp.get(data.palettes)
+                : ldpp.get('all');
             obj.ldpp = new ldpp({
               root: node,
               ldcv: true,
               useClusterizejs: true,
               i18n: i18n,
               palette: data.palette,
-              palettes: data.palettes
+              palettes: pals
             });
             return obj.pal = obj.ldpp.ldpe.getPal();
           }

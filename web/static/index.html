@@ -32,11 +32,17 @@
   });
   this.meta = {
     palette: {
-      name: 'palette',
+      name: 'color brewer',
       type: 'palette',
       hint: "pick your favorite palette.",
       tab: 'color',
-      palettes: ldpp.get('default')
+      palettes: 'colorbrewer'
+    },
+    allpal: {
+      name: 'Default Palettes',
+      type: 'palette',
+      hint: "pick your favorite palette.",
+      tab: 'color'
     },
     number: {
       name: 'number',

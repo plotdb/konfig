@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.5
+
+ - accept string palettes option in in palette ctrl and by default use `all` palettes from all.palettes.js
+
+
 ## v1.2.4
 
  - add button ctrl

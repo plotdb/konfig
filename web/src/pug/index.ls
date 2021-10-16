@@ -11,8 +11,10 @@ popup = do
 
 @meta =
   palette:
-    name: \palette, type: \palette, hint: "pick your favorite palette.", tab: 'color'
-    palettes: ldpp.get('default')
+    name: 'color brewer', type: \palette, hint: "pick your favorite palette.", tab: 'color'
+    palettes: \colorbrewer
+  allpal:
+    name: 'Default Palettes', type: \palette, hint: "pick your favorite palette.", tab: 'color'
   number: name: \number, type: \number, range: false, min: 10, max: 64, step: 1, default: 24
   boolean: name: \boolean, type: \boolean, default: true
   button: name: \button, type: \button, text: \action, default: 0, cb: (-> console.log \clicked; return Math.random!)
