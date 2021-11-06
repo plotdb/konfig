@@ -35,7 +35,7 @@ Config editor.
          div(ld="name")
          div(ld-each="ctrl")
 
-     - `recurse`: controls in recursive tabs. sample DOM:
+     - `recurse`: controls in recursive tabs. sample DOM as followed. Note `ctrl` should be outside of `tab`:
 
        div(ld="template")
          div(ld="name")
