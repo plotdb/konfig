@@ -4,6 +4,7 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
+      {name: "@plotdb/load", version: "main", path: "index.min.js"}
       {name: "@plotdb/choose", version: "main", path: "index.min.js"}
       {name: "@plotdb/choose", version: "main", path: "index.min.css", global: true}
     ]

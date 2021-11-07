@@ -3,7 +3,7 @@
 block-factory =
   pkg:
     dependencies: [
-      {name: "ldview", version: "main", path: "index.js"}
+      {name: "ldview", version: "main", path: "index.min.js"}
       {name: "@loadingio/debounce.js", version: "main", path: "debounce.min.js"}
       {name: "ldcover", version: "main", path: "index.min.js"}
       {name: "ldcover", version: "main", path: "index.min.css"}
