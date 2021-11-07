@@ -34,6 +34,10 @@
           version: "main",
           path: "ldcp.min.css"
         }, {
+          name: "@loadingio/vscroll",
+          version: "main",
+          path: "index.min.js"
+        }, {
           name: "ldpalettepicker",
           version: "main",
           path: "index.min.css"
@@ -54,7 +58,7 @@
       root = arg$.root, context = arg$.context, pubsub = arg$.pubsub, data = arg$.data, i18n = arg$.i18n;
       ldview = context.ldview, ldcolor = context.ldcolor, ldpp = context.ldpp, ldcover = context.ldcover;
       obj = {
-        pal: null
+        pal: data.palette || ldpp.defaultPalette
       };
       pubsub.fire('init', {
         get: function(){
@@ -71,6 +75,23 @@
         action: {
           click: {
             ldp: function(){
+              var pals;
+              if (!obj.ldpp) {
+                pals = Array.isArray(data.palettes)
+                  ? data.palettes
+                  : typeof data.palettes === 'string'
+                    ? ldpp.get(data.palettes)
+                    : ldpp.get('all');
+                obj.ldpp = new ldpp({
+                  root: view.get('ldcv'),
+                  ldcv: true,
+                  useClusterizejs: true,
+                  i18n: i18n,
+                  palette: data.palette,
+                  palettes: pals,
+                  useVscroll: true
+                });
+              }
               return obj.ldpp.get().then(function(it){
                 if (!it) {
                   return;
@@ -80,26 +101,6 @@
                 return pubsub.fire('event', 'change', obj.pal);
               });
             }
-          }
-        },
-        init: {
-          ldcv: function(arg$){
-            var node, pals;
-            node = arg$.node;
-            pals = Array.isArray(data.palettes)
-              ? data.palettes
-              : typeof data.palettes === 'string'
-                ? ldpp.get(data.palettes)
-                : ldpp.get('all');
-            obj.ldpp = new ldpp({
-              root: node,
-              ldcv: true,
-              useClusterizejs: true,
-              i18n: i18n,
-              palette: data.palette,
-              palettes: pals
-            });
-            return obj.pal = obj.ldpp.ldpe.getPal();
           }
         },
         handler: {

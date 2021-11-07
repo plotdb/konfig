@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.7 (upcoming)
+
+ - lazy init ldpp, and init with vscroll to improve performance
+
+
 ## v1.2.6
 
  - paragraph ctrl remove `inline` class to prevent from conflict of new ldcover feature

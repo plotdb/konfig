@@ -9,13 +9,14 @@ block-factory =
       {name: "ldslider", version: "main", path: "ldrs.min.css"}
       {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.js", async: false}
       {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.css"}
+      {name: "@loadingio/vscroll", version: "main", path: "index.min.js"}
       {name: "ldpalettepicker", version: "main", path: "index.min.css"}
       {name: "ldpalettepicker", version: "main", path: "index.min.js", async: false}
       {name: "ldpalettepicker", version: "main", path: "all.palettes.js"}
     ]
   init: ({root, context, pubsub, data, i18n}) ->
     {ldview,ldcolor,ldpp,ldcover} = context
-    obj = {pal: null}
+    obj = {pal: data.palette or ldpp.default-palette}
     pubsub.fire \init, do
       get: -> obj.pal
       set: ->
@@ -26,20 +27,19 @@ block-factory =
       root: root
       action: click:
         ldp: ->
+          if !obj.ldpp =>
+            pals = if Array.isArray(data.palettes) => data.palettes
+            else if typeof(data.palettes) == \string => ldpp.get data.palettes
+            else ldpp.get('all')
+            obj.ldpp = new ldpp {
+              root: view.get('ldcv'), ldcv: true, use-clusterizejs: true, i18n: i18n
+              palette: data.palette, palettes: pals, use-vscroll: true
+            }
           obj.ldpp.get!then ->
             if !it => return
             obj.pal = it
             view.render \color
             pubsub.fire \event, \change, obj.pal
-      init: ldcv: ({node}) ->
-        pals = if Array.isArray(data.palettes) => data.palettes
-        else if typeof(data.palettes) == \string => ldpp.get data.palettes
-        else ldpp.get('all')
-        obj.ldpp = new ldpp {
-          root: node, ldcv: true, use-clusterizejs: true, i18n: i18n
-          palette: data.palette, palettes: pals
-        }
-        obj.pal = obj.ldpp.ldpe.get-pal!
       handler:
         color:
           list: -> obj.{}pal.[]colors

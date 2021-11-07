@@ -9,8 +9,8 @@ block-factory =
       {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.css", type: \css}
       {url: "/assets/lib/@loadingio/ldcolorpicker/main/ldcp.js", async: false}
-      {url: "/assets/lib/ldpalettepicker/main/ldpp.css", type: \css}
-      {url: "/assets/lib/ldpalettepicker/main/ldpp.js"}
+      {url: "/assets/lib/ldpalettepicker/main/index.min.css", type: \css}
+      {url: "/assets/lib/ldpalettepicker/main/index.min.js"}
     ]
   init: ({root, context, pubsub, data}) ->
     {ldview,ldcolor,ldpp,ldcover} = context
