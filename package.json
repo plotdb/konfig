@@ -63,7 +63,7 @@
     ]
   },
   "dependencies": {
-    "@loadingio/ldcolorpicker": "^2.0.4",
+    "@loadingio/ldcolorpicker": "^2.0.5",
     "@loadingio/vscroll": "^0.0.6",
     "@plotdb/block": "^2.0.7",
     "@plotdb/csscope": "^2.0.0",
