@@ -1,8 +1,9 @@
 # Change Logs
 
-## v1.2.7 (upcoming)
+## v1.2.7
 
  - lazy init ldpp, and init with vscroll to improve performance
+ - update blocks to use minimized version of lib files
 
 
 ## v1.2.6
