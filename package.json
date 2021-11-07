@@ -71,7 +71,7 @@
     "@plotdb/rescope": "^3.0.0",
     "ldcolor": "^0.0.4",
     "ldcover": "^2.1.0",
-    "ldpalettepicker": "^3.1.6",
+    "ldpalettepicker": "^3.1.7",
     "ldslider": "^2.0.6",
     "proxise": "^0.1.3"
   }
