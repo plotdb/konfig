@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.2.9
+
+ - rebuild blocks for fixing incorrectly removed code
+ - upgrade `@zbryikt/template` for inline script minification bug fixing
+
+
 ## v1.2.8
 
  - minify inline script and style.
