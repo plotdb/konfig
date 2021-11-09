@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "files": [
     "dist/**/*"
   ],
@@ -25,7 +25,7 @@
     "@loadingio/ldquery": "^2.2.1",
     "@loadingio/vscroll": "^0.0.5",
     "@xlfont/load": "^1.1.1",
-    "@zbryikt/template": "^2.3.22",
+    "@zbryikt/template": "^2.3.24",
     "bootstrap": "^4.5.2",
     "bootstrap.native": "^3.0.15",
     "fedep": "^0.0.17",

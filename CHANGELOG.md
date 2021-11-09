@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.2.8
+
+ - minify inline script and style.
+ - mangle and compress minified output.
+
+
 ## v1.2.7
 
  - lazy init ldpp, and init with vscroll to improve performance
