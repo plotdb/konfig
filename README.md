@@ -39,8 +39,8 @@ Config editor.
 
        div(ld="template")
          div(ld="name")
-         div(ld="ctrl")
-         div(ld="tab")
+         div(ld-each="ctrl")
+         div(ld-each="tab")
 
 
 ### API
