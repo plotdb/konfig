@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.10
+
+ - add `aria-label` in controls with input for accessibility
+
+
 ## v1.2.9
 
  - rebuild blocks for fixing incorrectly removed code

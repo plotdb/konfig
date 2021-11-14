@@ -1,8 +1,8 @@
 div
   div(plug="config")
-    textarea.form-control(rows="1",ld="input")
+    textarea.form-control(rows="1",ld="input",aria-label="paragraph")
     .ldcv(ld="ldcv"): .base(ld="panel"): .inner
-      .p-2: textarea.form-control(ld="textarea",rows="3")
+      .p-2: textarea.form-control(ld="textarea",rows="3",aria-label="paragraph")
       .px-2.pb-2.text-right
         .btn.btn-sm.btn-outline-secondary(data-ldcv-set="") Cancel
         .btn.btn-sm.btn-primary.ml-2(data-ldcv-set="ok") OK
