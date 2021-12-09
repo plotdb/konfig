@@ -1,5 +1,10 @@
 # Change Logs
 
+## v2.0.2
+
+ - upgrade rescope for bug fixing
+
+
 ## v2.0.1
 
  - replace `konfig.js`, `konfig.min.js` with `index.js` and `index.min.js`

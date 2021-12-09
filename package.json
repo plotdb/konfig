@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "browser": "dist/index.min.js",
   "files": [
     "dist/**/*"
@@ -69,7 +69,7 @@
     "@plotdb/block": "^3.0.0",
     "@plotdb/csscope": "^3.0.1",
     "@plotdb/datadom": "^0.0.4",
-    "@plotdb/rescope": "^4.0.0",
+    "@plotdb/rescope": "^4.0.1",
     "ldcolor": "^0.0.4",
     "ldcover": "^2.1.0",
     "ldpalettepicker": "^3.1.8",
