@@ -1,5 +1,10 @@
 # Change Logs
 
+## v2.0.0
+
+ - upgrade block modules
+
+
 ## v1.2.10
 
  - add `aria-label` in controls with input for accessibility
