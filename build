@@ -4,15 +4,15 @@ echo "prepare..."
 rm -rf dist
 mkdir -p dist
 
-echo "building konfig.ls -> konfig.js ..."
-./node_modules/.bin/lsc -cpb --no-header src/konfig.ls > dist/konfig.js
-echo "(function(){" > dist/konfig.js
-./node_modules/.bin/lsc -cpb --no-header src/konfig.ls >> dist/konfig.js
-./node_modules/.bin/lsc tools/pack.ls >> dist/konfig.js
-echo "})();" >> dist/konfig.js
+echo "building index.ls -> index.js ..."
+./node_modules/.bin/lsc -cpb --no-header src/index.ls > dist/index.js
+echo "(function(){" > dist/index.js
+./node_modules/.bin/lsc -cpb --no-header src/index.ls >> dist/index.js
+./node_modules/.bin/lsc tools/pack.ls >> dist/index.js
+echo "})();" >> dist/index.js
 ./node_modules/.bin/lsc tools/pack.ls -s bootstrap > dist/konfig.widget.bootstrap.js
-echo "minify konfig.js -> konfig.min.js ..."
-./node_modules/.bin/uglifyjs dist/konfig.js -m -c > dist/konfig.min.js
+echo "minify index.js -> index.min.js ..."
+./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 echo "minify konfig.widget.bootstrap.js -> konfig.widget.bootstrap.min.js ..."
 ./node_modules/.bin/uglifyjs dist/konfig.widget.bootstrap.js -m -c > dist/konfig.widget.bootstrap.min.js
 
