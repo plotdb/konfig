@@ -1,5 +1,10 @@
 # Change Logs
 
+## v2.0.3 (upcoming)
+
+ - upgrade `@plotdb/block` and `@plotdb/rescope` for bug fixing
+
+
 ## v2.0.2
 
  - upgrade rescope for bug fixing
