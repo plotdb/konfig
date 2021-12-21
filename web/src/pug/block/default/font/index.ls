@@ -27,7 +27,7 @@ block-factory =
       init:
         ldcv: ({node}) ->
           obj.ldcv = new ldcover root: node
-          obj.ldcv.on \toggle.on, -> chooser.render!
+          obj.ldcv.on \toggle.on, -> debounce 50 .then -> chooser.render!
       action: click:
         button: ({node}) ->
           obj.ldcv.get!
