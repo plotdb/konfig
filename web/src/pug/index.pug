@@ -2,6 +2,7 @@ extends /base.pug
 block head
   +css("/css/index.css")
   style(type="text/css"): :stylus
+    html, body { width: 100%; height: 100%; padding: 0;margin: 0}
     .config
       margin: 0 0 1em
       flex: 1 1 200px
@@ -11,12 +12,12 @@ block head
     [ld=kfg]
       .ldrs .hint { padding-top: 4px!important }
 block body      
-  .w-1024.rwd.mx-auto.my-4.d-flex.flex-column(style="gap:1em")
+  .w-100.h-100.p-4: .d-flex.flex-column.h-100(style="gap:1em")
     .border.rounded.shadow-sm.p-4(ld="kfg-alt")
       div(ld-each="tab"): div(ld-each="ctrl")
-    .d-flex.flex-grow-1(style="gap:1em")
-      .d-flex.flex-wrap(ld="kfg",style="gap:1em")
-        .tab.p-2.border.rounded.shadow-sm(ld-each="tab",style="min-width:15em")
+    .d-flex.flex-grow-1(style="gap:1em;overflow:hidden")
+      .d-flex.flex-wrap.h-100(ld="kfg",style="gap:1em")
+        .tab.p-2.border.rounded.shadow-sm.h-100(ld-each="tab",style="min-width:15em;overflow-y:scroll")
           .text-center.font-weight-bold.p-1.mb-4.bg-secondary.text-light.rounded(ld="name")
           .config.mb-4(ld-each="ctrl")
       .flex-grow-1

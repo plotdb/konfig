@@ -3,6 +3,7 @@
 ## v2.0.3 (upcoming)
 
  - upgrade `@plotdb/block` and `@plotdb/rescope` for bug fixing
+ - adopt `@xlfont` for font picker
 
 
 ## v2.0.2

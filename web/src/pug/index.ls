@@ -25,7 +25,7 @@ popup = do
   text: name: \text, type: \text, default: 'default text'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
   upload: name: \upload, type: \upload, multiple: true
-  #font: name: \font, type: \font
+  font: name: \font, type: \font
   popup: name: \popup, type: \popup, popup:
     get: -> popup.ldcv.get!
     default: -> popup.data
@@ -79,3 +79,6 @@ sample = ld$.find('#sample',0)
     fontSize: "#{@val.number}px"
     whiteSpace: 'pre-line'
     textAlign: (@val.choice or 'left')
+  if @val.font =>
+    sample.style.fontFamily = @val.font.name
+    @val.font.sync sample.innerText

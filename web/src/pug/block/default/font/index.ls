@@ -4,33 +4,40 @@ block-factory =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {name: "@plotdb/load", version: "main", path: "index.min.js"}
-      {name: "@plotdb/choose", version: "main", path: "index.min.js"}
-      {name: "@plotdb/choose", version: "main", path: "index.min.css", global: true}
+      {name: "@xlfont/load", version: "main", path: "index.min.js"}
+      {name: "@xlfont/choose", version: "main", path: "index.min.js"}
+      {name: "@xlfont/choose", version: "main", path: "index.min.css", global: true}
     ]
   init: ({root, context, data, pubsub}) ->
-    {ldview,ldcover,ChooseFont} = context
-    obj = {font: {}}
+    {ldview,ldcover,xfc} = context
     pubsub.fire \init, do
       get: -> obj.font
-      set: -> obj.fontview.get('input').value = it or ''
+      set: ->
+        obj.font = it
+        view.render \button
+    obj = {font: null}
+    chooser = new xfc do
+      root: root.querySelector('.ldcv'), init-render: true
+      meta: 'https://xlfont.maketext.io/meta'
+      links: 'https://xlfont.maketext.io/links'
+    chooser.init!
+    chooser.on \choose, (f) ~> obj.ldcv.set f
     view = new ldview do
       root: root
       init:
-        ldcv: ({node}) -> obj.ldcv = new ldcover root: node
-        inner: ({node}) ->
-          obj.cf = new ChooseFont do
-            root: node
-            meta-url: '/assets/lib/choosefont.js/main/fontinfo/meta.json'
-            base: 'https://plotdb.github.io/xl-fontset/alpha'
-          obj.cf.init!then ->
-            obj.cf.on \choose, ->
-              obj.ldcv.set it
+        ldcv: ({node}) ->
+          obj.ldcv = new ldcover root: node
+          obj.ldcv.on \toggle.on, -> chooser.render!
       action: click:
-        button: ->
-          obj.ldcv.get!then ->
-            if !it => return
-            obj.font = it
-      text: "font-name": -> obj.font.name or 'Font'
+        button: ({node}) ->
+          obj.ldcv.get!
+            .then (f) ->
+              obj.font = f
+              view.render \button
+              pubsub.fire \event, \change, f
+
+      text:
+        button: ({node}) ->
+          if !obj.font => "..." else obj.font.name or "..."
 
 return block-factory
