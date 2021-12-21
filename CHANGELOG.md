@@ -4,6 +4,7 @@
 
  - upgrade `@plotdb/block` and `@plotdb/rescope` for bug fixing
  - adopt `@xlfont` for font picker
+ - upgrade modules
 
 
 ## v2.0.2
