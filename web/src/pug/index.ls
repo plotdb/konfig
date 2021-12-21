@@ -31,21 +31,26 @@ popup = do
     default: -> popup.data
     data: (d) -> Promise.resolve!then ~> if d? => popup.data = d else popup.data
 
-cfg = new konfig do
+kfg-cfg =
   root: ld$.find('[ld=kfg]', 0)
   debounce: false
   meta: @meta
   view: \default
   manager: @manager
 
-  /*
-  use-bundle: false
-  manager: new block.manager registry: ({name, version, path}) ->
-    ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
-    return if !ret => "/block/#name/#version/index.html"
-    else "/block/#{ret.1}/#path/index.html"
-  */
   typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
+
+if true =>
+  kfg-cfg <<<
+    use-bundle: false
+    manager: new block.manager registry: ({name, version, path, type}) ->
+      if type == \block =>
+        ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
+        return if !ret => "/block/#name/#version/index.html"
+        else "/block/#{ret.1}/#path/index.html"
+      else return "/assets/lib/#name/#version/#{path or 'index.min.js'}"
+
+cfg = new konfig kfg-cfg
 
 cfg.on \change, ~> @update it
 cfg.init!then ->
