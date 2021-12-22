@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
@@ -14,5 +12,3 @@ block-factory =
       init: input: ({node}) -> if data.multiple => node.setAttribute \multiple, true
       action:
         change: input: ({node}) -> pubsub.fire \event, \change, node.files
-
-return block-factory

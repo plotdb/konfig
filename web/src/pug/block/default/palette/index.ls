@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
@@ -46,5 +44,3 @@ block-factory =
           key: -> ldcolor.web(it)
           handler: ({node,data}) -> node.style.backgroundColor = ldcolor.web data
     view.render!
-
-return block-factory

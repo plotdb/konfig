@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
@@ -22,5 +20,3 @@ block-factory =
           handler: ({node,data}) ->
             node.setAttribute \value, data
             node.textContent = data
-
-return block-factory

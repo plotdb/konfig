@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
@@ -14,10 +12,9 @@ block-factory =
       root: root
       action: click:
         switch: ->
+          console.log 123
           obj.state = !obj.state
           view.render \switch
           pubsub.fire \event, \change, obj.state
       handler:
         switch: ({node}) -> node.classList.toggle \on, obj.state
-
-return block-factory

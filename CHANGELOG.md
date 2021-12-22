@@ -1,10 +1,12 @@
 # Change Logs
 
-## v2.0.3 (upcoming)
+## v3.0.0
 
  - upgrade `@plotdb/block` and `@plotdb/rescope` for bug fixing
  - adopt `@xlfont` for font picker
  - upgrade modules
+ - adopt `@plotdb/block` v4 syntax
+ - add bunlder sample
 
 
 ## v2.0.2

@@ -4,11 +4,6 @@ popup = do
   ldcv: new ldcover root: ld$.find('.ldcv', 0)
   data: 'yes'
 
-@manager = new block.manager do
-  registry: ({name,version,path,type}) ->
-    if type == \block => "/block/#name/#version/#{path or 'index.html'}"
-    else "/assets/lib/#name/#version/#{path or ''}"
-
 @meta =
   palette:
     name: 'color brewer', type: \palette, hint: "pick your favorite palette.", tab: 'color'
@@ -31,32 +26,19 @@ popup = do
     default: -> popup.data
     data: (d) -> Promise.resolve!then ~> if d? => popup.data = d else popup.data
 
+@manager = new block.manager do
+  registry: ({name,version,path,type}) ->
+    if type == \block => "/block/#name/#version/#{path or 'index.html'}"
+    else "/assets/lib/#name/#version/#{path or ''}"
 kfg-cfg =
   root: ld$.find('[ld=kfg]', 0)
   debounce: false
   meta: @meta
   view: \default
   manager: @manager
-
   typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
 
-if true =>
-  kfg-cfg <<<
-    use-bundle: false
-    manager: new block.manager registry: ({name, version, path, type}) ->
-      if type == \block =>
-        ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
-        return if !ret => "/block/#name/#version/index.html"
-        else "/block/#{ret.1}/#path/index.html"
-      else return "/assets/lib/#name/#version/#{path or 'index.min.js'}"
-
-cfg = new konfig kfg-cfg
-
-cfg.on \change, ~> @update it
-cfg.init!then ->
-  console.log '@plotdb/konfig cfg inited with init config:', it
-
-cfg-alt = new konfig do
+kfg-alt-cfg =
   root: ld$.find('[ld=kfg-alt]', 0)
   debounce: false
   meta: size: type: \number, min: 10, max: 32, step: 1, default: 14
@@ -64,21 +46,39 @@ cfg-alt = new konfig do
   manager: @manager
   typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}
 
-cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size}px"
-cfg-alt.init!then -> console.log "@plotdb/konfig cfg-alt inited."
 
-sample = ld$.find('#sample',0)
+if true =>
+  @manager = new block.manager registry: ({name, version, path, type}) ->
+    if type == \block =>
+      ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
+      return if !ret => "/block/#name/#version/index.html"
+      else "/block/#{ret.1}/#path/index.html"
+    else return "/assets/lib/#name/#version/#{path or 'index.min.js'}"
+  kfg-cfg <<< { use-bundle: false, manager: @manager }
+  kfg-alt-cfg <<< { use-bundle: false, manager: @manager }
 
-@val = {}
-@update = ~>
-  @val = it
-  sample.innerText = (@val.text or '') + '\n' + (@val.paragraph or '')
-  sample.style <<<
-    color: ldcolor.web(@val.color or '#000')
-    fontFamily: @val.font or 'sans serif'
-    fontSize: "#{@val.number}px"
-    whiteSpace: 'pre-line'
-    textAlign: (@val.choice or 'left')
-  if @val.font =>
-    sample.style.fontFamily = @val.font.name
-    @val.font.sync sample.innerText
+@manager.debundle url: "/assets/bundle/index.html"
+  .then ~>
+    cfg = new konfig kfg-cfg
+    cfg.on \change, ~> @update it
+    cfg.init!then -> console.log '@plotdb/konfig cfg inited with init config:', it
+
+    cfg-alt = new konfig kfg-alt-cfg
+    cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size}px"
+    cfg-alt.init!then -> console.log "@plotdb/konfig cfg-alt inited."
+
+    sample = ld$.find('#sample',0)
+
+    @val = {}
+    @update = ~>
+      @val = it
+      sample.innerText = (@val.text or '') + '\n' + (@val.paragraph or '')
+      sample.style <<<
+        color: ldcolor.web(@val.color or '#000')
+        fontFamily: @val.font or 'sans serif'
+        fontSize: "#{@val.number}px"
+        whiteSpace: 'pre-line'
+        textAlign: (@val.choice or 'left')
+      if @val.font =>
+        sample.style.fontFamily = @val.font.name
+        @val.font.sync sample.innerText

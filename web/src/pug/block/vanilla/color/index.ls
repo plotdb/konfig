@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
@@ -22,5 +20,3 @@ block-factory =
         @ldcp.on \change, ~>
           pubsub.fire \event, \change, it
           node.style.backgroundColor = ldcolor.web it
-
-return block-factory

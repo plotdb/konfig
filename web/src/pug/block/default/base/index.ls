@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     dependencies: [
       {name: "@loadingio/vscroll", version: "main", path: "index.min.js"}
@@ -36,8 +34,4 @@ block-factory =
       handler: hint: ({node}) ~> node.classList.toggle \d-none, !data.hint
       action: click: hint: ~>
         alert(t(data.hint or 'no hint'))
-
-
   interface: -> @itf
-
-return block-factory

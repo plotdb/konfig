@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
@@ -31,5 +29,3 @@ block-factory =
             if !it => return
             obj.font = it
       text: "font-name": -> obj.font.name or 'Font'
-
-return block-factory

@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
@@ -32,5 +30,3 @@ block-factory =
           )
         )
         obj.ldrs.on \change, -> pubsub.fire \event, \change, it
-
-return block-factory

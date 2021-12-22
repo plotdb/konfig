@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
@@ -21,5 +19,3 @@ block-factory =
       init: ldrs: ({node}) ->
         obj.ldrs = new ldslider({root: node} <<< data{min,max,step,from,to,exp,limit-max,range,label,limit-max})
         obj.ldrs.on \change, -> pubsub.fire \event, \change, it
-
-return block-factory

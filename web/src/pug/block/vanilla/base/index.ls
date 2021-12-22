@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     dependencies: [
       {url: "/assets/lib/ldview/main/index.js"}
@@ -24,8 +22,4 @@ block-factory =
       handler: hint: ({node}) ~> node.classList.toggle \d-none, !@data.hint
       action: click: hint: ~>
         alert(t(@data.hint or 'no hint'))
-
-
   interface: -> @itf
-
-return block-factory

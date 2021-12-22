@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
@@ -34,5 +32,3 @@ block-factory =
             if obj.data != value => pubsub.fire \event, \change, value
             obj.data = value
             view.render!
-
-return block-factory

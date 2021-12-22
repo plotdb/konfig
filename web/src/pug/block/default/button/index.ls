@@ -1,6 +1,4 @@
-<-(->it!) _
-
-block-factory =
+module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
@@ -19,5 +17,3 @@ block-factory =
             if local.data == it => return
             pubsub.fire \event, \change, ( local.data = it )
       text: button: -> data.text or '...'
-
-return block-factory
