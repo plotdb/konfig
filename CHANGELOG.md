@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.0.1
+
+ - fix ldpp include path in palette blocks
+ - rebuild dist for correct version of lib inclusion
+
+
 ## v4.0.0
 
  - add `main` field in `package.json`.
