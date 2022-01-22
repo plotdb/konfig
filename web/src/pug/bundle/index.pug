@@ -1,9 +1,9 @@
 doctype html
 html
-  include @/@loadingio/bootstrap.ext/dist/index.pug
-  include @/ldview/dist/index.pug
+  include @/@loadingio/bootstrap.ext/index.pug
+  include @/ldview/index.pug
   head
-    +css("/assets/lib/bootstrap/main/css/bootstrap.min.css")
+    +css("/assets/lib/bootstrap/main/dist/css/bootstrap.min.css")
     +css("/assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
     //-
       +css("/assets/lib/ldcover/main/index.min.css")
@@ -24,13 +24,13 @@ html
       +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
       +script("/assets/lib/proxise/main/proxise.min.js")
       +script("/assets/lib/ldview/main/index.min.js")
-    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
-    +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
-    +script("/assets/lib/proxise/main/proxise.min.js")
+    +script("/assets/lib/@loadingio/ldquery/main/index.min.js")
+    +script("/assets/lib/@loadingio/debounce.js/main/index.min.js")
+    +script("/assets/lib/proxise/main/index.min.js")
     +script("/assets/lib/@plotdb/rescope/main/index.min.js")
     +script("/assets/lib/@plotdb/csscope/main/index.min.js")
     +script("/assets/lib/@plotdb/block/main/index.min.js")
     +script("/assets/lib/@plotdb/konfig/dev/index.min.js")
     +script("/assets/lib/ldview/main/index.min.js")
-    script: include:lsc index.ls
+    script(type="module"): include:lsc index.ls
 

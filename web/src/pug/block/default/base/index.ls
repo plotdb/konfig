@@ -2,11 +2,11 @@ module.exports =
   pkg:
     dependencies: [
       {name: "@loadingio/vscroll", version: "main", path: "index.min.js"}
-      {name: "@loadingio/debounce.js", version: "main", path: "debounce.min.js"}
+      {name: "@loadingio/debounce.js", version: "main", path: "index.min.js"}
       {name: "ldview", version: "main", path: "index.min.js"}
       {name: "ldcover", version: "main", path: "index.min.js"}
       {name: "ldcover", version: "main", path: "index.min.css"}
-      {name: "ldloader", version: "main", path: "index.js"}
+      {name: "ldloader", version: "main", path: "index.min.js"}
       {name: "ldloader", version: "main", path: "index.min.css", global: true}
       {name: "zmgr", version: "main", path: "index.min.js"}
     ]

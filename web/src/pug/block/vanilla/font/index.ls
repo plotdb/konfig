@@ -2,8 +2,8 @@ module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/choosefont.js/main/choosefont.min.js"}
-      {url: "/assets/lib/choosefont.js/main/choosefont.min.css", global: true}
+      {url: "/assets/lib/choosefont.js/main/dist/choosefont.min.js"}
+      {url: "/assets/lib/choosefont.js/main/dist/choosefont.min.css", global: true}
     ]
   init: ({root, context, data, pubsub}) ->
     {ldview,ldcover,ChooseFont} = context

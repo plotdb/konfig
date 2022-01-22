@@ -2,7 +2,7 @@ module.exports =
   pkg:
     dependencies: [
       {url: "/assets/lib/ldview/main/index.js"}
-      {url: "/assets/lib/@loadingio/debounce.js/main/debounce.min.js"}
+      {url: "/assets/lib/@loadingio/debounce.js/main/index.min.js"}
     ]
   init: ({root, context, data, pubsub, t}) ->
     @data = {}

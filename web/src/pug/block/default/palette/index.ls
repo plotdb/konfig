@@ -2,11 +2,11 @@ module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {name: "ldcolor", version: "main", path: "ldcolor.min.js", async: false}
-      {name: "ldslider", version: "main", path: "ldrs.min.js", async: false}
-      {name: "ldslider", version: "main", path: "ldrs.min.css"}
-      {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.js", async: false}
-      {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.css"}
+      {name: "ldcolor", version: "main", path: "index.min.js", async: false}
+      {name: "ldslider", version: "main", path: "index.min.js", async: false}
+      {name: "ldslider", version: "main", path: "index.min.css"}
+      {name: "@loadingio/ldcolorpicker", version: "main", path: "index.min.js", async: false}
+      {name: "@loadingio/ldcolorpicker", version: "main", path: "index.min.css"}
       {name: "@loadingio/vscroll", version: "main", path: "index.min.js"}
       {name: "ldpalettepicker", version: "main", path: "index.min.css"}
       {name: "ldpalettepicker", version: "main", path: "index.min.js", async: false}

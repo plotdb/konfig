@@ -2,10 +2,10 @@ module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {name: "ldcolor", version: "main", path: "ldcolor.min.js", async: false}
-      {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.js"}
+      {name: "ldcolor", version: "main", path: "index.min.js", async: false}
+      {name: "@loadingio/ldcolorpicker", version: "main", path: "index.min.js"}
       # ldcp inject DOM into global space so we need it to be global.
-      {name: "@loadingio/ldcolorpicker", version: "main", path: "ldcp.min.css", global: true}
+      {name: "@loadingio/ldcolorpicker", version: "main", path: "index.min.css", global: true}
     ]
   init: ({root, context, pubsub, data}) ->
     {ldview,ldcolor,ldcolorpicker} = context

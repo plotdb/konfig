@@ -2,8 +2,8 @@ module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: [
-      {url: "/assets/lib/ldslider/main/ldrs.css", type: \css}
-      {url: "/assets/lib/ldslider/main/ldrs.js", async: false}
+      {url: "/assets/lib/ldslider/main/index.min.css", type: \css}
+      {url: "/assets/lib/ldslider/main/index.min.js", async: false}
     ]
   init: ({root, context, data, pubsub}) ->
     {ldview,ldrs} = context
