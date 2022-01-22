@@ -1,5 +1,14 @@
 # Change Logs
 
+## v4.0.0
+
+ - add `main` field in `package.json`.
+ - upgrade modules
+ - patch test code to make it work with upgraded modules
+ - add `@plotdb/semver` to make things work
+ - release with compact directory structure
+
+
 ## v3.0.0
 
  - upgrade `@plotdb/block` and `@plotdb/rescope` for bug fixing
