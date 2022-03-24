@@ -12,7 +12,6 @@ module.exports =
       root: root
       action: click:
         switch: ->
-          console.log 123
           obj.state = !obj.state
           view.render \switch
           pubsub.fire \event, \change, obj.state

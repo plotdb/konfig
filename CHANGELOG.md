@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.0.3 (upcoming)
+
+ - remove log in `boolean` widget
+
+
 ## v4.0.2
 
  - fix bug: in recursive view, ctx should be defined outside view config to prevent infinite recursive call.
