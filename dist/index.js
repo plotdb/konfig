@@ -131,12 +131,13 @@ konfig.views = {
     template = ld$.find(this.root, '[ld=template]', 0);
     template.parentNode.removeChild(template);
     template.removeAttribute('ld-scope');
-    return new ldview(import$(opt = {}, {
+    return new ldview(import$({
       ctx: {
         tab: {
           id: null
         }
-      },
+      }
+    }, import$(opt = {}, {
       template: template,
       root: this.root,
       initRender: false,
@@ -193,7 +194,7 @@ konfig.views = {
           }
         }
       }
-    }));
+    })));
   }
 };
 konfig.prototype = import$(Object.create(Object.prototype), {

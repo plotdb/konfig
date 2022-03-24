@@ -60,8 +60,7 @@ konfig.views =
     template = ld$.find(@root, '[ld=template]', 0)
     template.parentNode.removeChild template
     template.removeAttribute \ld-scope
-    new ldview (opt = {}) <<< do
-      ctx: {tab: id: null}
+    new ldview ({ctx: {tab: id: null}}) <<< ((opt = {}) <<< do
       template: template
       root: @root
       init-render: false
@@ -87,7 +86,7 @@ konfig.views =
           handler: ({node, data}) ~>
             node.style.flex = "1 1 #{16 * (data.meta.weight or 1)}%"
             data.itf.render!
-
+    )
 
 
 konfig.prototype = Object.create(Object.prototype) <<< do

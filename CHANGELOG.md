@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.0.2
+
+ - fix bug: in recursive view, ctx should be defined outside view config to prevent infinite recursive call.
+
+
 ## v4.0.1
 
  - fix ldpp include path in palette blocks
