@@ -136,7 +136,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           @_prepare-tab {id: meta.tab, name: meta.tab, depth: 0, parent: {}}
 
         @_ctrllist.push(ctrl[id] = {block: b, meta, root, key: Math.random!toString(36).substring(2)})
-        b.attach {root}
+        b.attach {root, defer: true}
           .then -> b.interface!
           .then -> return ctrl[id].itf = it
       .then (item) ~>
@@ -149,6 +149,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
   build: (clear = false) ->
     @_build-tab clear
     @_build-ctrl clear
+      .then ~> @_ctrllist.map (c) -> c.block.attach!
       .then ~> @render!
       .then ~> @update!
 
