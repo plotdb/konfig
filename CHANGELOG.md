@@ -1,8 +1,9 @@
 # Change Logs
 
-## v4.0.3 (upcoming)
+## v4.0.3
 
  - remove log in `boolean` widget
+ - upgrade `@plotdb/rescope` and `@plotdb/csscope` for running in nodejs
 
 
 ## v4.0.2
