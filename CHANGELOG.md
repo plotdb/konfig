@@ -3,6 +3,7 @@
 ## v4.0.4 (upcoming)
 
  - add missing `ldview` lib in boolean widget
+ - batch attach widgets
 
 
 ## v4.0.3
