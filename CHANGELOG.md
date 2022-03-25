@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.0.4 (upcoming)
+
+ - add missing `ldview` lib in boolean widget
+
+
 ## v4.0.3
 
  - remove log in `boolean` widget

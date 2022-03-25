@@ -1,7 +1,7 @@
 module.exports =
   pkg:
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
-    dependencies: []
+    dependencies: [ {name: "ldview", path: "index.min.js"} ]
   init: ({root, context, pubsub, data}) ->
     {ldview} = context
     obj = {state: data.default or false}
