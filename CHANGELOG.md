@@ -1,9 +1,10 @@
 # Change Logs
 
-## v4.0.4 (upcoming)
+## v4.1.0
 
  - add missing `ldview` lib in boolean widget
  - batch attach widgets
+ - add `konfig.merge` API
 
 
 ## v4.0.3

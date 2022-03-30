@@ -196,5 +196,18 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         traverse item.child, ((item.depth or 0) + 1), item
     traverse @_tab
 
+konfig.merge = (des = {}, ...objs) ->
+  _ = (des = {}, src = {}) ->
+    [dc,sc] = [(if des.child => des.child else des), (if src.child => src.child else src)]
+    for k,v of sc =>
+      if v.type =>
+        if !dc[k] => dc[k] = src[k]
+        else if dc[k] => dc[k] <<< src[k]
+      else
+        dc[k] = _(dc[k], sc[k])
+    return des
+  for i from 0 til objs.length => des = _ des, JSON.parse(JSON.stringify(objs[i]))
+  return des
+
 if module? => module.exports = konfig
 else if window? => window.konfig = konfig

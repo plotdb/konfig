@@ -56,6 +56,11 @@ Config editor.
  - `fire(event, args...)`
 
 
+## Class API
+
+ - `merge(des, obj1, obj2, ...)`: recursively merge objs by order into `des`, and return `des`.
+
+
 ### Events
 
  - `change`: fired when value is changed. Params:
