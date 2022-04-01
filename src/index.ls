@@ -19,11 +19,11 @@ konfig = (opt={}) ->
     @mgr = opt.manager
     @mgr.chain @mgr-chain
   @init = proxise.once (~> @_init!), (~> @_val)
-  @_update-debounced = debounce 150, ~> @_update!
+  @_update-debounced = debounce 150, (n, v) ~> @_update n, v
   @do-debounce = !(opt.debounce?) or opt.debounce
-  @update = ~>
-    if @do-debounce => @_update-debounced!
-    else @_update!
+  @update = (n,v) ~>
+    if @do-debounce => @_update-debounced n, v
+    else @_update n, v
   @
 
 konfig.views =
@@ -96,7 +96,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if !@view => return
     if !@_view =>
       if typeof(@view) == \string => @_view = konfig.views[@view].apply @
-      else @_view = @view
+      else if typeof(@view) == \function => @_view = @view.apply {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
+      else
+        @_view = @view
+        @_view.setCtx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
     @_view.render!
 
   meta: ({meta, tab}) ->
@@ -107,7 +110,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
   set: ->
     @_val = JSON.parse JSON.stringify it
     @render!
-  _update: -> @fire \change, @_val
+  _update: (n, v) -> @fire \change, @_val, n, v
   _init: ->
     @mgr.init!
       .then ~> if @use-bundle => (konfig.bundle or []) else []
@@ -143,7 +146,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         val[id] = v = item.get!
         item.on \change, ~>
           val[id] = it
-          @update!
+          @update id, it
       .then -> ctrl[id]
 
   build: (clear = false) ->

@@ -16,6 +16,9 @@ echo "minify index.js -> index.min.js ..."
 echo "minify konfig.widget.bootstrap.js -> konfig.widget.bootstrap.min.js ..."
 ./node_modules/.bin/uglifyjs dist/konfig.widget.bootstrap.js -m -c > dist/konfig.widget.bootstrap.min.js
 
+echo "bundling blocks -> index.html ..."
+./node_modules/.bin/lsc tools/bundle.ls > web/static/assets/bundle/index.html
+
 echo "copy dist to web ..."
 rm -rf web/static/assets/lib/@plotdb/konfig/dev/
 mkdir -p web/static/assets/lib/@plotdb/konfig/dev/

@@ -19,7 +19,7 @@
     "npm": ">=6.4.1"
   },
   "scripts": {
-    "start": "npx server -r web -o true"
+    "start": "npx server -r web -o true -p 3456"
   },
   "devDependencies": {
     "@loadingio/bootstrap.ext": "^0.0.4",

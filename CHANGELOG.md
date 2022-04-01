@@ -1,5 +1,13 @@
 # Change Logs
 
+## v4.2.0 (upcoming)
+
+ - support function as view parameter, with `{root, ctrls, tabs}` as this object.
+ - use `{root, ctrls, tabs}` as view context
+ - bundler output to standard out.
+ - pass changed id and value to `update` and `change` event.
+
+
 ## v4.1.0
 
  - add missing `ldview` lib in boolean widget

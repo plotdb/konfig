@@ -19,8 +19,9 @@ module.exports =
     pubsub.on \init, (opt = {}) ~>
       @itf = itf =
         evt-handler: {}
-        get: (opt.get or ->)
-        set: (opt.set or ->)
+        get: opt.get or ->
+        set: opt.set or ->
+        meta: opt.meta or ->
         render: ->
           view.render!
           if opt.render => opt.render!
