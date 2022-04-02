@@ -12,7 +12,9 @@ module.exports =
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
       set: ~> @ldcp.set it
-      meta: ~> @ldcp.set-palette it.palette
+      meta: ~>
+        @ldcp.set-palette it.palette
+        if it.idx? => @ldcp.set-idx it.idx
     @ldcp = new ldcolorpicker(
       root,
       className: "round shadow-sm round flat compact-palette no-button no-empty-color vertical"

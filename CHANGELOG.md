@@ -6,6 +6,7 @@
  - use `{root, ctrls, tabs}` as view context
  - bundler output to standard out.
  - pass changed id and value to `update` and `change` event.
+ - support `meta` in widget for re-configuring
 
 
 ## v4.1.0
