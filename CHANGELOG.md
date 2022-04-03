@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.2.0 (upcoming)
+## v4.2.0
 
  - support function as view parameter, with `{root, ctrls, tabs}` as this object.
  - use `{root, ctrls, tabs}` as view context
