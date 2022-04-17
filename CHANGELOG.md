@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.1
+
+ - rebuild and remove useless log
+
+
 ## v4.2.0
 
  - support function as view parameter, with `{root, ctrls, tabs}` as this object.
