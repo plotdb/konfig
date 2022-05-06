@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.3 (upcoming)
+
+ - palette widget should use `default` instead of `palette` as its default value 
+
+
 ## v4.2.2
 
  - add an option for regenerate view
