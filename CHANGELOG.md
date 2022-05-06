@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.2.2
+
+ - add an option for regenerate view
+ - always regenerate view when build with clear option on
+
+
 ## v4.2.1
 
  - rebuild and remove useless log

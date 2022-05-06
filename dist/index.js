@@ -215,11 +215,12 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     }
     return results$;
   },
-  render: function(){
+  render: function(clear){
+    clear == null && (clear = false);
     if (!this.view) {
       return;
     }
-    if (!this._view) {
+    if (!this._view || clear === true) {
       if (typeof this.view === 'string') {
         this._view = konfig.views[this.view].apply(this);
       } else if (typeof this.view === 'function') {
@@ -364,7 +365,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         return c.block.attach();
       });
     }).then(function(){
-      return this$.render();
+      return this$.render(clear);
     }).then(function(){
       return this$.update();
     });

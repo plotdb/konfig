@@ -92,9 +92,9 @@ konfig.views =
 konfig.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
-  render: ->
+  render: (clear = false) ->
     if !@view => return
-    if !@_view =>
+    if !@_view or clear == true =>
       if typeof(@view) == \string => @_view = konfig.views[@view].apply @
       else if typeof(@view) == \function => @_view = @view.apply {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
       else
@@ -106,6 +106,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if meta? => @_meta = meta
     if tab? => @_tab = tab
     @build true
+
   get: -> JSON.parse JSON.stringify @_val
   set: ->
     @_val = JSON.parse JSON.stringify it
@@ -153,7 +154,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     @_build-tab clear
     @_build-ctrl clear
       .then ~> @_ctrllist.map (c) -> c.block.attach!
-      .then ~> @render!
+      .then ~> @render clear
       .then ~> @update!
 
   _build-ctrl: (clear = false) ->
