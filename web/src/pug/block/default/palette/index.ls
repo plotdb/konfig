@@ -14,7 +14,7 @@ module.exports =
     ]
   init: ({root, context, pubsub, data, i18n}) ->
     {ldview,ldcolor,ldpp,ldcover} = context
-    obj = {pal: data.palette or ldpp.default-palette}
+    obj = {pal: data.default or ldpp.default-palette}
     pubsub.fire \init, do
       get: -> obj.pal
       set: ->
