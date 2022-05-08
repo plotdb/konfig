@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.2.4
+
+ - add `ldbutton` dependency for palette picker
+ - make css of `ldslider` and `ldbutton` global for global ldpalettepicker
+
+
 ## v4.2.3
 
  - palette widget should use `default` instead of `palette` as its default value 

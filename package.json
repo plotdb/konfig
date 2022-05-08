@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "4.2.3",
+  "version": "4.2.4",
   "browser": "dist/index.min.js",
   "main": "dist/index.min.js",
   "files": [
@@ -65,6 +65,7 @@
       "zmgr",
       "ldpalettepicker",
       "ldcolor",
+      "ldbutton",
       "ldcover",
       "ldloader",
       "ldiconfont",
@@ -82,6 +83,7 @@
     "@plotdb/semver": "^0.0.2",
     "ldcolor": "^1.0.0",
     "ldcover": "^3.0.1",
+    "ldbutton": "^2.0.1",
     "ldpalettepicker": "^4.0.0",
     "ldslider": "^3.0.2",
     "proxise": "^1.0.1"
