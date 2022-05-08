@@ -1,8 +1,9 @@
 # Change Logs
 
-## v4.2.3 (upcoming)
+## v4.2.3
 
  - palette widget should use `default` instead of `palette` as its default value 
+ - lazy-load `all.palettes.js` and load it only if necessary
 
 
 ## v4.2.2
