@@ -8,11 +8,10 @@ module.exports =
       {name: "@loadingio/ldcolorpicker", version: "main", path: "index.min.js", async: false}
       {name: "@loadingio/ldcolorpicker", version: "main", path: "index.min.css"}
       {name: "@loadingio/vscroll", version: "main", path: "index.min.js"}
-      {name: "ldpalettepicker", version: "main", path: "index.min.css"}
-      {name: "ldpalettepicker", version: "main", path: "index.min.js", async: false}
-      {name: "ldpalettepicker", version: "main", path: "all.palettes.js"}
+      {name: "ldpalettepicker", version: "main", path: "index.min.css", global: true}
+      {name: "ldpalettepicker", version: "main", path: "index.min.js"}
     ]
-  init: ({root, context, pubsub, data, i18n}) ->
+  init: ({root, context, pubsub, data, i18n, manager}) ->
     {ldview,ldcolor,ldpp,ldcover} = context
     obj = {pal: data.default or ldpp.default-palette}
     pubsub.fire \init, do
@@ -24,20 +23,33 @@ module.exports =
     view = new ldview do
       root: root
       action: click:
-        ldp: ->
-          if !obj.ldpp =>
-            pals = if Array.isArray(data.palettes) => data.palettes
-            else if typeof(data.palettes) == \string => ldpp.get data.palettes
-            else ldpp.get('all')
-            obj.ldpp = new ldpp {
-              root: view.get('ldcv'), ldcv: true, use-clusterizejs: true, i18n: i18n
-              palette: data.palette, palettes: pals, use-vscroll: true
-            }
-          obj.ldpp.get!then ->
-            if !it => return
-            obj.pal = it
-            view.render \color
-            pubsub.fire \event, \change, obj.pal
+        ldp: ~>
+          Promise.resolve!
+            .then ->
+              if obj.ldpp => return
+              pals = if Array.isArray(data.palettes) => data.palettes
+              else if typeof(data.palettes) == \string => ldpp.get data.palettes
+              else null
+              p = if pals => Promise.resolve pals
+              else
+                manager.rescope.load([
+                  {name: "ldpalettepicker", version: "main", path: "index.min.js", async: false}
+                  {name: "ldpalettepicker", version: "main", path: "all.palettes.js"}
+                ])
+                  .then ({ldpp}) ~> ldpp.get \all
+              p
+                .then (pals) ~>
+                  obj.ldpp = new ldpp {
+                    root: view.get('ldcv'), ldcv: {in-place:false}, use-clusterizejs: true, i18n: i18n
+                    palette: data.palette, palettes: pals, use-vscroll: true
+                  }
+            .then -> obj.ldpp.get!
+            .then ->
+              if !it => return
+              obj.pal = it
+              view.render \color
+              pubsub.fire \event, \change, obj.pal
+
       handler:
         color:
           list: -> obj.{}pal.[]colors
