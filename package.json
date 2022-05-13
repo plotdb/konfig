@@ -76,7 +76,7 @@
   "dependencies": {
     "@loadingio/ldcolorpicker": "^3.0.0",
     "@loadingio/vscroll": "^0.0.8",
-    "@plotdb/block": "^4.5.4",
+    "@plotdb/block": "^4.6.0",
     "@plotdb/csscope": "^4.0.5",
     "@plotdb/datadom": "^0.2.0",
     "@plotdb/rescope": "^4.1.3",
