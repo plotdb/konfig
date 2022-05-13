@@ -15,6 +15,7 @@ konfig = function(opt){
   this._ctrllist = [];
   this._tabobj = {};
   this._tablist = [];
+  this._template = null;
   this._meta = opt.meta || {};
   this._tab = opt.tab || {};
   this._val = {};
@@ -128,9 +129,15 @@ konfig.views = {
   },
   recurse: function(){
     var template, opt, this$ = this;
-    template = ld$.find(this.root, '[ld=template]', 0);
-    template.parentNode.removeChild(template);
-    template.removeAttribute('ld-scope');
+    if (this._template) {
+      template = this._template;
+    } else {
+      template = ld$.find(this.root, '[ld=template]', 0);
+      template.parentNode.removeChild(template);
+      template.removeAttribute('ld-scope');
+      this._template = template;
+    }
+    template = template.cloneNode(true);
     return new ldview(import$({
       ctx: {
         tab: {

@@ -9,6 +9,7 @@ konfig = (opt={}) ->
   @_ctrllist = []
   @_tabobj = {}
   @_tablist = []
+  @_template = null # for recursive view, or views with template
   @_meta = opt.meta or {}
   @_tab = opt.tab or {}
   @_val = {}
@@ -57,9 +58,13 @@ konfig.views =
                 handler: ({node, data}) ~>
                   data.itf.render!
   recurse: ->
-    template = ld$.find(@root, '[ld=template]', 0)
-    template.parentNode.removeChild template
-    template.removeAttribute \ld-scope
+    if @_template => template = @_template
+    else
+      template = ld$.find(@root, '[ld=template]', 0)
+      template.parentNode.removeChild template
+      template.removeAttribute \ld-scope
+      @_template = template
+    template = template.cloneNode true
     new ldview ({ctx: {tab: id: null}}) <<< ((opt = {}) <<< do
       template: template
       root: @root

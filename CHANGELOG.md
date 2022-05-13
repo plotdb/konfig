@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.5
+
+ - in recursive view, keep template and use cloned version of template for any rebuilding
+
+
 ## v4.2.4
 
  - add `ldbutton` dependency for palette picker
