@@ -24,6 +24,11 @@ Config editor.
  - `view`: view to use for rendering. option, default null. can be an object or string:
    - object: based on duck typing, it can be anything with following method:
      - `render()`: called when `@plotdb/konfig` renders tabs and ctrls.
+   - function: a function applied with `{ctrls, tabs, tree, root}` object where
+     - `root`: konfig root element
+     - `ctrls`: list of controls
+     - `tabs`: list of tabs
+     - `tree`: control object
    - string: name of the bundled views to use. possible names:
      - `simple`: simple list of control. sample DOM:
 
