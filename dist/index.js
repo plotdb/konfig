@@ -223,6 +223,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     return results$;
   },
   render: function(clear){
+    var payload;
     clear == null && (clear = false);
     if (!this.view) {
       return;
@@ -231,11 +232,12 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       if (typeof this.view === 'string') {
         this._view = konfig.views[this.view].apply(this);
       } else if (typeof this.view === 'function') {
-        this._view = this.view.apply({
+        payload = {
           root: this.root,
           ctrls: this._ctrllist,
           tabs: this._tablist
-        });
+        };
+        this._view = this.view.apply(payload, [payload]);
       } else {
         this._view = this.view;
         this._view.setCtx({

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.6
+
+ - pass parameter into functional view
+
+
 ## v4.2.5
 
  - in recursive view, keep template and use cloned version of template for any rebuilding

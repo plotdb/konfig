@@ -101,7 +101,14 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if !@view => return
     if !@_view or clear == true =>
       if typeof(@view) == \string => @_view = konfig.views[@view].apply @
-      else if typeof(@view) == \function => @_view = @view.apply {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
+      else if typeof(@view) == \function =>
+        payload =
+          root: @root
+          ctrls: @_ctrllist
+          tabs: @_tablist
+          #tree: @_ctrlobj # TBD
+        # TODO we should not use apply since with parameters give us more flexibility
+        @_view = @view.apply payload, [payload]
       else
         @_view = @view
         @_view.setCtx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
@@ -168,6 +175,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
       tab = if meta.child => meta.tab else null
+      # TODO this support only 1 level subtree. we may want to accept more info from tab def.
       if !tab and @autotab and pid => tab = pid
       if !ctrls => return
       for id,v of ctrls =>
