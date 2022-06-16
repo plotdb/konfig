@@ -11,7 +11,7 @@ module.exports =
     {ldview,ldcolor,ldcolorpicker} = context
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
-      set: ~> @ldcp.set it
+      set: ~> @ldcp.set-color it
       meta: ~>
         @ldcp.set-palette it.palette
         if it.idx? => @ldcp.set-idx it.idx

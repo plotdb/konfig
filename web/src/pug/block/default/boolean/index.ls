@@ -7,7 +7,9 @@ module.exports =
     obj = {state: data.default or false}
     pubsub.fire \init, do
       get: -> obj.state
-      set: -> obj.state = !!it
+      set: ->
+        obj.state = !!it
+        view.render \switch
     view = new ldview do
       root: root
       action: click:
