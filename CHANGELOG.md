@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.7 (upcoming)
+
+ - upgrade dependencies
+
+
 ## v4.2.6
 
  - pass parameter into functional view
