@@ -120,9 +120,21 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     @build true
 
   get: -> JSON.parse JSON.stringify @_val
-  set: ->
-    @_val = JSON.parse JSON.stringify it
+  set: (nv) ->
+    # we should not overwrite `_val`,
+    # since widget event handler update the original `_val` directly.
+    nv = JSON.parse JSON.stringify nv
     @render!
+    traverse = (meta, val = {}, nval = {}, ctrl = {}, pid) ~>
+      ctrls = if meta.child => meta.child else meta
+      for id,v of ctrls =>
+        if v.type =>
+          if val[id] != nv[id] =>
+            val[id] = nv[id]
+            ctrl[id].itf.set val[id]
+        else traverse(v, val{}[id], nv{}[id], ctrl{}[id], id)
+    traverse @_meta, @_val, nv, @_ctrlobj, null
+
   _update: (n, v) -> @fire \change, @_val, n, v
   _init: ->
     @mgr.init!
