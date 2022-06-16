@@ -82,3 +82,12 @@ if true =>
       if @val.font =>
         sample.style.fontFamily = @val.font.name
         @val.font.sync sample.innerText
+
+    # test updating konfig programmatically
+    setTimeout (->
+      val = cfg.get!
+      console.log val
+      val.choice = \right
+      cfg.set val
+      cfg.render!
+    ), 1000

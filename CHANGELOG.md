@@ -1,8 +1,12 @@
 # Change Logs
 
-## v4.2.7 (upcoming)
+## v4.2.7
 
  - upgrade dependencies
+ - bug fix: `set` should also update widgets
+ - bug fix: color widget: when updating color, should use `ldcp.set-color` instead of `ldcp.set`
+ - bug fix: boolean widget: when updating boolean, should render widget
+ - bug fix: when setting value, widgets should also be updated and rendered
 
 
 ## v4.2.6
