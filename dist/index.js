@@ -276,12 +276,12 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       for (id in ctrls) {
         v = ctrls[id];
         if (v.type) {
-          if (val[id] !== nv[id]) {
-            val[id] = nv[id];
+          if (val[id] !== nval[id]) {
+            val[id] = nval[id];
             results$.push(ctrl[id].itf.set(val[id]));
           }
         } else {
-          results$.push(traverse(v, val[id] || (val[id] = {}), nv[id] || (nv[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
+          results$.push(traverse(v, val[id] || (val[id] = {}), nval[id] || (nval[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
         }
       }
       return results$;

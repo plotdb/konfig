@@ -129,10 +129,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       ctrls = if meta.child => meta.child else meta
       for id,v of ctrls =>
         if v.type =>
-          if val[id] != nv[id] =>
-            val[id] = nv[id]
+          if val[id] != nval[id] =>
+            val[id] = nval[id]
             ctrl[id].itf.set val[id]
-        else traverse(v, val{}[id], nv{}[id], ctrl{}[id], id)
+        else traverse(v, val{}[id], nval{}[id], ctrl{}[id], id)
     traverse @_meta, @_val, nv, @_ctrlobj, null
 
   _update: (n, v) -> @fire \change, @_val, n, v

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.8
+
+ - bug fix: recursive `set` should read value from `nval` instead of the root `nv`.
+
+
 ## v4.2.7
 
  - upgrade dependencies
