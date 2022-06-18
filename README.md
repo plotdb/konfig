@@ -54,7 +54,7 @@ Config editor.
  - `render()`: re-render controls
  - `get()`: get value object.
  - `set(v)`: set value object to `v`.
- - `meta()`: update `meta` object.
+ - `meta()`: update `meta` object. return Promise
  - `tab()`: update `tab` object.
  - `on(event, cb(args...))`
  - `fire(event, args...)`
