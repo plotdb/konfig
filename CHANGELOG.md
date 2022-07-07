@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.10
+
+ - bug fix: `ns` in block def is not used to get a block
+
+
 ## v4.2.9
 
  - bug fix: `ns` in block def is not resolved in `typemap`

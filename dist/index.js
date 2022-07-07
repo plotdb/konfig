@@ -337,9 +337,10 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     } else if (this.typemap && (ret = this.typemap(meta.type))) {
       ns = ret.ns, name = ret.name, version = ret.version, path = ret.path;
     } else {
-      ref$ = [meta.type, "master", ''], name = ref$[0], version = ref$[1], path = ref$[2];
+      ref$ = ['', meta.type, "master", ''], ns = ref$[0], name = ref$[1], version = ref$[2], path = ref$[3];
     }
     return this.mgr.get({
+      ns: ns,
       name: name,
       version: version,
       path: path
