@@ -323,7 +323,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     return this._tabobj[tab.id] = d;
   },
   _prepareCtrl: function(meta, val, ctrl){
-    var id, ref$, name, version, path, ret, this$ = this;
+    var id, ref$, name, version, path, ret, ns, this$ = this;
     id = meta.id;
     if (ctrl[id]) {
       return Promise.resolve();
@@ -335,7 +335,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         path: ref$.path
       }, name = ref$.name, version = ref$.version, path = ref$.path;
     } else if (this.typemap && (ret = this.typemap(meta.type))) {
-      name = ret.name, version = ret.version, path = ret.path;
+      ns = ret.ns, name = ret.name, version = ret.version, path = ret.path;
     } else {
       ref$ = [meta.type, "master", ''], name = ref$[0], version = ref$[1], path = ref$[2];
     }

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.9
+
+ - bug fix: `ns` in block def is not resolved in `typemap`
+
+
 ## v4.2.8
 
  - bug fix: recursive `set` should read value from `nval` instead of the root `nv`.
