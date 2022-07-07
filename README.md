@@ -21,6 +21,9 @@ Config editor.
  - `tab`: tab object. see spec for more information.
  - `mgr`: block manager for retrieving blocks
    - use default mgr if omitted, which always throw an Error except for blocks available in bundle.
+ - `typemap(name)`: converter from widget name to `@plotdb/block` definition. For widget customization.
+   - `name`: a widget name, such as `number`, `color`, etc.
+   - return value: should be an object for block definition such as `{name: 'number', version: '0.0.1'}`
  - `view`: view to use for rendering. option, default null. can be an object or string:
    - object: based on duck typing, it can be anything with following method:
      - `render()`: called when `@plotdb/konfig` renders tabs and ctrls.
