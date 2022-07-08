@@ -543,7 +543,7 @@ konfig.merge = function(des){
     ref$ = [des.child ? des.child : des, src.child ? src.child : src], dc = ref$[0], sc = ref$[1];
     for (k in sc) {
       v = sc[k];
-      if (v.type) {
+      if (v.type || (dc[k] && dc[k].type)) {
         if (!dc[k]) {
           dc[k] = src[k];
         } else if (dc[k]) {

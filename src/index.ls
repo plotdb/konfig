@@ -229,7 +229,7 @@ konfig.merge = (des = {}, ...objs) ->
   _ = (des = {}, src = {}) ->
     [dc,sc] = [(if des.child => des.child else des), (if src.child => src.child else src)]
     for k,v of sc =>
-      if v.type =>
+      if v.type or (dc[k] and dc[k].type) =>
         if !dc[k] => dc[k] = src[k]
         else if dc[k] => dc[k] <<< src[k]
       else

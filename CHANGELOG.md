@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.2.11
+
+ - consider both src and des type in konfig.merge to make konfig merge simpler
+
+
 ## v4.2.10
 
  - bug fix: `ns` in block def is not used to get a block
