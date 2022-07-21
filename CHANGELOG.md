@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.3.0 (upcoming)
+
+ - font widget:
+   - popup should not be in-place
+   - support default value
+   - get return minimal data from xlfont
+
 ## v4.2.11
 
  - consider both src and des type in konfig.merge to make konfig merge simpler
