@@ -8,8 +8,11 @@ module.exports =
     ]
   init: ({root, context, data, pubsub}) ->
     {ldview,ldcover,xfc} = context
+    # TODO data for get/set should be serializable and backward compatible.
     pubsub.fire \init, do
-      get: -> obj.font
+      get: ->
+        if obj.font => obj.font{name, style, weight}
+        if typeof(data.default) == \string => {name: data.default} else data.default
       set: ->
         obj.font = it
         view.render \button
@@ -24,7 +27,7 @@ module.exports =
       root: root
       init:
         ldcv: ({node}) ->
-          obj.ldcv = new ldcover root: node
+          obj.ldcv = new ldcover root: node, in-place: false
           obj.ldcv.on \toggle.on, -> debounce 50 .then -> chooser.render!
       action: click:
         button: ({node}) ->
@@ -33,7 +36,6 @@ module.exports =
               obj.font = f
               view.render \button
               pubsub.fire \event, \change, f
-
       text:
         button: ({node}) ->
           if !obj.font => "..." else obj.font.name or "..."
