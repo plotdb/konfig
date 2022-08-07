@@ -10,7 +10,7 @@ Config editor.
     kfg.init().then(function() { ... });
 
 
-### Constructor options
+Constructor options:
 
  - `root`: root node or CSS selector for root node.
    - root node is used to place root tab for this config.
@@ -19,8 +19,8 @@ Config editor.
  - `autotab`: true to use meta object field key as tab name by default. default false
  - `meta`: meta object. see spec for more information.
  - `tab`: tab object. see spec for more information.
- - `mgr`: block manager for retrieving blocks
-   - use default mgr if omitted, which always throw an Error except for blocks available in bundle.
+ - `manager`: block manager for retrieving blocks
+   - use default manager if omitted, which always throw an Error except for blocks available in bundle.
  - `typemap(name)`: converter from widget name to `@plotdb/block` definition. For widget customization.
    - `name`: a widget name, such as `number`, `color`, etc.
    - return value: should be an object for block definition such as `{name: 'number', version: '0.0.1'}`
