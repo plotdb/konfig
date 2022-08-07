@@ -7,6 +7,8 @@
    - support default value
    - get return minimal data from xlfont
  - support passing `meta` object directly into `meta()` api
+ - use `ctx()` to replace `setCtx()` with object type `view` definition
+ - return `_view` even if `clear` is true for builtin views, since there is no need to re-generate ldview for builtin views.
 
 
 ## v4.2.11

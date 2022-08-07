@@ -24,30 +24,7 @@ Config editor.
  - `typemap(name)`: converter from widget name to `@plotdb/block` definition. For widget customization.
    - `name`: a widget name, such as `number`, `color`, etc.
    - return value: should be an object for block definition such as `{name: 'number', version: '0.0.1'}`
- - `view`: view to use for rendering. option, default null. can be an object or string:
-   - object: based on duck typing, it can be anything with following method:
-     - `render()`: called when `@plotdb/konfig` renders tabs and ctrls.
-   - function: a function with a parameter object which contains following fields:
-     - `root`: konfig root element
-     - `ctrls`: list of controls
-     - `tabs`: list of tabs
-   - string: name of the bundled views to use. possible names:
-     - `simple`: simple list of control. sample DOM:
-
-       div(ld-each="ctrl")
-
-     - `default`: controls with tabs. sample DOM:
-
-       div(ld-each="tab")
-         div(ld="name")
-         div(ld-each="ctrl")
-
-     - `recurse`: controls in recursive tabs. sample DOM as followed. Note `ctrl` should be outside of `tab`:
-
-       div(ld="template")
-         div(ld="name")
-         div(ld-each="ctrl")
-         div(ld-each="tab")
+ - `view`: view for rendering. optional, default null. For more information, see `Views` section below.
 
 
 ### API
@@ -92,6 +69,78 @@ Config editor.
 ## Meta Specification
 
 Check `doc/spec.md` for more information.
+
+
+## Views
+
+To correctly render your configuration editor, you have to specify how it should be rendered. This can be done by setting the `view` option in constructor.
+
+`view` can be either a string, an object or a function. Following explains the details about the usage of corresponding types. 
+
+
+### Builtin Views
+
+`@plotdb/konfig` uses `ldview` for widget rendering, and provide some builtin views which can be specified by their name, by setting `view` option to following strings along with the corresponding sample DOM for ldview, for example:
+
+    new konfig({
+      view: "simple"
+    });
+
+While `@plotdb/konfig` provides a set of default view dynamics, you still have to define the looks and feels of your views. Following are possible values of `view`, including `simple`, `default` and `recurse`, along with the corresponding sample DOMs.
+
+
+#### simple
+
+A simple list of controls. sample DOM:
+
+    div(ld-each="ctrl")
+
+
+#### default
+
+Controls with tabs. sample DOM:
+
+    div(ld-each="tab")
+      div(ld="name")
+      div(ld-each="ctrl")
+
+
+#### recurse
+
+Controls in recursive tabs. sample DOM:
+
+    div(ld="template")
+      div(ld="name")
+      div(ld-each="ctrl")
+      div(ld-each="tab")
+
+Note `ctrl` should be outside of `tab`.
+
+ 
+### view as object
+
+When `view` option is an object, it can be anything with following methods:
+
+ - `render()`: called when `@plotdb/konfig` renders tabs and ctrls.
+ - `ctx(opt)`: called when `meta` changes, with a parameter object `opt`, with following fields:
+   - `root`: root element
+   - `ctrls`: ctrl list
+   - `tabs`: tab list
+
+
+### view as function
+
+When `view` option is a function, it should accept an parameter object with following fields:
+
+ - `root`: konfig root element
+ - `ctrls`: list of controls
+ - `tabs`: list of tabs
+
+Additionally, it should return an object with at least following method:
+
+ - `render()`: this is called everytime when `konfig` needs to br re-rendered.
+
+This function is called everytime a konfig rebuild is necessary ( e.g., when `meta` is updated ). You should implement singleton by yourself if needed.
 
 
 ## License

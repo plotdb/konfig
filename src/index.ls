@@ -100,7 +100,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
   render: (clear = false) ->
     if !@view => return
     if !@_view or clear == true =>
-      if typeof(@view) == \string => @_view = konfig.views[@view].apply @
+      if typeof(@view) == \string => @_view = @_view or konfig.views[@view].apply @
       else if typeof(@view) == \function =>
         payload =
           root: @root
@@ -111,7 +111,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         @_view = @view.apply payload, [payload]
       else
         @_view = @view
-        @_view.setCtx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
+        @_view.ctx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
     @_view.render!
 
   meta: (opt = {}) ->

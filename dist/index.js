@@ -230,7 +230,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     }
     if (!this._view || clear === true) {
       if (typeof this.view === 'string') {
-        this._view = konfig.views[this.view].apply(this);
+        this._view = this._view || konfig.views[this.view].apply(this);
       } else if (typeof this.view === 'function') {
         payload = {
           root: this.root,
@@ -240,7 +240,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         this._view = this.view.apply(payload, [payload]);
       } else {
         this._view = this.view;
-        this._view.setCtx({
+        this._view.ctx({
           root: this.root,
           ctrls: this._ctrllist,
           tabs: this._tablist
