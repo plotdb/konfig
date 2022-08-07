@@ -114,9 +114,13 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         @_view.setCtx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
     @_view.render!
 
-  meta: ({meta, tab}) ->
-    if meta? => @_meta = meta
-    if tab? => @_tab = tab
+  meta: (opt = {}) ->
+    {meta, tab} = opt
+    @ <<< {_meta: {}, _tab: {}}
+    if !(meta? and tab?) or !(meta? and meta.type?) => @_meta = opt
+    else
+      if meta? => @_meta = meta
+      if tab? => @_tab = tab
     @build true
 
   get: -> JSON.parse JSON.stringify @_val

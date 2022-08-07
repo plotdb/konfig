@@ -6,6 +6,8 @@
    - popup should not be in-place
    - support default value
    - get return minimal data from xlfont
+ - support passing `meta` object directly into `meta()` api
+
 
 ## v4.2.11
 

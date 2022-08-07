@@ -249,14 +249,21 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     }
     return this._view.render();
   },
-  meta: function(arg$){
+  meta: function(opt){
     var meta, tab;
-    meta = arg$.meta, tab = arg$.tab;
-    if (meta != null) {
-      this._meta = meta;
-    }
-    if (tab != null) {
-      this._tab = tab;
+    opt == null && (opt = {});
+    meta = opt.meta, tab = opt.tab;
+    this._meta = {};
+    this._tab = {};
+    if (!(meta != null && tab != null) || !(meta != null && meta.type != null)) {
+      this._meta = opt;
+    } else {
+      if (meta != null) {
+        this._meta = meta;
+      }
+      if (tab != null) {
+        this._tab = tab;
+      }
     }
     return this.build(true);
   },
