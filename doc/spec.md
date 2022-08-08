@@ -1,11 +1,11 @@
 # Overview
 
-`@plotdb/konfig` is for configuring with interface. For this purpose, we have:
+`@plotdb/konfig` is for configuring with user interface. For this purpose, we have:
 
+ - `meta`: a set of widgets defining how information is organized
  - `ctrl`: a widget for user to input certain information
    - `ctrl definition object`: config ( type, name, size, value range, ui order, etc ) for this ctrl
    - `block`: logic + interface definition in `@plotdb/block` format.
- - `meta`: a set of widgets in defined arrangement that defines how information are organized
  - `tab`: a different view of ctrl, mainly for how ctrls are arranged in user interface.
 
 
