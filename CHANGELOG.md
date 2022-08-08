@@ -9,6 +9,9 @@
  - support passing `meta` object directly into `meta()` api
  - use `ctx()` to replace `setCtx()` with object type `view` definition
  - return `_view` even if `clear` is true for builtin views, since there is no need to re-generate ldview for builtin views.
+ - support `config` in `meta()` and `build()` for instantly reconfig after meta updated.
+ - `meta()` should check for type of `meta.type` for parameter analysis
+ - return cloned config object in change event to prevent pollution from outside
 
 
 ## v4.2.11

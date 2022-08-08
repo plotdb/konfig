@@ -250,13 +250,14 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     return this._view.render();
   },
   meta: function(opt){
-    var meta, tab;
+    var meta, tab, config;
     opt == null && (opt = {});
-    meta = opt.meta, tab = opt.tab;
+    meta = opt.meta, tab = opt.tab, config = opt.config;
     this._meta = {};
     this._tab = {};
-    if (!(meta != null && tab != null) || !(meta != null && meta.type != null)) {
+    if (!(meta != null) || typeof meta.type === 'string') {
       this._meta = opt;
+      return this.build(true);
     } else {
       if (meta != null) {
         this._meta = meta;
@@ -264,8 +265,8 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       if (tab != null) {
         this._tab = tab;
       }
+      return this.build(true, config);
     }
-    return this.build(true);
   },
   get: function(){
     return JSON.parse(JSON.stringify(this._val));
@@ -296,7 +297,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     return traverse(this._meta, this._val, nv, this._ctrlobj, null);
   },
   _update: function(n, v){
-    return this.fire('change', this._val, n, v);
+    return this.fire('change', JSON.parse(JSON.stringify(this._val)), n, v);
   },
   _init: function(){
     var this$ = this;
@@ -394,7 +395,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       return ctrl[id];
     });
   },
-  build: function(clear){
+  build: function(clear, cfg){
     var this$ = this;
     clear == null && (clear = false);
     this._buildTab(clear);
@@ -404,6 +405,10 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       });
     }).then(function(){
       return this$.render(clear);
+    }).then(function(){
+      if (cfg != null) {
+        return this$.set(cfg);
+      }
     }).then(function(){
       return this$.update();
     });

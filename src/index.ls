@@ -115,13 +115,15 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     @_view.render!
 
   meta: (opt = {}) ->
-    {meta, tab} = opt
+    {meta, tab, config} = opt
     @ <<< {_meta: {}, _tab: {}}
-    if !(meta? and tab?) or !(meta? and meta.type?) => @_meta = opt
+    if !(meta?) or (typeof(meta.type) == \string) =>
+      @_meta = opt
+      @build true
     else
       if meta? => @_meta = meta
       if tab? => @_tab = tab
-    @build true
+      @build true, config
 
   get: -> JSON.parse JSON.stringify @_val
   set: (nv) ->
@@ -139,7 +141,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         else traverse(v, val{}[id], nval{}[id], ctrl{}[id], id)
     traverse @_meta, @_val, nv, @_ctrlobj, null
 
-  _update: (n, v) -> @fire \change, @_val, n, v
+  _update: (n, v) -> @fire \change, JSON.parse(JSON.stringify(@_val)), n, v
   _init: ->
     @mgr.init!
       .then ~> if @use-bundle => (konfig.bundle or []) else []
@@ -178,11 +180,12 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           @update id, it
       .then -> ctrl[id]
 
-  build: (clear = false) ->
+  build: (clear = false, cfg) ->
     @_build-tab clear
     @_build-ctrl clear
       .then ~> @_ctrllist.map (c) -> c.block.attach!
       .then ~> @render clear
+      .then ~> if cfg? => @set cfg
       .then ~> @update!
 
   _build-ctrl: (clear = false) ->
