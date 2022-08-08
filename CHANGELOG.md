@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.3.0 (upcoming)
+## v4.3.0
 
  - font widget:
    - popup should not be in-place
@@ -12,6 +12,7 @@
  - support `config` in `meta()` and `build()` for instantly reconfig after meta updated.
  - `meta()` should check for type of `meta.type` for parameter analysis
  - return cloned config object in change event to prevent pollution from outside
+ - update dev dependencies to prevent vulnerability warning
 
 
 ## v4.2.11
