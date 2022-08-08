@@ -5,6 +5,28 @@ Config editor.
 
 ## Usage
 
+Following modules are needed:
+
+    npm install --save @plotdb/konfig @plotdb/semver @plotdb/block @plotdb/rescope @plotdb/csscope @loadingio/debounce.js proxise @loadingio/ldquery ldview
+
+include them:
+
+    /* here we use `@zbryikt/template` syntax */
+    +script({
+      {name: "proxise"},
+      {name: "@loadingio/debounce.js"},
+      {name: "@loadingio/ldquery"},
+      {name: "ldview"},
+      {name: "@plotdb/semver"},
+      {name: "@plotdb/rescope"},
+      {name: "@plotdb/csscope"},
+      {name: "@plotdb/block"},
+      {name: "@plotdb/konfig"},
+      {name: "@plotdb/konfig", path: "konfig.widget.bootstrap.min.js"}
+    });
+
+Then the initialization script:
+
     kfg = new konfig({...});
     kfg.on("change", function(cfg) { ... });
     kfg.init().then(function() { ... });
@@ -25,6 +47,24 @@ Constructor options:
    - `name`: a widget name, such as `number`, `color`, etc.
    - return value: should be an object for block definition such as `{name: 'number', version: '0.0.1'}`
  - `view`: view for rendering. optional, default null. For more information, see `Views` section below.
+
+
+A common sample usage:
+
+    kfg = new konfig({
+      root: document.querySelector('.kfg'),
+      useBundle: true /* bundle from konfig.widget.bootstrap.min.js */
+      view: 'simple'
+      meta: { sample: { type: 'number' } }
+      view: 'simple'
+    });
+    kfg.on("change", function() { ... });
+    kfg.init().then(function() {
+    });
+
+with this DOM:
+
+    .kfg(ld-scope): div(ld-each="ctrl")
 
 
 ### API
@@ -88,6 +128,10 @@ To correctly render your configuration editor, you have to specify how it should
 
 While `@plotdb/konfig` provides a set of default view dynamics, you still have to define the looks and feels of your views. Following are possible values of `view`, including `simple`, `default` and `recurse`, along with the corresponding sample DOMs.
 
+Additionally, you may want to scope your DOM if you are also using ldview for UI rendering:
+
+    div(ld-scope): div(ld-each="ctrl")
+
 
 #### simple
 
@@ -114,9 +158,12 @@ Controls in recursive tabs. sample DOM:
       div(ld-each="ctrl")
       div(ld-each="tab")
 
+DOM will be reused for recursive tabs so you have to specify a template roo node with `ld="template"`.
+
 Note `ctrl` should be outside of `tab`.
 
- 
+
+
 ### view as object
 
 When `view` option is an object, it can be anything with following methods:
