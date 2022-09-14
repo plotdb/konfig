@@ -14,12 +14,16 @@ module.exports =
     ]
   init: ({root, context, pubsub, data, i18n, manager}) ->
     {ldview,ldcolor,ldpp,ldcover} = context
-    obj = {pal: data.default or ldpp.default-palette}
+    obj =
+      default: data.default or ldpp.default-palette
+      pal: data.default or ldpp.default-palette
     pubsub.fire \init, do
       get: -> obj.pal
       set: ->
         obj.pal = it
         view.render!
+      default: -> obj.default
+      meta: -> obj.default = it.default or ldpp.default-palette
     root = ld$.find root, '[plug=config]', 0
     view = new ldview do
       root: root

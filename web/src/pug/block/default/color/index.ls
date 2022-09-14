@@ -12,9 +12,11 @@ module.exports =
     pubsub.fire \init, do
       get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
       set: ~> @ldcp.set-color it
+      default: ~> @default
       meta: ~>
         @ldcp.set-palette it.palette
         if it.idx? => @ldcp.set-idx it.idx
+        @default = ldcolor.web(it.default or @ldcp.get-color!)
     @ldcp = new ldcolorpicker(
       root,
       className: "round shadow-sm round flat compact-palette no-button no-empty-color vertical"
@@ -22,6 +24,7 @@ module.exports =
       context: data.context or 'random'
       exclusive: if data.exclusive? => data.exclusive else true
     )
+    @default = ldcolor.web(data.default or @ldcp.get-color!)
     view = new ldview do
       ctx: {color: ldcolor.web @ldcp.get-color!}
       root: root

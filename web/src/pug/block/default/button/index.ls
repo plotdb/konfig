@@ -7,8 +7,13 @@ module.exports =
         "config": "設定"
   init: ({root, context, data, pubsub, t}) ->
     {ldview,ldcolor} = context
-    local = {data: data.default}
-    pubsub.fire \init, {get: (-> local.data ), set: (-> local.data = it)}
+    local = {data: data.default, default: data.default}
+    pubsub.fire \init, {
+      get: (-> local.data )
+      set: (-> local.data = it)
+      default: -> local.default
+      meta: -> local.data = local.default = it.default
+    }
     view = new ldview do
       root: root
       action: click: button: ->

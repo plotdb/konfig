@@ -125,8 +125,17 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       if tab? => @_tab = tab
       @build true, config
 
+  default: ->
+    traverse = (meta, val = {}, ctrl = {}, pid) ~>
+      ctrls = if meta.child => meta.child else meta
+      for id,v of ctrls =>
+        if v.type => val[id] = ctrl[id].itf.default!
+        else traverse(v, val{}[id], ctrl{}[id], id)
+    traverse @_meta, ret = {}, @_ctrlobj, null
+    ret
+
   get: -> JSON.parse JSON.stringify @_val
-  set: (nv) ->
+  set: (nv, o = {}) ->
     # we should not overwrite `_val`,
     # since widget event handler update the original `_val` directly.
     nv = JSON.parse JSON.stringify nv
@@ -135,7 +144,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       ctrls = if meta.child => meta.child else meta
       for id,v of ctrls =>
         if v.type =>
-          if val[id] != nval[id] =>
+          if val[id] != nval[id] and !(o.append and !(nval[id]?)) =>
             val[id] = nval[id]
             ctrl[id].itf.set val[id]
         else traverse(v, val{}[id], nval{}[id], ctrl{}[id], id)
@@ -244,6 +253,19 @@ konfig.merge = (des = {}, ...objs) ->
     return des
   for i from 0 til objs.length => des = _ des, JSON.parse(JSON.stringify(objs[i]))
   return des
+
+konfig.append = (...cs) ->
+  ret = {}
+  _ = (a, b) ->
+    for k,v of b =>
+      if typeof(v) == \object =>
+        if !typeof(a[k]) == \object => a[k] = {}
+        _(a[k], v)
+      a[k] = v
+  for i from cs.length - 2 to 0 by -1
+    [c1, c2] = [JSON.parse(JSON.stringify(cs[i])), cs[i + 1]]
+    _ c1, c2
+  return c1
 
 if module? => module.exports = konfig
 else if window? => window.konfig = konfig

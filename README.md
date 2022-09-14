@@ -73,7 +73,10 @@ with this DOM:
     - return Promise, resolved initial config on initialized.
  - `render()`: re-render controls
  - `get()`: get value object.
- - `set(v)`: set value object to `v`.
+ - `set(v, opt)`: set value object to `v`.
+   - options: an option object with possibly following field:
+     - `append`: default false. if true, only fields with value other than undefined will be update.
+ - `default()`: get a config object with all values from default value.
  - `meta(opt)`: update `meta` object. return Promise
    - parameters: either
      - the meta object
@@ -85,7 +88,10 @@ with this DOM:
 
 ## Class API
 
- - `merge(des, obj1, obj2, ...)`: recursively merge objs by order into `des`, and return `des`.
+ - `merge(des, obj1, obj2, ...)`: recursively merge meta objs by order into `des`, and return `des`.
+   - this is for merging meta objects.
+ - `append(o1, o2, o3, ...)`: recursively append config object backward to o1. return merged object.
+   - this is for merging config objects.
 
 
 ### Events

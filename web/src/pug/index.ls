@@ -61,7 +61,13 @@ if true =>
   .then ~>
     cfg = new konfig kfg-cfg
     cfg.on \change, ~> @update it
-    cfg.init!then -> console.log '@plotdb/konfig cfg inited with init config:', it
+    cfg.init!then ->
+      console.log '@plotdb/konfig cfg inited with init config:', it
+      console.log cfg._ctrllist
+      c = cfg._ctrllist
+        .filter -> it.meta.type == \color
+        .0
+      c.itf.meta c.meta <<< {palette: {colors: <[#f00 #0f0 #00f]>}}
 
     cfg-alt = new konfig kfg-alt-cfg
     cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size}px"
@@ -91,3 +97,7 @@ if true =>
       cfg.set val
       cfg.render!
     ), 1000
+
+    ld$.find('.btn[ld=get-default]', 0).addEventListener \click, ->
+      console.log "cfg default: ", cfg.default!
+      console.log "cfg-alt default: ", cfg-alt.default!

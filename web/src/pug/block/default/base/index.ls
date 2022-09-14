@@ -11,7 +11,7 @@ module.exports =
       {name: "zmgr", version: "main", path: "index.min.js"}
     ]
   init: ({root, context, data, pubsub, t}) ->
-    @data = {}
+    @_meta = data
     {ldcover,ldloader,zmgr} = context
     z = new zmgr!
     ldcover.zmgr z
@@ -21,7 +21,8 @@ module.exports =
         evt-handler: {}
         get: opt.get or ->
         set: opt.set or ->
-        meta: opt.meta or ->
+        meta: opt.meta or ~> @_meta = it
+        default: opt.default or ~> @_meta.default
         render: ->
           view.render!
           if opt.render => opt.render!
@@ -31,8 +32,8 @@ module.exports =
     pubsub.on \event, (n, ...v) ~> @itf.fire.apply @itf, [n] ++ v
     view = new ldview do
       root: root
-      text: name: -> t(data.name or data.id or '')
-      handler: hint: ({node}) ~> node.classList.toggle \d-none, !data.hint
+      text: name: ~> t(@_meta.name or @_meta.id or '')
+      handler: hint: ({node}) ~> node.classList.toggle \d-none, !@_meta.hint
       action: click: hint: ~>
-        alert(t(data.hint or 'no hint'))
+        alert(t(@_meta.hint or 'no hint'))
   interface: -> @itf

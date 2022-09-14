@@ -4,9 +4,12 @@ module.exports =
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     {ldview} = context
+    @_meta = data
     pubsub.fire \init, do
       get: -> view.get('input').value or ''
       set: -> view.get('input').value = it or ''
+      default: ~> @_meta.default or ''
+      meta: ~> @_meta = it
     view = new ldview do
       root: root
       init: input: ({node}) -> node.value = data.default or ''

@@ -52,8 +52,10 @@ Specific control can extend this interface but to prevent future conflict, imple
 
 This block follows `@plotdb/block` spec, and should provide an interface with following methods:
 
- - `get`: get current value
+ - `get()`: get current value
  - `set(value)`: set value of this control
+ - `meta(meta)`: update meta of this control
+ - `default()`: return default value from this control
  - `on(event, cb(args...))`: register event handler for events fired by this control
  - `fire(event, args...)`: fire an event to this control
  - `render()`: update ui of this control

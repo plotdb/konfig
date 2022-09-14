@@ -13,6 +13,7 @@ block head
       .ldrs .hint { padding-top: 4px!important }
 block body      
   .w-100.h-100.p-4: .d-flex.flex-column.h-100(style="gap:1em")
+    div: .btn.btn-outline-secondary(ld="get-default") get default
     .border.rounded.shadow-sm.p-4(ld="kfg-alt")
       div(ld-each="tab"): div(ld-each="ctrl")
     .d-flex.flex-grow-1(style="gap:1em;overflow:hidden")

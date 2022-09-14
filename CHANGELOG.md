@@ -1,5 +1,14 @@
 # Change Logs
 
+## v4.4.0 (upcoming)
+
+ - add `default()` api for getting default value from konfig meta.
+ - support addition option in `set()` api for setting config with different methods ( such as append new config to the old config )
+ - add `konfig.append()` class method for merging config objects
+ - extend widget api with `meta()` and `default()` api in spec.
+ - update default widgets with `meta()` and `default()` api.
+
+
 ## v4.3.0
 
  - font widget:

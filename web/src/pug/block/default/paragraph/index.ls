@@ -3,13 +3,17 @@ module.exports =
     extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
-    obj = {data: data.default or ''}
+    obj = 
+      default: data.default or ''
+      data: data.default or ''
     {ldview, ldcover} = context
     pubsub.fire \init, do
       get: -> obj.data or ''
       set: ->
         obj.data = (it or '')
         view.render!
+      default: -> obj.default
+      meta: -> obj.default = it.default
     view = new ldview do
       root: root
       init: ldcv: ({node}) -> obj.ldcv = new ldcover root: node
