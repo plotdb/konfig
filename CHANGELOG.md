@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.4.0 (upcoming)
+## v4.4.0
 
  - add `default()` api for getting default value from konfig meta.
  - support addition option in `set()` api for setting config with different methods ( such as append new config to the old config )
