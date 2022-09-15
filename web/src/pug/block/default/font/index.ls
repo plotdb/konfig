@@ -12,7 +12,7 @@ module.exports =
     pubsub.fire \init, do
       get: ->
         if obj.font => obj.font{name, style, weight}
-        if typeof(data.default) == \string => {name: data.default} else data.default
+        else if typeof(data.default) == \string => {name: data.default} else data.default
       set: ->
         obj.font = it
         view.render \button

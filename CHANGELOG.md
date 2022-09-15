@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.4.1 (upcoming)
+
+ - bug fix: get function in font widget should return font object if available
+
+
 ## v4.4.0
 
  - add `default()` api for getting default value from konfig meta.
