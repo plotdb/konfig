@@ -57,7 +57,7 @@ module.exports =
 
       handler:
         color:
-          list: -> obj.{}pal.[]colors
-          key: -> ldcolor.web(it)
+          list: -> obj.{}pal.[]colors.map (d,i) -> {_idx: i} <<< ldcolor.hsl(d)
+          key: -> it._idx
           handler: ({node,data}) -> node.style.backgroundColor = ldcolor.web data
     view.render!

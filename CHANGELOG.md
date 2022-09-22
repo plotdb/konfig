@@ -1,8 +1,9 @@
 # Change Logs
 
-## v4.4.1 (upcoming)
+## v4.4.1
 
  - bug fix: get function in font widget should return font object if available
+ - bug fix: color key in palette widget may duplicate, pointing to the same node to be removed.
 
 
 ## v4.4.0
