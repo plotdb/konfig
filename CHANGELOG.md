@@ -1,5 +1,10 @@
 # Change Logs
 
+## v5.0.0 (upcoming)
+
+ - use `ctx` instead of `setCtx` in color widget to prevent warning.
+
+
 ## v4.4.1
 
  - bug fix: get function in font widget should return font object if available

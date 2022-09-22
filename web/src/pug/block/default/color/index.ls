@@ -35,5 +35,5 @@ module.exports =
     @ldcp.on \change, ~>
       color = ldcolor.web it
       pubsub.fire \event, \change, color
-      view.setCtx {color}
+      view.ctx {color}
       view.render!
