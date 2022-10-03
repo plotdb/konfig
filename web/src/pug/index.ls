@@ -46,6 +46,7 @@ kfg-alt-cfg =
     size2:
       type: \size
       name: "size with unit"
+      default: unit: \em, value: 1
       units:
         * name: \em, min: 0, max: 10, step: 0.01, default: 1
         * name: \px, min: 0, max: 1024, step: 1, default: 16
