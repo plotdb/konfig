@@ -224,6 +224,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     Promise.all promises
 
   _build-tab: (clear = false) ->
+    # TODO: clarify what is this. remove it if this is not used.
     if @render-mode == \ctrl => return
     if clear and @_tablist => @_tablist.map ({root}) -> if root.parentNode => root.parentNode.removeChild root
     if clear or !@_tablist => @_tablist = []
