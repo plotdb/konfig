@@ -41,7 +41,15 @@ kfg-cfg =
 kfg-alt-cfg =
   root: ld$.find('[ld=kfg-alt]', 0)
   debounce: false
-  meta: size: type: \number, min: 10, max: 32, step: 1, default: 14
+  meta:
+    size: type: \number, min: 10, max: 32, step: 1, default: 14
+    size2:
+      type: \size
+      name: "size with unit"
+      units:
+        * name: \em, min: 0, max: 10, step: 0.01, default: 1
+        * name: \px, min: 0, max: 1024, step: 1, default: 16
+        * name: \%, min: 0, max: 100, step: 0.1, default: 20
   view: \default
   manager: @manager
   typemap: (name) -> {name: "@plotdb/konfig.widget.bootstrap", version: "master", path: name}

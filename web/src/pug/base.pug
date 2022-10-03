@@ -5,29 +5,33 @@ html
   include @/ldview/index.pug
   head
     block prehead
-    +css("/assets/lib/bootstrap/main/dist/css/bootstrap.min.css")
-    +css("/assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
-    +css("/assets/lib/ldcover/main/index.min.css")
-    +css("/assets/lib/ldiconfont/main/ldif.min.css")
+    +css([
+      {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
+      {name: "@loadingio/bootstrap.ext"},
+      {name: "ldcover"},
+      {name: "ldiconfont"}
+    ])
     block head
 
   body
     block body
-    +script("/assets/lib/bootstrap.native/main/dist/bootstrap-native-v4.min.js")
-    +script("/assets/lib/ldcolor/main/index.min.js")
-    +script("/assets/lib/ldcover/main/index.min.js")
-    +script("/assets/lib/@loadingio/ldquery/main/index.min.js")
-    +script("/assets/lib/@loadingio/debounce.js/main/index.min.js")
-    +script("/assets/lib/@loadingio/vscroll/main/index.min.js")
-    +script("/assets/lib/proxise/main/index.min.js")
-    +script("/assets/lib/ldview/main/index.min.js")
-    +script("/assets/lib/@plotdb/semver/main/index.min.js")
-    +script("/assets/lib/@plotdb/rescope/main/index.min.js")
-    +script("/assets/lib/@plotdb/csscope/main/index.min.js")
-    +script("/assets/lib/@plotdb/datadom/main/index.js")
-    +script("/assets/lib/ldpalettepicker/main/index.min.js")
-    +script("/assets/lib/@plotdb/block/main/index.min.js")
-    +script("/assets/lib/@plotdb/konfig/dev/index.min.js")
-    +script("/assets/lib/@plotdb/konfig/dev/konfig.widget.bootstrap.js")
+    +script([
+      {name: "bootstrap.native", path: "dist/bootstrap-native-v4.min.js"},
+      {name: "ldcolor"},
+      {name: "ldcover"},
+      {name: "@loadingio/ldquery"},
+      {name: "@loadingio/debounce.js"},
+      {name: "@loadingio/vscroll"},
+      {name: "proxise"},
+      {name: "ldview"},
+      {name: "@plotdb/semver"},
+      {name: "@plotdb/rescope"},
+      {name: "@plotdb/csscope"},
+      {name: "@plotdb/datadom"},
+      {name: "ldpalettepicker"},
+      {name: "@plotdb/block"},
+      {name: "@plotdb/konfig", version: "dev"},
+      {name: "@plotdb/konfig", version: "dev", path: "konfig.widget.bootstrap.js"}
+    ])
     block script
 
