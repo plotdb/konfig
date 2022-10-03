@@ -1,0 +1,11 @@
+div
+  div(plug="config"): input.ldrs.auto(data-class="form-control",ld="ldrs",aria-label="number")
+  div(plug="ctrl")
+    .d-flex
+      .dropdown
+        .dropdown-toggle.clickable.mr-4(ld="picker", data-toggle="dropdown") #[span(t) unit]: #[span(ld="picked")]
+        .dropdown-menu.dropdown-menu-right.shadow-sm
+          .dropdown-item(ld-each="unit")
+      .clickable(ld="switch"): i.i-pen
+  script(type="@plotdb/block"): include:lsc index.ls
+
