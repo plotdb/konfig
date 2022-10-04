@@ -29,28 +29,30 @@ This is an object with following fields:
  - `id`: string, id for this control. optional, may determined externally.
  - `type`: string, type of this control. mapped to a specific block internally.
  - `block`: explicit definition of block. overwrite `type` if provided. this is an object with following members:
+   - `ns`: namespace.
    - `name`: block name.
    - `version`: block version.
    - `path`: block path.
+   - `type`: block type (should be `block`, and will be if omitted.)
  - `tab`: id for - if any - a group containing this control.
  - `order`: number for order of this control in specific tab. optional. random order if omitted.
-   - lower order mean higher priority.
- - `hidden`: default false. true to disable this widget.
+   - lower order means higher priority.
+ - `hidden`: default false. true to hide this widget.
  - `default`: default value for this config.
-   - values here should be serialized data such as plain object, string, number, etc.
+   - should be a serializable value such as plain object, string, number, etc.
    - this ensures a default object reconstruction via object tree traverse, even without using `@plotdb/konfig`.
    - it's still possible to have computed value from ctrls. users should be always aware of this.
 
-`name`, `desc` and `hint` are up to view about rendering.
+It's for and by the view provided by user (or from default views) how `name`, `desc` and `hint` are used and rendered.
 
-Specific control can extend this interface but to prevent future conflict, implementation should *avoid using* words starting with `_`.
+Controls can extend this interface but to prevent future conflict, it should *avoid using* words with `_` prefix.
 
 
 ## Ctrl type block 
 
-`@plotdb/konfig` identifies a specific `@plotdb/block` object via the `block` or `type` value in an ctrl definition object.
+A `@plotdb/block` object can be found for each ctrl definition object from its `block` or `type` value.
 
-This block follows `@plotdb/block` spec, and should provide an interface with following methods:
+This block should provide an interface with following methods:
 
  - `get()`: get current value
  - `set(value)`: set value of this control
@@ -60,12 +62,12 @@ This block follows `@plotdb/block` spec, and should provide an interface with fo
  - `fire(event, args...)`: fire an event to this control
  - `render()`: update ui of this control
 
-For detail about how to implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
+To implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
 
 
 ### Base block
 
-To make implementation easier, `@plotdb/konfig` provides a block set `@plotdb/konfig.widget.default` with a base block in path `base` which has already implemented above methods. Yet after extending it, you should still implement following mechanism:
+To make it easier to implement a block, `@plotdb/konfig` provides a block set `@plotdb/konfig.widget.default` with a base block in path `base` which has already implemented above methods. You can extend it directly to make your own widget.  However, you should still implement following mechanism:
 
  - for logic: init base block via `init` event through pubsub, with an object containing following:
    - `get`: same with the above `get`.
@@ -98,7 +100,7 @@ Here is a sample implementation of a block for simple data reflection which exte
 
 ### UI Overwrite
 
-`@plotdb/konfig` has provided blocks for using with basic types such as `number`, `choice` in the `@plotdb/konfig.widget.default` package, and these blocks are implemented with UI / Logic separated, so you can simply extend corresponding widgets to overwrite their default interface without rewriting their logic.
+`@plotdb/konfig` provides blocks for basic types such as `number`, `choice` in `@plotdb/konfig.widget.default` package. These blocks are implemented with UI / Logic separated, so if you want to customize its looks and feel, you can extend them and overwrite their DOM without rewriting their logic.
 
 For example, this extends `number` block and overwrite its `config` plug with a simply `input` element:
 
@@ -114,14 +116,14 @@ All widgets use `ldview` directive to separate interface from logic so you shoul
 
 ## Meta: Tree of Ctrls
 
-User can compose return values of a set of controls into a nested object by defining a meta object `meta` using hash keys as paths of value from specpfic control. For example, following `meta`:
+Values of controls can be turned into a nested object by defining a meta object `meta` with keys as paths to each value of controls. For example, following `meta`:
 
     meta = {
-      text: { type: "color", ... }
-      background: { type: "color", ... }
+      text: { type: "color", default: "#fff", ... }
+      background: { type: "color", default: "#000", ... }
     };
 
-may provide result object like following:
+provides an object like following:
 
     {text: "#fff", background: "#000"}
 
@@ -130,42 +132,52 @@ It can be nested:
 
     meta = {
       text: {
-        color: {type: "color", ...}
-        size: {type: "unit-value", ...}
+        color: {type: "color", default: "#fff", ...}
+        size: {type: "unit-number", default: {value: 12, unit: "px"}, ...}
       },
       background: {
-        color: {type: "color", ...}
-        image: {type: "text", ...}
+        color: {type: "color", default: "#000", ...}
+        image: {type: "text", default: "sample text", ...}
       }
     }
 
-which may provide following result:
+above nested example provides following result:
 
     {
       text: {
         color: "#fff",
-        size: "12px"
+        size: {value: 12, unit: "px"}
       },
       background: {
         color: "#000",
-        image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+        image: "sample text"
       }
     }
 
-
-Alternatively, you can specify additional information, including `tab`, `order` and `hidden` for an entire subtree. To distinguish config with other controls, use `child` field to hold sub controls:
+You can also specify `tab`, `order` and `hidden` fields in the parent node:
 
     meta = {
       text: {
+        tab: '...', order: '...', hidden: false
+        color: {type: "color", ...}
+        size: {type: "unit-value", ...}
+        }
+      }, ...
+    }
+
+However in this example it's hard to distinguish a control defintion from a config for an intermediate node. To distinguish, use `child` field to keep sub controls:
+
+    meta = {
+      text: {
+        tab: '...', order: '...', hidden: false
         child: {
           color: {type: "color", ...}
           size: {type: "unit-value", ...}
         }
-        tab: '...', order: '...', hidden: false
       }, ...
     }
 
-`@plotdb/konfig` use `type` to recognize a control, and use `child` to recognize such subtree so you should avoid using `type` and `child` as control id. However, you can still define a control with id `child` by putting it in `child`:
+`@plotdb/konfig` use `type` to recognize a control, and use `child` to recognize such an intermediate node, so you should avoid using `type` and `child` as control id. However, you can still define a control with id `child` by putting it in `child`:
 
     meta = {
       text: {
@@ -175,12 +187,12 @@ Alternatively, you can specify additional information, including `tab`, `order` 
       }, ...
     }
 
-Generally speaking, subtree without `child` is just a shorthand. Always put controls in `child` if you want to prevent ambiguity.
+Generally speaking, intermediate node without `child` is just a shorthand. Always put controls in `child` if you want to prevent ambiguity.
 
 
 ## Tab: Group of Ctrls 
 
-While meta are constructed based on the hierarchy of the expected result object, we may want controls to be shown in different order or grouping. This is done by setting `tab` and `order` members in ctrl definition object.
+While meta are constructed based on the hierarchy of the expected result object, we may want controls to be shown in different order or groups. This is done by setting `tab` and `order` members in ctrl definition object.
 
 Tabs can also be nested, and defined similarly in a separated object:
 
@@ -208,35 +220,4 @@ where a tab object contains following members:
 `name`, `desc` and `hint` are up to view about rendering.
 
 Providing a `tabs` object and a `meta` object, one can manually construct an edit panel, or use `@plotdb/konfig` to construct one.
-
-
-## Draft
-
-original definition ( used in loading.io )
-
-    {
-      a: name: '...', type: '...', default: '...', priority: 0.5, tab: '...'
-      ..
-    }
-
-proposed improving: ( TBD )
-
-    {
-      tab-a: # group ctrls in one named tab
-        name: '...', type: 'group', priority: 0.5
-        ctrl: {}
-      tab-b:
-        name: '...', type: 'group',
-        collapsed: true # default show / not show
-        priority: undefined # ctrls without priorities are sorted by name, placed after ctrls with priority
-        ctrl:
-          inp-a: { name: '...', type: '...', default: '...', priority: 0.5 }
-      # stray ctrl can still have tab. overwrite when conflict ( make extension easier )
-      inp-b: { name: '...', type: '...', default: '...', priority: 0.5, tab: 'tab-a' }
-    }
-
-## TODO
-
- - 這個解析還需要再想: 定義 -> 控制項物件 -> 分組資訊
-   - 分組如何分? 如何處理命名衝突? 多層式如何更新資料?
 
