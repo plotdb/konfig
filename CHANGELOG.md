@@ -5,6 +5,11 @@
  - use `ctx` instead of `setCtx` in color widget to prevent warning.
 
 
+## v4.5.0
+
+ - support complete config tree via root tab (tab with depth = 0)
+
+
 ## v4.4.1
 
  - bug fix: get function in font widget should return font object if available

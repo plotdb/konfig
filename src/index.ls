@@ -74,8 +74,8 @@ konfig.views =
         tab:
           list: ({ctx}) ~>
             tabs = @_tablist.filter ->
-              !(it.tab.parent.id or ctx.tab.id) or
-              (it.tab.parent and ctx.tab and it.tab.parent.id == ctx.tab.id)
+              !(it.tab.parent.tab.id or ctx.tab.id) or
+              (it.tab.parent and ctx.tab and it.tab.parent.tab.id == ctx.tab.id)
             tabs.sort (a,b) -> b.tab.order - a.tab.order
             tabs
           key: -> it.key
@@ -159,9 +159,20 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then ~> return @_val
 
   _prepare-tab: (tab) ->
-    if @_tabobj[tab.id] => return @_tabobj[tab.id] <<< {tab}
+    if @_tabobj[tab.id] =>
+      ctab = @_tabobj[tab.id].tab
+      # collision only happened when a tab is referred but not yet created.
+      # in this case, a tab is created first with depth 0, and later from autotab.
+      # the tab with nonzero depth is from autotab and should overwrite the depth 0 one,
+      # since the depth 0 one carries less information (only the tab id)
+      if ctab.depth < tab.depth => ctab <<< {tab}
+      return ctab
     root = document.createElement('div')
-    @_tablist.push d = {root, tab, key: Math.random!toString(36).substring(2)}
+    @_tablist.push d = {
+      root, tab
+      ctrls: [], tabs: []
+      key: "tabkey-#{@_tablist.length}-#{Math.random!toString(36).substring(2)}"
+    }
     @_tabobj[tab.id] = d
 
   _prepare-ctrl: (meta, val, ctrl) ->
@@ -175,10 +186,16 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then (b) ~>
         root = document.createElement(\div)
         if !(meta.tab?) => meta.tab = 'default'
-        if !@_tabobj[meta.tab] =>
-          @_prepare-tab {id: meta.tab, name: meta.tab, depth: 0, parent: {}}
+        tabo = if !@_tabobj[meta.tab] =>
+          @_prepare-tab {id: meta.tab, name: meta.tab, depth: 0, parent: {tab: {}}}
+        else @_tabobj[meta.tab]
 
-        @_ctrllist.push(ctrl[id] = {block: b, meta, root, key: Math.random!toString(36).substring(2)})
+        @_ctrllist.push(ctrl[id] = {
+          block: b, meta, root
+          key: "ctrlkey-#{@_ctrllist.length}-#{Math.random!toString(36).substring(2)}"
+        })
+
+        tabo.ctrls.push ctrl[id]
         b.attach {root, defer: true}
           .then -> b.interface!
           .then -> return ctrl[id].itf = it
@@ -199,19 +216,27 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   _build-ctrl: (clear = false) ->
     promises = []
-    traverse = (meta, val = {}, ctrl = {}, pid) ~>
+    traverse = (meta, val = {}, ctrl = {}, pid, ptabo) ~>
       if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
       tab = if meta.child => meta.tab else null
-      # TODO this support only 1 level subtree. we may want to accept more info from tab def.
-      if !tab and @autotab and pid => tab = pid
+
+      if !tab and @autotab and pid =>
+        tab = "tabid-#{@_tablist.length}-#{Math.random!toString(36).substring(2)}"
+        tabo = @_prepare-tab {
+          id: tab, name: pid
+          depth: if ptabo => ptabo.tab.depth + 1 else 0
+          parent: if ptabo => ptabo else {tab: {}}
+        }
+        if ptabo => ptabo.tabs.push tabo
+
       if !ctrls => return
       for id,v of ctrls =>
         if v.type =>
           v <<< {id} <<< (if tab and !v.tab => {tab} else {})
           promises.push @_prepare-ctrl(v, val, ctrl)
           continue
-        traverse(v, val{}[id], ctrl{}[id], id)
+        traverse(v, val{}[id], ctrl{}[id], id, tabo)
 
     if clear and @_ctrllist =>
       @_ctrllist.map ({block, root}) ->
@@ -230,7 +255,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if clear or !@_tablist => @_tablist = []
     if clear or !@_tab => @_tab = {}
     if clear => @_tabobj = {}
-    traverse = (tab, depth = 0, parent = {}) ~>
+    traverse = (tab, depth = 0, parent = {tab: {}}) ~>
       if !(tab and (Array.isArray(tab) or typeof(tab) == \object)) => return
       list = if Array.isArray(tab) => tab
       else [{id,v} for id,v of tab].map ({id,v},i) -> v <<< {id}
@@ -238,8 +263,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         item = list[order]
         item <<< {depth, parent} <<< (if !(v.name) => {name: item.id} else {})
         item <<< if !(v.order?) => {order} else {}
-        @_prepare-tab item
-        traverse item.child, ((item.depth or 0) + 1), item
+        tabo = @_prepare-tab item
+        traverse item.child, ((item.depth or 0) + 1), tabo
     traverse @_tab
 
 konfig.merge = (des = {}, ...objs) ->

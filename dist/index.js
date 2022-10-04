@@ -161,7 +161,7 @@ konfig.views = {
             var ctx, tabs;
             ctx = arg$.ctx;
             tabs = this$._tablist.filter(function(it){
-              return !(it.tab.parent.id || ctx.tab.id) || (it.tab.parent && ctx.tab && it.tab.parent.id === ctx.tab.id);
+              return !(it.tab.parent.tab.id || ctx.tab.id) || (it.tab.parent && ctx.tab && it.tab.parent.tab.id === ctx.tab.id);
             });
             tabs.sort(function(a, b){
               return b.tab.order - a.tab.order;
@@ -339,15 +339,21 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     });
   },
   _prepareTab: function(tab){
-    var ref$, root, d;
+    var ctab, root, d;
     if (this._tabobj[tab.id]) {
-      return ref$ = this._tabobj[tab.id], ref$.tab = tab, ref$;
+      ctab = this._tabobj[tab.id].tab;
+      if (ctab.depth < tab.depth) {
+        ctab.tab = tab;
+      }
+      return ctab;
     }
     root = document.createElement('div');
     this._tablist.push(d = {
       root: root,
       tab: tab,
-      key: Math.random().toString(36).substring(2)
+      ctrls: [],
+      tabs: [],
+      key: "tabkey-" + this._tablist.length + "-" + Math.random().toString(36).substring(2)
     });
     return this._tabobj[tab.id] = d;
   },
@@ -378,25 +384,28 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         data: meta
       });
     }).then(function(b){
-      var root;
+      var root, tabo;
       root = document.createElement('div');
       if (!(meta.tab != null)) {
         meta.tab = 'default';
       }
-      if (!this$._tabobj[meta.tab]) {
-        this$._prepareTab({
+      tabo = !this$._tabobj[meta.tab]
+        ? this$._prepareTab({
           id: meta.tab,
           name: meta.tab,
           depth: 0,
-          parent: {}
-        });
-      }
+          parent: {
+            tab: {}
+          }
+        })
+        : this$._tabobj[meta.tab];
       this$._ctrllist.push(ctrl[id] = {
         block: b,
         meta: meta,
         root: root,
-        key: Math.random().toString(36).substring(2)
+        key: "ctrlkey-" + this$._ctrllist.length + "-" + Math.random().toString(36).substring(2)
       });
+      tabo.ctrls.push(ctrl[id]);
       return b.attach({
         root: root,
         defer: true
@@ -438,8 +447,8 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     var promises, traverse, this$ = this;
     clear == null && (clear = false);
     promises = [];
-    traverse = function(meta, val, ctrl, pid){
-      var ctrls, tab, id, v, results$ = [];
+    traverse = function(meta, val, ctrl, pid, ptabo){
+      var ctrls, tab, tabo, id, v, results$ = [];
       val == null && (val = {});
       ctrl == null && (ctrl = {});
       if (!(meta && typeof meta === 'object')) {
@@ -448,7 +457,20 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       ctrls = meta.child ? meta.child : meta;
       tab = meta.child ? meta.tab : null;
       if (!tab && this$.autotab && pid) {
-        tab = pid;
+        tab = "tabid-" + this$._tablist.length + "-" + Math.random().toString(36).substring(2);
+        tabo = this$._prepareTab({
+          id: tab,
+          name: pid,
+          depth: ptabo ? ptabo.tab.depth + 1 : 0,
+          parent: ptabo
+            ? ptabo
+            : {
+              tab: {}
+            }
+        });
+        if (ptabo) {
+          ptabo.tabs.push(tabo);
+        }
       }
       if (!ctrls) {
         return;
@@ -464,7 +486,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
           promises.push(this$._prepareCtrl(v, val, ctrl));
           continue;
         }
-        results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
+        results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {}), id, tabo));
       }
       return results$;
     };
@@ -517,9 +539,11 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       this._tabobj = {};
     }
     traverse = function(tab, depth, parent){
-      var list, id, v, i$, to$, order, item, results$ = [];
+      var list, id, v, i$, to$, order, item, tabo, results$ = [];
       depth == null && (depth = 0);
-      parent == null && (parent = {});
+      parent == null && (parent = {
+        tab: {}
+      });
       if (!(tab && (Array.isArray(tab) || typeof tab === 'object'))) {
         return;
       }
@@ -553,8 +577,8 @@ konfig.prototype = import$(Object.create(Object.prototype), {
             order: order
           }
           : {});
-        this$._prepareTab(item);
-        results$.push(traverse(item.child, (item.depth || 0) + 1, item));
+        tabo = this$._prepareTab(item);
+        results$.push(traverse(item.child, (item.depth || 0) + 1, tabo));
       }
       return results$;
     };

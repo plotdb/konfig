@@ -42,7 +42,6 @@ view = new ldview do
               font: {}
           axis: {child: padding: {}}
 
-
       kfg.init!
         .then ->
 view.render!

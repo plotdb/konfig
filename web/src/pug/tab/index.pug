@@ -1,0 +1,9 @@
+extends /base.pug
+block body
+  .m-4(ld="konfig"): +scope()(ld="template")
+    .mb-4(ld="name")
+    div(style="display:grid;grid-template-columns:repeat(3,1fr);gap:1em")
+      .mb-4(ld-each="ctrl")
+    .border.p-4.mb-4.shadow-sm(ld-each="tab")
+block script
+  script(type="module"): include:lsc index.ls
