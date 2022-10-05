@@ -62,7 +62,6 @@ io =
 io.obj = new IntersectionObserver io.cb, io.opt
 
 myview = ({root, ctrls, tabs}) ->
-  console.log "myview render: " , tabs
   obj.alltabs = tabs
   tabs = tabs.filter -> !it.tab.depth
   if obj.view =>
@@ -141,7 +140,6 @@ kfg.init!then ->
       yaxis: chart.utils.config.preset.axis
       legend: chart.utils.config.preset.legend
 
-  console.log meta.chart
   kfg.meta meta.chart
 
   kfg.on \change, -> console.log it

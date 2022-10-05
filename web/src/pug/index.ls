@@ -72,7 +72,6 @@ if true =>
     cfg.on \change, ~> @update it
     cfg.init!then ->
       console.log '@plotdb/konfig cfg inited with init config:', it
-      console.log cfg._ctrllist
       c = cfg._ctrllist
         .filter -> it.meta.type == \color
         .0
