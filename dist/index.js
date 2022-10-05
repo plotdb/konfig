@@ -249,14 +249,15 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     }
     return this._view.render();
   },
-  meta: function(opt){
+  meta: function(o){
     var meta, tab, config;
-    opt == null && (opt = {});
-    meta = opt.meta, tab = opt.tab, config = opt.config;
+    o == null && (o = {});
+    o = JSON.parse(JSON.stringify(o));
+    meta = o.meta, tab = o.tab, config = o.config;
     this._meta = {};
     this._tab = {};
     if (!(meta != null) || typeof meta.type === 'string') {
-      this._meta = opt;
+      this._meta = o;
       return this.build(true);
     } else {
       if (meta != null) {

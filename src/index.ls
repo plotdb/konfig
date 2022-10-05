@@ -114,11 +114,15 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         @_view.ctx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
     @_view.render!
 
-  meta: (opt = {}) ->
-    {meta, tab, config} = opt
+  meta: (o = {}) ->
+    # we pollute meta (e.g., with auto generated id) so we have to clone input in order to
+    #  - prevent affect caller
+    #  - prevent id overwritten if caller use the same obj for different subtree.
+    o = JSON.parse JSON.stringify o
+    {meta, tab, config} = o
     @ <<< {_meta: {}, _tab: {}}
     if !(meta?) or (typeof(meta.type) == \string) =>
-      @_meta = opt
+      @_meta = o
       @build true
     else
       if meta? => @_meta = meta
