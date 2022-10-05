@@ -4,6 +4,10 @@
 
  - use `ctx` instead of `setCtx` in color widget to prevent warning.
 
+## v4.5.1
+
+ - add `@xlfont/choose` and `@xlfont/load` for correctly building
+
 
 ## v4.5.0
 
