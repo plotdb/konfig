@@ -28,6 +28,8 @@ module.exports =
     view = new ldview do
       ctx: {color: ldcolor.web @ldcp.get-color!}
       root: root
+      action: keyup: color: ({node, ctx, evt}) ~>
+        if evt.keyCode == 13 => @ldcp.set-color node.value
       handler:
         color: ({node, ctx}) ->
           if node.nodeName.toLowerCase! == \input => node.value = ctx.color
