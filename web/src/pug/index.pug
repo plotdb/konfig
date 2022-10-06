@@ -7,10 +7,12 @@ block head
       margin: 0 0 1em
       flex: 1 1 200px
       height: 3em
-    [ld=kfg-alt]
-      .ldrs .hint { padding-top: 5px!important }
-    [ld=kfg]
-      .ldrs .hint { padding-top: 4px!important }
+    div[ld=kfg-alt] div[block]
+      .ldrs .hint { padding: 4px 4px 3px }
+      .ldrs .hint { top: 1.785em }
+      .ldrs .hint.p { top: 1.5em }
+    div[ld=kfg] div[block]
+      .ldrs .hint { padding: 4px }
 block body      
   .w-100.h-100.p-4: .d-flex.flex-column.h-100(style="gap:1em")
     div: .btn.btn-outline-secondary(ld="get-default") get default

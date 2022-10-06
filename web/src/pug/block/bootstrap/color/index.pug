@@ -1,21 +1,39 @@
 div
   div(plug="config")
     .color
-      input.form-control(ld="color",aria-label="color")
-      div(ld="color")
+      .input-group(ld="input-group")
+        input.form-control(ld="input color",aria-label="color",style="z-index:0")
+        .input-group-append(ld="menu")
+          div(ld="indicator color")
+          .btn.btn-outline-secondary.border.dropdown-toggle(ld="dropdown",data-toggle="dropdown",style="z-index:1")
+          .dropdown-menu.shadow-sm.z-float
+            .dropdown-item(t,ld="default") current color
+
   style(type="text/css"): :stylus
     .color
       position: relative
-    div[ld=color]
+    div[ld~=indicator]
+      pointer-events: none
       top: 0
       bottom: 0
       width: .66em
-      right: .33em
       margin: auto
+      margin-left: -1em
       position: absolute
       height: calc(100% - .5em)
       border-radius: .25em
     .form-control { font-size: 1em }
+    .btn { font-size: 1em }
+    .input-group.no-addon
+      .form-control
+        border-top-right-radius: .25em
+        border-bottom-right-radius: .25em
+      .input-group-append .btn
+        width: 0
+        padding: 0 0 0 0em
+        border: none!important
+        overflow: hidden
+        pointer-events: none
 
   script(type="@plotdb/block"): include:lsc index.ls
 

@@ -9,33 +9,55 @@ module.exports =
     ]
   init: ({root, context, pubsub, data}) ->
     {ldview,ldcolor,ldcolorpicker} = context
+    @_meta = data
+    @render = ->
+      pubsub.fire \render
+      if view? => view.render!
+    @set = (c) ->
+      @c = c
+      if c != \currentColor => @ldcp.set-color(c)
+      @render!
+
+    @prepare-default = (o={}) ->
+      @default = if o.data.default == \currentColor => \currentColor
+      else ldcolor.web(o.data.default or @ldcp.get-color!)
+      if o.overwrite => @set @default
+
     pubsub.fire \init, do
-      get: ~> if @ldcp => ldcolor.web @ldcp.get-color!
-      set: ~> @ldcp.set-color it
+      get: ~> @c
+      set: ~> @set it
       default: ~> @default
       meta: ~>
+        @_meta = it
         @ldcp.set-palette it.palette
         if it.idx? => @ldcp.set-idx it.idx
-        @default = ldcolor.web(it.default or @ldcp.get-color!)
+        @prepare-default {overwrite: true, data: it}
     @ldcp = new ldcolorpicker(
-      root,
+      root.querySelector('[ld~=input]'),
       className: "round shadow-sm round flat compact-palette no-button no-empty-color vertical"
       palette: (if data.default => [data.default] else []) ++ (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
       context: data.context or 'random'
       exclusive: if data.exclusive? => data.exclusive else true
     )
-    @default = ldcolor.web(data.default or @ldcp.get-color!)
+    @prepare-default {overwrite: true, data}
+
     view = new ldview do
-      ctx: {color: ldcolor.web @ldcp.get-color!}
       root: root
-      action: keyup: color: ({node, ctx, evt}) ~>
-        if evt.keyCode == 13 => @ldcp.set-color node.value
+      action:
+        keyup: input: ({node, ctx, evt}) ~>
+          if evt.keyCode == 13 =>
+            @ldcp.set-color node.value
+            @c = node.value
+        click: default: ({node, ctx}) ~>
+          @c = \currentColor
+          pubsub.fire \event, \change, @c
+          @render!
       handler:
-        color: ({node, ctx}) ->
-          if node.nodeName.toLowerCase! == \input => node.value = ctx.color
-          else node.style.backgroundColor = ctx.color
+        color: ({node, ctx}) ~>
+          c = ldcolor.web(@c)
+          if node.nodeName.toLowerCase! == \input => node.value = c
+          else node.style.backgroundColor = c
     @ldcp.on \change, ~>
-      color = ldcolor.web it
-      pubsub.fire \event, \change, color
-      view.ctx {color}
-      view.render!
+      @c = ldcolor.web it
+      pubsub.fire \event, \change, @c
+      @render!

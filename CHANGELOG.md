@@ -8,6 +8,7 @@
 ## v4.5.2 (upcoming)
 
  - fix bug: color widget: cant input value into input box by hand correctly
+ - support `currentColor` in color widget
 
 
 ## v4.5.1
