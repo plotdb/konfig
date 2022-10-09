@@ -1,14 +1,10 @@
 # Change Logs
 
-## v5.0.0 (upcoming)
-
- - use `ctx` instead of `setCtx` in color widget to prevent warning.
-
-
 ## v4.5.2 (upcoming)
 
  - fix bug: color widget: cant input value into input box by hand correctly
  - support `currentColor` in color widget
+ - add quantity widget
 
 
 ## v4.5.1

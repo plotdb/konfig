@@ -47,9 +47,9 @@ kfg-alt-cfg =
   meta:
     size: type: \number, min: 10, max: 32, step: 1, default: 14
     size2:
-      type: \size
+      type: \quantity
       name: "size with unit"
-      default: unit: \em, value: 1
+      default: "1em"
       units:
         * name: \em, min: 0, max: 10, step: 0.01, default: 1
         * name: \px, min: 0, max: 1024, step: 1, default: 16
@@ -81,7 +81,7 @@ if true =>
       c.itf.meta c.meta <<< {palette: {colors: <[#f00 #0f0 #00f]>}}
 
     cfg-alt = new konfig kfg-alt-cfg
-    cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size}px"
+    cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size2}"
     cfg-alt.init!then -> console.log "@plotdb/konfig cfg-alt inited."
 
     sample = ld$.find('#sample',0)
