@@ -27,7 +27,7 @@
     "@loadingio/ldquery": "^3.0.4",
     "@loadingio/vscroll": "^0.0.8",
     "@plotdb/chart": "^2.1.3",
-    "@xlfont/choose": "^0.0.13",
+    "@xlfont/choose": "^0.0.14",
     "@xlfont/load": "^2.1.0",
     "@zbryikt/template": "^2.3.38",
     "bootstrap": "^4.5.2",
