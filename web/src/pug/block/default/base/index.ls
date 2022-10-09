@@ -23,13 +23,15 @@ module.exports =
         set: opt.set or ->
         meta: opt.meta or ~> @_meta = it
         default: opt.default or ~> @_meta.default
+        object: opt.object or (->it)
         render: ->
           view.render!
           if opt.render => opt.render!
         on: (n, cb) -> (if Array.isArray(n) => n else [n]).map (n) ~> @evt-handler.[][n].push cb
         fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
-      view.render \hint
+      if view => view.render \hint
     pubsub.on \event, (n, ...v) ~> @itf.fire.apply @itf, [n] ++ v
+    if !root => return
     view = new ldview do
       root: root
       text: name: ~> t(@_meta.name or @_meta.id or '')

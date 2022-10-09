@@ -61,6 +61,7 @@ This block should provide an interface with following methods:
  - `on(event, cb(args...))`: register event handler for events fired by this control
  - `fire(event, args...)`: fire an event to this control
  - `render()`: update ui of this control
+ - `object(v)`: convert a serializable `v` into corresponding object
 
 To implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
 
