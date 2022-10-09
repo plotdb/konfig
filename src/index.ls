@@ -179,6 +179,17 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     }
     @_tabobj[tab.id] = d
 
+  interface: (meta) ->
+    if meta.block => {name, version, path} = meta.block{name,version, path}
+    else if @typemap and (ret = @typemap(meta.type)) => {ns, name, version, path} = ret
+    else [ns, name, version, path] = ['', meta.type, "master", '']
+    id = block.id({ns,name,version,path})
+    if @{}_lib[id] => return Promise.resolve that
+    @mgr.get({ns, name, version, path})
+      .then -> it.create {data: meta}
+      .then (b) ~> b.attach!then -> b.interface!
+      .then (itf = {}) ~> @_lib[id] = itf
+
   _prepare-ctrl: (meta, val, ctrl) ->
     id = meta.id
     if ctrl[id] => return Promise.resolve!

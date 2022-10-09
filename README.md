@@ -82,6 +82,7 @@ with this DOM:
      - the meta object
      - `{meta, tab}` object.
  - `tab()`: update `tab` object.
+ - `interface(meta)`: return a Promise resolved with an interface for the widget defined by `meta`.
  - `on(event, cb(args...))`
  - `fire(event, args...)`
 
