@@ -99,7 +99,8 @@ if true =>
       if @val.font =>
         sample.style.fontFamily = @val.font.name
         console.log @val.font
-        cfg-alt.interface kfg-cfg.meta.font
+        cfg.obj!then -> console.log ">",it
+        cfg.interface kfg-cfg.meta.font
           .then (o = {}) ~> o.object @val.font
           .then (f) -> f.sync sample.innerText
 

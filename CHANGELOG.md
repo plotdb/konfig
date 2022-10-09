@@ -7,7 +7,8 @@
  - add quantity widget
  - support `default` in font widget
  - extend widget spec with `object(v)` API
- - add `interface()` for retrieving widget interface
+ - add `interface()` API for retrieving widget interface
+ - add `obj()` API for retrieving config corresponding objects.
 
 
 ## v4.5.1

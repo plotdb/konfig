@@ -13,6 +13,8 @@ konfig = (opt={}) ->
   @_meta = opt.meta or {}
   @_tab = opt.tab or {}
   @_val = {}
+  @_obj = {}
+  @_objps = []
   @typemap = opt.typemap or null
   @mgr = @mgr-chain = new block.manager registry: ({name, version, path}) ->
     throw new Error("@plotdb/konfig: #name@#version/#path is not supported")
@@ -139,20 +141,33 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     ret
 
   get: -> JSON.parse JSON.stringify @_val
+  _objwait: (p) ->
+    @_objps.push p
+    if @_objps.length < 100 => return
+    ps = @_objps.splice 0
+    @_objps.push Promise.all(ps)
+
+  obj: ->
+    Promise.all @_objps
+      .then ~>
+        @_objps.splice 0
+        @_obj
+
   set: (nv, o = {}) ->
     # we should not overwrite `_val`,
     # since widget event handler update the original `_val` directly.
     nv = JSON.parse JSON.stringify nv
     @render!
-    traverse = (meta, val = {}, nval = {}, ctrl = {}, pid) ~>
+    traverse = (meta, val = {}, obj = {}, nval = {}, ctrl = {}, pid) ~>
       ctrls = if meta.child => meta.child else meta
       for id,v of ctrls =>
         if v.type =>
           if val[id] != nval[id] and !(o.append and !(nval[id]?)) =>
             val[id] = nval[id]
             ctrl[id].itf.set val[id]
-        else traverse(v, val{}[id], nval{}[id], ctrl{}[id], id)
-    traverse @_meta, @_val, nv, @_ctrlobj, null
+            @_objwait(ctrl[id].itf.object val[id] .then -> obj[id] = it)
+        else traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
+    traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
 
   _update: (n, v) -> @fire \change, JSON.parse(JSON.stringify(@_val)), n, v
   _init: ->
@@ -190,7 +205,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then (b) ~> b.attach!then -> b.interface!
       .then (itf = {}) ~> @_lib[id] = itf
 
-  _prepare-ctrl: (meta, val, ctrl) ->
+  _prepare-ctrl: (meta, val, obj, ctrl) ->
     id = meta.id
     if ctrl[id] => return Promise.resolve!
     if meta.block => {name, version, path} = meta.block{name,version, path}
@@ -216,8 +231,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           .then -> return ctrl[id].itf = it
       .then (item) ~>
         val[id] = v = item.get!
+        @_objwait(item.object(v).then -> obj[id] = it)
         item.on \change, ~>
           val[id] = it
+          @_objwait(item.object(it).then -> obj[id] = it)
           @update id, it
       .then -> ctrl[id]
 
@@ -231,7 +248,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   _build-ctrl: (clear = false) ->
     promises = []
-    traverse = (meta, val = {}, ctrl = {}, pid, ptabo) ~>
+    traverse = (meta, val = {}, obj = {},  ctrl = {}, pid, ptabo) ~>
       if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
       tab = if meta.child => meta.tab else null
@@ -249,7 +266,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       for id,v of ctrls =>
         if v.type =>
           v <<< {id} <<< (if tab and !v.tab => {tab} else {})
-          promises.push @_prepare-ctrl(v, val, ctrl)
+          promises.push @_prepare-ctrl(v, val, obj, ctrl)
           continue
         traverse(v, val{}[id], ctrl{}[id], id, tabo)
 
@@ -257,10 +274,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       @_ctrllist.map ({block, root}) ->
         if block.destroy => block.destroy!
         if root.parentNode => root.parentNode.removeChild root
-    if clear or !@_val => @_val = {}
+    if clear or !@_val => @ <<< {_val: {}, _obj: {}}
     if clear or !@_ctrlobj => @_ctrlobj = {}
     if clear or !@_ctrllist => @_ctrllist = []
-    traverse @_meta, @_val, @_ctrlobj, null
+    traverse @_meta, @_val, @_obj, @_ctrlobj, null
     Promise.all promises
 
   _build-tab: (clear = false) ->
