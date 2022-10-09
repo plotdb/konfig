@@ -2,7 +2,12 @@ div
   div(plug="config")
     include @/@xlfont/choose/index.pug
     .ldcv.default-size(ld="ldcv"): .base: .inner: +xfc
-    .btn.btn-outline-secondary.d-block(ld="button"): span(ld="font-name") ...
+    .btn-group.d-flex
+      .btn.btn-outline-secondary.d-block(ld="button"): span(ld="font-name") ...
+      .btn-group.z-float
+        .btn.btn.btn-outline-secondary.dropdown-toggle(ld="dropdown",data-toggle="dropdown")
+          .dropdown-menu.dropdown-menu-right.shadow-sm
+            .dropdown-item(ld="system",data-name="inherit") Default
   style(type="text/css"): :stylus
     [ld=button]
       position: relative
