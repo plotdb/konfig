@@ -98,7 +98,11 @@ if true =>
         textAlign: (@val.choice or 'left')
       if @val.font =>
         sample.style.fontFamily = @val.font.name
-        @val.font.sync sample.innerText
+        console.log @val.font
+        cfg-alt.interface kfg-cfg.meta.font
+          .then (o = {}) ~> o.object @val.font
+          .then (f) -> f.sync sample.innerText
+
 
     # test updating konfig programmatically
     setTimeout (->
