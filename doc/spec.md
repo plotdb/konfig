@@ -62,8 +62,7 @@ This block should provide an interface with following methods:
  - `fire(event, args...)`: fire an event to this control
  - `render()`: update ui of this control
  - `object(v)`: convert a serializable `v` into corresponding object
-   - event if sometimes this may involve asynchronous behavior, we should always return an object synchronously.
-     widget can instruct caller for further asynchronous actions over this returned object.
+   - return a Promise resolved with the corresponding object
 
 To implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
 
