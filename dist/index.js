@@ -328,15 +328,17 @@ konfig.prototype = import$(Object.create(Object.prototype), {
           if (val[id] !== nval[id] && !(o.append && !(nval[id] != null))) {
             val[id] = nval[id];
             ctrl[id].itf.set(val[id]);
-            results$.push(this$._objwait(ctrl[id].itf.object(val[id]).then(fn$)));
+            results$.push(fn$(id));
           }
         } else {
           results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), nval[id] || (nval[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
         }
       }
       return results$;
-      function fn$(it){
-        return obj[id] = it;
+      function fn$(id){
+        return this$._objwait(ctrl[id].itf.object(val[id]).then(function(it){
+          return obj[id] = it;
+        }));
       }
     };
     return traverse(this._meta, this._val, this._obj, nv, this._ctrlobj, null);

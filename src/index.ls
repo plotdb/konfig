@@ -165,7 +165,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           if val[id] != nval[id] and !(o.append and !(nval[id]?)) =>
             val[id] = nval[id]
             ctrl[id].itf.set val[id]
-            @_objwait(ctrl[id].itf.object val[id] .then -> obj[id] = it)
+            ((id)~>@_objwait(ctrl[id].itf.object val[id] .then -> obj[id] = it))(id)
         else traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
     traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
 
