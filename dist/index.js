@@ -557,7 +557,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
           promises.push(this$._prepareCtrl(v, val, obj, ctrl));
           continue;
         }
-        results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {}), id, tabo));
+        results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), ctrl[id] || (ctrl[id] = {}), id, tabo));
       }
       return results$;
     };

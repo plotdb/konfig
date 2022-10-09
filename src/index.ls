@@ -268,7 +268,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           v <<< {id} <<< (if tab and !v.tab => {tab} else {})
           promises.push @_prepare-ctrl(v, val, obj, ctrl)
           continue
-        traverse(v, val{}[id], ctrl{}[id], id, tabo)
+        traverse(v, val{}[id], obj{}[id], ctrl{}[id], id, tabo)
 
     if clear and @_ctrllist =>
       @_ctrllist.map ({block, root}) ->
