@@ -1,10 +1,13 @@
 # Change Logs
 
-## v4.5.2 (upcoming)
+## v4.6.0 (upcoming)
 
  - fix bug: color widget: cant input value into input box by hand correctly
  - support `currentColor` in color widget
  - add quantity widget
+ - support `default` in font widget
+ - extend widget spec with `object(v)` API
+ - add `interface()` for retrieving widget interface
 
 
 ## v4.5.1
