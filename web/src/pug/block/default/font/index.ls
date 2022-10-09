@@ -21,7 +21,7 @@ module.exports =
         obj.font = if !f => f
         else if typeof(f) == \string => {name: f}
         else f{name, style, weight}
-        view.render \button
+        view.render \font-name
       default: -> if typeof(obj._m.default) == \string => {name: obj._m.default} else obj._m.default
       meta: (m) -> obj._meta = m
       object: (f) ~> chooser.load f
@@ -42,16 +42,17 @@ module.exports =
       action: click:
         system: ({node}) ->
           obj.font = f = null
-          view.render \button
+          view.render \font-name
           pubsub.fire \event, \change, f
         button: ({node}) ->
           obj.ldcv.get!
             .then (f) ->
               obj.font = if f => f{name, style, weight} else null
-              view.render \button
+              view.render \font-name
               pubsub.fire \event, \change, obj.font
       handler:
         "font-name": ({node}) ->
           ret = if !obj.font => t("default") else obj.font.name or t("default")
           node.innerText = ret
-          node.setAttribute \class, (if obj.font and obj.font.className => that else '')
+          Promise.resolve(if obj.font => chooser.load obj.font else obj.font)
+            .then (f) -> node.setAttribute \class, (if f and f.className => that else '')
