@@ -53,6 +53,7 @@ module.exports =
       handler:
         "font-name": ({node}) ->
           ret = if !obj.font => t("default") else obj.font.name or t("default")
+          if ret.length > 10 => ret = ret.substring(0, 10) + '...'
           node.innerText = ret
           Promise.resolve(if obj.font => chooser.load obj.font else obj.font)
             .then (f) -> node.setAttribute \class, (if f and f.className => that else '')

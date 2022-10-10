@@ -8,5 +8,7 @@ module.exports =
     view = new ldview do
       root: root
       init: dropdown: ({node}) -> new BSN.Dropdown node
-      handler: "input-group": ({node}) -> node.classList.toggle \no-addon, !parent._meta.current-color
+      handler: "input-group": ({node}) ->
+        c = parent._meta.current-color
+        node.classList.toggle \no-addon, (c? and !c)
     pubsub.on \render, -> view.render!

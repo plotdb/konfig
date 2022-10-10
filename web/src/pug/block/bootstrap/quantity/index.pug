@@ -1,9 +1,10 @@
 div
   div(plug="config"): input.ldrs.auto(data-class="form-control",ld="ldrs",aria-label="number")
   div(plug="ctrl")
-    .d-flex
+    .d-flex.align-items-center
       .dropdown
-        .dropdown-toggle.clickable.mr-4(ld="picker", data-toggle="dropdown") #[span(t) unit]: #[span(ld="picked")]
+        .dropdown-toggle.clickable.mr-2.text-sm(
+        ld="picker", data-toggle="dropdown") #[span(t) unit]: #[span(ld="picked")]
         .dropdown-menu.dropdown-menu-right.shadow-sm
           .dropdown-item(ld-each="unit")
       .clickable(ld="switch"): i.i-pen

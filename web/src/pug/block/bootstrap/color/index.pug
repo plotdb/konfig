@@ -5,8 +5,9 @@ div
         input.form-control(ld="input color",aria-label="color",style="z-index:0")
         .input-group-append(ld="menu")
           div(ld="indicator color")
-          .btn.btn-outline-secondary.border.dropdown-toggle(ld="dropdown",data-toggle="dropdown",style="z-index:1")
-          .dropdown-menu.shadow-sm.z-float
+          .btn.btn-outline-secondary.border.dropdown-toggle.px-2(
+          ld="dropdown",data-toggle="dropdown",style="z-index:1")
+          .dropdown-menu.dropdown-menu-right.shadow-sm.z-float
             .dropdown-item(t,ld="default") current color
 
   style(type="text/css"): :stylus
