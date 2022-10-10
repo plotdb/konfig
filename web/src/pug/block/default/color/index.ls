@@ -15,11 +15,11 @@ module.exports =
       if view? => view.render!
     @set = (c) ->
       @c = c
-      if c != \currentColor => @ldcp.set-color(c)
+      if !(c in <[currentColor transparent]>) => @ldcp.set-color(c)
       @render!
 
     @prepare-default = (o={}) ->
-      @default = if o.data.default == \currentColor => \currentColor
+      @default = if o.data.default in <[currentColor transparent]> => o.data.default
       else ldcolor.web(o.data.default or @ldcp.get-color!)
       if o.overwrite => @set @default
 
@@ -35,7 +35,10 @@ module.exports =
     @ldcp = new ldcolorpicker(
       root.querySelector('[ld~=input]'),
       className: "round shadow-sm round flat compact-palette no-button no-empty-color vertical"
-      palette: (if data.default => [data.default] else []) ++ (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
+      palette: (
+        (if data.default => [data.default] else []).filter(->!(it in <[transparent currentColor]>)) ++
+        (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
+      )
       context: data.context or 'random'
       exclusive: if data.exclusive? => data.exclusive else true
     )

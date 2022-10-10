@@ -12,9 +12,9 @@
  - color widget:
    - currentColor by default on now.
    - tweak dropdown button size
+   - take care of `currentColor` and `transparent` value in default field
  - quantity widget: tweak unit dropdown toggler alignment
  - font widget: tweak text size
-
 
 ## v4.5.1
 
