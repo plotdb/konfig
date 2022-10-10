@@ -9,6 +9,11 @@
  - extend widget spec with `object(v)` API
  - add `interface()` API for retrieving widget interface
  - add `obj()` API for retrieving config corresponding objects.
+ - color widget:
+   - currentColor by default on now.
+   - tweak dropdown button size
+ - quantity widget: tweak unit dropdown toggler alignment
+ - font widget: tweak text size
 
 
 ## v4.5.1
