@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.6.0 (upcoming)
+## v4.6.0
 
  - fix bug: color widget: cant input value into input box by hand correctly
  - support `currentColor` in color widget
@@ -15,6 +15,7 @@
    - take care of `currentColor` and `transparent` value in default field
  - quantity widget: tweak unit dropdown toggler alignment
  - font widget: tweak text size
+
 
 ## v4.5.1
 
