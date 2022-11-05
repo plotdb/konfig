@@ -1,1 +1,1 @@
-module.exports = pkg: extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'text', dom: \overwrite
+module.exports = pkg: extend: name: '@plotdb/konfig.widget.default', version: 'main', path: 'text', dom: \overwrite

@@ -1,6 +1,6 @@
 module.exports =
   pkg:
-    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'main', path: 'base'
     dependencies: [
     ]
   init: ({root, context, data, pubsub}) ->

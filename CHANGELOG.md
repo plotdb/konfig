@@ -1,5 +1,10 @@
 # Change Logs
 
+## v5.0.0 (upcoming)
+
+ - include widgets separately in dist folder
+
+
 ## v4.6.0
 
  - fix bug: color widget: cant input value into input box by hand correctly

@@ -1,6 +1,6 @@
 module.exports =
   pkg:
-    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'base'
+    extend: name: '@plotdb/konfig.widget.default', version: 'main', path: 'base'
     dependencies: [
       {name: "@xlfont/load", version: "main", path: "index.min.js"}
       {name: "@xlfont/choose", version: "main", path: "index.min.js"}

@@ -1,6 +1,6 @@
 module.exports =
   pkg:
-    extend: name: '@plotdb/konfig.widget.default', version: 'master', path: 'font', dom: \overwrite
+    extend: name: '@plotdb/konfig.widget.default', version: 'main', path: 'font', dom: \overwrite
   init: ({root, data, pubsub, parent}) ->
     if !root => return
     view = new ldview do

@@ -197,7 +197,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
   interface: (meta) ->
     if meta.block => {name, version, path} = meta.block{name,version, path}
     else if @typemap and (ret = @typemap(meta.type)) => {ns, name, version, path} = ret
-    else [ns, name, version, path] = ['', meta.type, "master", '']
+    else [ns, name, version, path] = ['', meta.type, konfig.version, '']
     id = block.id({ns,name,version,path})
     if @{}_lib[id] => return Promise.resolve that
     @mgr.get({ns, name, version, path})
@@ -210,7 +210,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if ctrl[id] => return Promise.resolve!
     if meta.block => {name, version, path} = meta.block{name,version, path}
     else if @typemap and (ret = @typemap(meta.type)) => {ns, name, version, path} = ret
-    else [ns, name, version, path] = ['', meta.type, "master", '']
+    else [ns, name, version, path] = ['', meta.type, konfig.version, '']
     @mgr.get({ns, name, version, path})
       .then -> it.create {data: meta}
       .then (b) ~>
@@ -325,5 +325,6 @@ konfig.append = (...cs) ->
     _ c1, c2
   return c1
 
+konfig.version = 'main'
 if module? => module.exports = konfig
 else if window? => window.konfig = konfig
