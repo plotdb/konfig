@@ -17,9 +17,9 @@ files = fs.readdir-sync root
   .filter -> fs.exists-sync(it.1)
 ret = files.map (file) ->
   {
-    name: "@plotdb/konfig.widget.#set"
+    name: "@plotdb/konfig"
     version: "main"
-    path: file.0
+    path: "#set/#{file.0}"
     code: (fs.read-file-sync file.1 .toString!)
   }
 console.log """

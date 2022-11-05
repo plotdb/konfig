@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.7.2
+
+ - use correct naming for both default and bootstrap widget in both separated widget files and bundle js
+
+
 ## v4.7.1
 
  - replace `master` in tools with `main` to align with 4.7.0 version changes.

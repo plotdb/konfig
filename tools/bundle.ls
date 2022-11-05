@@ -9,26 +9,18 @@ base = "http://localhost:3456"
 mgr = new block.manager do
   registry: ({name,version,path,type}) ->
     if type != \block => return "#base/assets/lib/#name/#{version or 'main'}/#{path or 'index.min.js'}"
-    ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
+    ret = /^@plotdb\/konfig$/.exec(name)
     if !ret => return "#base/block/#name/#{version or 'main'}/#{path or 'index.html'}"
-    return "#base/block/#{ret.1}/#{path or 'index.html'}"
+    return "#base/block/#{if /\//.exec(path) => '' else 'default'}/#{path or 'index.html'}"
 set = <[default bootstrap]>
 root = path.join(lib, "../web/static/block")
 bs = set
   .map (s) ->
     r = path.join(root, s)
-    fs.readdir-sync r .map -> name: "@plotdb/konfig.widget.#s", version: "main", path: "#it"
+    fs.readdir-sync r .map -> name: "@plotdb/konfig", version: "main", path: "#s/#it"
   .reduce(((a,b) -> a ++ b),[])
-
-/*
-bs = [ <[default base]> <[default number]> <[bootstrap base]> <[bootstrap number]> ]
-bs = bs.map ([s,it]) ->
-  console.log s, it
-  name: "@plotdb/konfig.widget.#s", version: "main", path: "#it/index.html"
-*/
 
 mgr.bundle blocks: bs
   .then ->
     console.log it
-    #fs.write-file-sync "../web/static/assets/bundle/index.html", it
 

@@ -1,6 +1,6 @@
 module.exports =
   pkg:
-    extend: name: '@plotdb/konfig.widget.default', version: 'main', path: 'base'
+    extend: name: '@plotdb/konfig', version: 'main', path: 'base'
     dependencies: [
       {url: "/assets/lib/ldslider/main/index.min.css", type: \css}
       {url: "/assets/lib/ldslider/main/index.min.js", async: false}

@@ -1,6 +1,6 @@
 module.exports =
   pkg:
-    extend: name: '@plotdb/konfig.widget.default', version: 'main', path: 'color', dom: \overwrite
+    extend: name: '@plotdb/konfig', version: 'main', path: 'color', dom: \overwrite
     i18n:
       en: "current color": "Current Color"
       "zh-TW": "current-color": "自動用色"
