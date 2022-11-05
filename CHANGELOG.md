@@ -3,6 +3,7 @@
 ## v5.0.0 (upcoming)
 
  - include widgets separately in dist folder
+ - use `main` to replace `master`
 
 
 ## v4.6.0
