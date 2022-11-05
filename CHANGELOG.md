@@ -1,6 +1,6 @@
 # Change Logs
 
-## v5.0.0 (upcoming)
+## v4.7.0
 
  - include widgets separately in dist folder
  - use `main` to replace `master`
