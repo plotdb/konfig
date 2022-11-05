@@ -18,7 +18,7 @@ files = fs.readdir-sync root
 ret = files.map (file) ->
   {
     name: "@plotdb/konfig.widget.#set"
-    version: "master"
+    version: "main"
     path: file.0
     code: (fs.read-file-sync file.1 .toString!)
   }

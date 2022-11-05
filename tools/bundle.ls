@@ -1,4 +1,5 @@
-require! <[fs path @plotdb/block jsdom]>
+require! <[fs path jsdom]>
+block = require "@plotdb/block/bundle"
 
 lib = path.dirname fs.realpathSync(__filename.replace(/\(.*/,''))
 
@@ -16,7 +17,7 @@ root = path.join(lib, "../web/static/block")
 bs = set
   .map (s) ->
     r = path.join(root, s)
-    fs.readdir-sync r .map -> name: "@plotdb/konfig.widget.#s", version: "master", path: "#it"
+    fs.readdir-sync r .map -> name: "@plotdb/konfig.widget.#s", version: "main", path: "#it"
   .reduce(((a,b) -> a ++ b),[])
 
 /*
