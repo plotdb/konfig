@@ -16,10 +16,11 @@ files = fs.readdir-sync root
   .map -> [it, "#root/#it/index.html"]
   .filter -> fs.exists-sync(it.1)
 ret = files.map (file) ->
+  dir = if set != \default => "#set/" else ''
   {
     name: "@plotdb/konfig"
     version: "main"
-    path: "#set/#{file.0}"
+    path: "#dir#{file.0}"
     code: (fs.read-file-sync file.1 .toString!)
   }
 console.log """

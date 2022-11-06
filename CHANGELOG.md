@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.7.4
+
+ - fix bug: name of builtin widgets inside bundle are incorrect
+
+
 ## v4.7.3
 
  - fix bug: incorrect widgets (bootstrap) are used as default widgets, causing recursive extend
