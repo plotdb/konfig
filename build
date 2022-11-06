@@ -26,7 +26,7 @@ for subset in $subsets; do
     ./node_modules/.bin/srcbuild-pug $root/$subset/$dir/index.pug > dist/widgets/$subset/$dir/index.html
   done
 done
-cp -R dist/widgets/$subset/* dist
+cp -R dist/widgets/default/* dist
 
 echo "bundling blocks -> index.html ..."
 ./node_modules/.bin/lsc tools/bundle.ls > web/static/assets/bundle/index.html

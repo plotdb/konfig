@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.7.3
+
+ - fix bug: incorrect widgets (bootstrap) are used as default widgets, causing recursive extend
+
+
 ## v4.7.2
 
  - use correct naming for both default and bootstrap widget in both separated widget files and bundle js
