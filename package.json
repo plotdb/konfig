@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "4.7.4",
+  "version": "4.7.5",
   "browser": "dist/index.min.js",
   "main": "dist/index.min.js",
   "files": [
@@ -26,7 +26,7 @@
     "@loadingio/debounce.js": "^1.0.1",
     "@loadingio/ldquery": "^3.0.4",
     "@loadingio/vscroll": "^0.0.8",
-    "@plotdb/chart": "^2.1.7",
+    "@plotdb/chart": "^2.1.14",
     "@xlfont/choose": "^0.0.15",
     "@xlfont/load": "^2.1.0",
     "@zbryikt/template": "^2.3.38",

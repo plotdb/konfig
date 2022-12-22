@@ -305,8 +305,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
   },
   obj: function(){
     var this$ = this;
-    return Promise.all(this._objps).then(function(){
-      this$._objps.splice(0);
+    return Promise.all(this._objps)['finally'](function(){
+      return this$._objps.splice(0);
+    }).then(function(){
       return this$._obj;
     });
   },

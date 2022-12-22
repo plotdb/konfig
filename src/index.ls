@@ -149,9 +149,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   obj: ->
     Promise.all @_objps
-      .then ~>
-        @_objps.splice 0
-        @_obj
+      .finally ~> @_objps.splice 0
+      .then ~> @_obj
 
   set: (nv, o = {}) ->
     # we should not overwrite `_val`,

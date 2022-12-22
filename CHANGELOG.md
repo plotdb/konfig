@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.7.5
+
+ - fix bug: always clear objps array after `obj()` even if promise rejects.
+ - npm audit fix to resolve vulnerabilities
+
+
 ## v4.7.4
 
  - fix bug: name of builtin widgets inside bundle are incorrect
