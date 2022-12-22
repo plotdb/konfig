@@ -12,20 +12,22 @@ module.exports =
   init: ({root, context, data, pubsub, t}) ->
     {ldview,ldcover,xfc} = context
     obj = {font: null}
+    get-default = -> if typeof(obj._m.default) == \string => {name: obj._m.default} else obj._m.default
     # TODO data for get/set should be serializable and backward compatible.
     pubsub.fire \init, do
       get: ->
-        if obj.font => obj.font{name, style, weight}
-        else @default!
+        if !obj.font => return null # should we return @default! ?
+        obj.font{name, style, weight}
       set: (f) ->
         obj.font = if !f => f
         else if typeof(f) == \string => {name: f}
         else f{name, style, weight}
         view.render \font-name
-      default: -> if typeof(obj._m.default) == \string => {name: obj._m.default} else obj._m.default
+      default: -> get-default!
       meta: (m) -> obj._meta = m
       object: (f) ~> chooser.load f
     obj._m = data
+    obj.font = get-default!
     chooser = new xfc do
       root: (if !root => null else root.querySelector('.ldcv')), init-render: true
       meta: 'https://xlfont.maketext.io/meta'

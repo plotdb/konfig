@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.7.6
+
+ - fix bug: `font` widget should initialize `font` object with default function.
+
+
 ## v4.7.5
 
  - fix bug: always clear objps array after `obj()` even if promise rejects.
