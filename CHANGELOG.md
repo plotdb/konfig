@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.7.7
+
+ - upgrade ldpalettepicker for tag feature
+ - tweak ldpalettepicker widget height
+
+
 ## v4.7.6
 
  - fix bug: `font` widget should initialize `font` object with default function.

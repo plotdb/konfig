@@ -2,5 +2,5 @@ div
   include @/ldpalettepicker/ldpp.pug
   div(ld-scope,plug="config")
     .ldp(ld="ldp"): .colors: .color(ld-each="color")
-    .ldcv.default-size(ld="ldcv"): .base: .inner.ldpp: +ldpp
+    .ldcv.default-size(ld="ldcv"): .base(style="height:35em"): .inner: +ldpp
   script(type="@plotdb/block"): include:lsc index.ls
