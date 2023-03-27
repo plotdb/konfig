@@ -1,5 +1,13 @@
 # Change Logs
 
+## v4.8.0
+
+ - support `reset` API
+ - fix bug: `quantity` widget incorrectly parse input value for unit, leading empty unit.
+   - tweak parser regex and fallback to default unit if no unit found
+ - fix bug: `quantity` widget doesn't update unit ui after value set
+
+
 ## v4.7.7
 
  - upgrade ldpalettepicker for tag feature

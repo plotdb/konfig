@@ -39,11 +39,12 @@ module.exports =
       #  - user have to parse string if they need value, which will need api from this widget.
       get: -> "#{obj.ldrs.get!}#{obj.unit}" #{value: obj.ldrs.get!, unit: obj.unit}
       set: (v) ->
-        ret = /^(\d+(?:\.(\d+))?)(\D*)/.exec("#v")
-        if !ret => ret = /^(\d+(?:\.(\d+))?)(\D*)/.exec("#{@default!}")
+        ret = /^(\d+(?:\.(?:\d+))?)(\D*)/.exec("#v")
+        if !ret => ret = /^(\d+(?:\.(?:\d+))?)(\D*)/.exec("#{@default!}")
         if !ret => ret = [0,0,@_meta.units.0]
         obj.ldrs.set +ret.1
-        obj.unit = ret.2
+        obj.unit = ret.2 or obj.unit or @_meta.units.0
+        view.render!
 
       /*
       # alternative approach: use object as return value. with this approach:

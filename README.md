@@ -78,6 +78,7 @@ with this DOM:
      - `append`: default false. if true, only fields with value other than undefined will be update.
  - `obj()`: instead of a plain, serializable JSON, `obj()` return a Promise resolved with objects corresponding to operatable objects provided by widgets.
  - `default()`: get a config object with all values from default value.
+ - `reset()`: reset config object to default value.
  - `meta(opt)`: update `meta` object. return Promise
    - parameters: either
      - the meta object

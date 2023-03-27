@@ -140,6 +140,11 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     traverse @_meta, ret = {}, @_ctrlobj, null
     ret
 
+  reset: ->
+    nv = @default!
+    @set nv
+    @_update!
+
   get: -> JSON.parse JSON.stringify @_val
   _objwait: (p) ->
     @_objps.push p
