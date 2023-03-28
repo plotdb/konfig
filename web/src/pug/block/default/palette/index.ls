@@ -48,7 +48,9 @@ module.exports =
                     root: view.get('ldcv'), ldcv: {in-place:false}, use-clusterizejs: true, i18n: i18n
                     palette: data.palette, palettes: pals, use-vscroll: true
                   }
-            .then -> obj.ldpp.get!
+            .then ->
+              obj.ldpp.edit obj.pal
+              obj.ldpp.get!
             .then ->
               if !it => return
               obj.pal = it

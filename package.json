@@ -76,10 +76,10 @@
   "dependencies": {
     "@loadingio/ldcolorpicker": "^3.0.4",
     "@loadingio/vscroll": "^0.0.8",
-    "@plotdb/block": "^5.2.1",
-    "@plotdb/csscope": "^5.0.2",
+    "@plotdb/block": "^5.2.2",
+    "@plotdb/csscope": "^5.0.3",
     "@plotdb/datadom": "^0.2.0",
-    "@plotdb/rescope": "^5.0.8",
+    "@plotdb/rescope": "^5.0.9",
     "@plotdb/semver": "^0.0.3",
     "ldbutton": "^2.0.1",
     "ldcolor": "^1.1.0",

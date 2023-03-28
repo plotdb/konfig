@@ -1,5 +1,5 @@
 require! <[fs path jsdom]>
-block = require "@plotdb/block/bundle"
+block = require "@plotdb/block"
 
 lib = path.dirname fs.realpathSync(__filename.replace(/\(.*/,''))
 
@@ -11,7 +11,7 @@ mgr = new block.manager do
     if type != \block => return "#base/assets/lib/#name/#{version or 'main'}/#{path or 'index.min.js'}"
     ret = /^@plotdb\/konfig$/.exec(name)
     if !ret => return "#base/block/#name/#{version or 'main'}/#{path or 'index.html'}"
-    return "#base/block/#{if /\//.exec(path) => '' else 'default'}/#{path or 'index.html'}"
+    return "#base/block/#{if /\//.exec(path) => '' else 'default/'}#{path or 'index.html'}"
 set = <[default bootstrap]>
 root = path.join(lib, "../web/static/block")
 bs = set
@@ -22,5 +22,5 @@ bs = set
 
 mgr.bundle blocks: bs
   .then ->
-    console.log it
+    console.log it.code
 

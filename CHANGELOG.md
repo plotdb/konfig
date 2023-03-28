@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.8.1
+
+ - upgrade dependencies
+ - update bunlder based on dependencies upgrade
+ - `palette` widget: toggle editor on when clicking
+
+
 ## v4.8.0
 
  - support `reset` API
