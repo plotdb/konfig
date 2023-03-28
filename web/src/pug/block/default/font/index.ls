@@ -26,7 +26,7 @@ module.exports =
       default: -> get-default!
       meta: (m) -> obj._meta = m
       object: (f) ~> chooser.load f
-    obj._m = data
+    obj._m = data or {}
     obj.font = get-default!
     chooser = new xfc do
       root: (if !root => null else root.querySelector('.ldcv')), init-render: true

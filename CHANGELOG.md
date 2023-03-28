@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.3
+
+ - fix bug: `font` widget: access undefined object if no config given.
+
+
 ## v4.8.2
 
  - `palette` widget: support view / edit toggling
