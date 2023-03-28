@@ -28,7 +28,8 @@ module.exports =
     view = new ldview do
       root: root
       action: click:
-        ldp: ~>
+        ldp: ({node}) ~>
+          action = node.getAttribute \data-action or \edit
           Promise.resolve!
             .then ->
               if obj.ldpp => return
@@ -49,7 +50,8 @@ module.exports =
                     palette: data.palette, palettes: pals, use-vscroll: true
                   }
             .then ->
-              obj.ldpp.edit obj.pal
+              if action == \edit => obj.ldpp.edit obj.pal
+              else obj.ldpp.tab \view
               obj.ldpp.get!
             .then ->
               if !it => return

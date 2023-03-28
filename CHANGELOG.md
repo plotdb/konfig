@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.2
+
+ - `palette` widget: support view / edit toggling
+
+
 ## v4.8.1
 
  - upgrade dependencies
