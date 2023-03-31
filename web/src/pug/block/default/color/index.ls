@@ -15,7 +15,7 @@ module.exports =
       if view? => view.render!
     @set = (c) ->
       @c = c
-      if !(c in <[currentColor transparent]>) => @ldcp.set-color(c)
+      if !(c in <[currentColor transparent]> or isNaN(ldcolor.hsl(c).h)) => @ldcp.set-color(c)
       @render!
 
     @prepare-default = (o={}) ->
@@ -56,9 +56,20 @@ module.exports =
           pubsub.fire \event, \change, @c
           @render!
       handler:
+        preset:
+          list: ~> @_meta.presets or []
+          key: -> it
+          view:
+            text: "@": ({ctx}) -> ctx
+            action: click: "@": ({ctx}) ~>
+              @c = ctx
+              pubsub.fire \event, \change, @c
+              @render!
+
         color: ({node, ctx}) ~>
           c = ldcolor.web(@c)
-          if node.nodeName.toLowerCase! == \input => node.value = c
+          if node.nodeName.toLowerCase! == \input =>
+            node.value = if isNaN(ldcolor.hsl(@c).h) => @c else c
           else node.style.backgroundColor = c
     @ldcp.on \change, ~>
       @c = ldcolor.web it

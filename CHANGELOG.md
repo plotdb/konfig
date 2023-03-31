@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.4
+
+ - support customized color value in color widget
+
+
 ## v4.8.3
 
  - fix bug: `font` widget: access undefined object if no config given.
