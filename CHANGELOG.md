@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.5
+
+ - `palette` widget: view palette should still set current palette for potential following editing
+
+
 ## v4.8.4
 
  - support customized color value in color widget

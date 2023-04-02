@@ -50,8 +50,8 @@ module.exports =
                     palette: data.palette, palettes: pals, use-vscroll: true
                   }
             .then ->
-              if action == \edit => obj.ldpp.edit obj.pal
-              else obj.ldpp.tab \view
+              obj.ldpp.edit obj.pal
+              if action != \edit => obj.ldpp.tab \view
               obj.ldpp.get!
             .then ->
               if !it => return
