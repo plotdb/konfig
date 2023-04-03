@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.8.6
+
+ - `text` widget: support preset menu
+ - `font` widget: remove `z-float` class to maintain correct z order among widgets
+ - add `format` widget for d3-format style formatting with presets
+
+
 ## v4.8.5
 
  - `palette` widget: view palette should still set current palette for potential following editing

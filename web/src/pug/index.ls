@@ -20,7 +20,11 @@ popup = do
     current-color: true
   color3: name: \color3, type: \color, tab: 'color', palette: <[#e15b64 #f8b26a #abbd81 #64afd2]>, context: \c
   choice: name: \choice, type: \choice, values: <[left right center]>, default: \left
-  text: name: \text, type: \text, default: 'default text'
+  text:
+    name: \text, type: \text, default: 'default text'
+    values: [{name: "Sample 1", value: 's1'}, {name: "Sample 2", value: 's2'}]
+  format:
+    name: \format, type: \format, default: 'default format'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
   upload: name: \upload, type: \upload, multiple: true
   font: name: \font, type: \font

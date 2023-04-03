@@ -4,15 +4,25 @@ module.exports =
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     {ldview} = context
-    @_meta = data
+    meta = (d) ~>
+      @_meta = d
+      @_values = @_meta.values or []
     pubsub.fire \init, do
       get: -> view.get('input').value or ''
       set: -> view.get('input').value = it or ''
       default: ~> @_meta.default or ''
-      meta: ~> @_meta = it
+      meta: ~> meta it
     view = new ldview do
       root: root
       init: input: ({node}) -> node.value = data.default or ''
+      handler:
+        preset:
+          list: ~> @_values or []
+          key: -> it.value or it.name or it
+          handler: ({node, data}) -> node.textContent = data.name or data.value or data
+          action: click: ({node, data}) ->
+            view.get('input').value = v = data.value or data
+            pubsub.fire \event, \change, v
       action:
         input: input: ({node}) -> pubsub.fire \event, \change, node.value
         change: input: ({node}) -> pubsub.fire \event, \change, node.value

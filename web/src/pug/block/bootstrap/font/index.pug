@@ -4,7 +4,10 @@ div
     .ldcv.default-size(ld="ldcv"): .base: .inner: +xfc
     .btn-group.d-flex
       .btn.btn-outline-secondary.d-block(ld="button"): span(ld="font-name") ...
-      .btn-group.z-float
+      //- we used to have `z-float` in btn-group but it make popups go under this btn-group
+      //- yet via some tests this `z-float` seems to have no effect over its own popup
+      //- so we remove it for now
+      .btn-group
         .btn.btn.btn-outline-secondary.dropdown-toggle(ld="dropdown",data-toggle="dropdown")
           .dropdown-menu.dropdown-menu-right.shadow-sm
             .dropdown-item(t, ld="system",data-name="inherit") default
