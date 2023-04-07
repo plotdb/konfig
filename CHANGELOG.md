@@ -3,6 +3,7 @@
 ## v4.8.7
 
  - add `ldfile` dev module for upload widget 
+ - `upload` widget: convert uploaded files into dataurl in widget to prevent config serialization issue.
 
 
 ## v4.8.6

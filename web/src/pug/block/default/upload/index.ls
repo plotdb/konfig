@@ -1,9 +1,11 @@
 module.exports =
   pkg:
     extend: name: '@plotdb/konfig', version: 'main', path: 'base'
-    dependencies: []
+    dependencies: [
+      {name: \ldfile}
+    ]
   init: ({root, context, data, pubsub}) ->
-    {ldview} = context
+    {ldview, ldfile} = context
     @_meta = data
     pubsub.fire \init, do
       get: -> view.get('input').value or ''
@@ -13,5 +15,12 @@ module.exports =
     view = new ldview do
       root: root
       init: input: ({node}) ~> if @_meta.multiple => node.setAttribute \multiple, true
-      action:
-        change: input: ({node}) -> pubsub.fire \event, \change, node.files
+      action: change:
+        input: ({node}) ->
+          ps = [node.files[v] for v from 0 til node.files.length]
+            .map (v) ->
+              ldfile.fromFile v, \dataurl
+                .then -> it.result
+          Promise.all ps
+            .then (files) ->
+              pubsub.fire \event, \change, files
