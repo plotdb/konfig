@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.7
+
+ - add `ldfile` dev module for upload widget 
+
+
 ## v4.8.6
 
  - `text` widget: support preset menu
