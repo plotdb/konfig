@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.8
+
+ - `font` widget: return default object if font is not available.
+
+
 ## v4.8.7
 
  - add `ldfile` dev module for upload widget 
