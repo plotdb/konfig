@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.9
+
+ - `font` widget: check default object againt empty to prevent serialization issue
+
+
 ## v4.8.8
 
  - `font` widget: return default object if font is not available.

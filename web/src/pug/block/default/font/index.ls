@@ -16,7 +16,8 @@ module.exports =
     # TODO data for get/set should be serializable and backward compatible.
     pubsub.fire \init, do
       get: ->
-        if !obj.font => return @default! # should we return @default! ?
+        # dont return a direct null/undefined to prevent json0 serialization issue.
+        if !obj.font => return (@default! or '')
         obj.font{name, style, weight}
       set: (f) ->
         obj.font = if !f => f
