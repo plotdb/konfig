@@ -32,7 +32,9 @@ module.exports =
           action = node.getAttribute \data-action or \edit
           Promise.resolve!
             .then ->
+              if obj.initing => return obj.initing!
               if obj.ldpp => return
+              obj.initing = proxise ->
               pals = if Array.isArray(data.palettes) => data.palettes
               else if typeof(data.palettes) == \string => ldpp.get data.palettes
               else null
@@ -49,9 +51,13 @@ module.exports =
                     root: view.get('ldcv'), ldcv: {in-place:false}, use-clusterizejs: true, i18n: i18n
                     palette: data.palette, palettes: pals, use-vscroll: true
                   }
+                  if !obj.initing => return
+                  obj.initing.resolve!
+                  obj.initing = false
             .then ->
-              obj.ldpp.edit obj.pal
-              if action != \edit => obj.ldpp.tab \view
+              obj.ldpp.edit obj.pal, false
+              if action == \edit => obj.ldpp.tab \edit
+              else obj.ldpp.tab \view
               obj.ldpp.get!
             .then ->
               if !it => return

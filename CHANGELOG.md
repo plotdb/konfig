@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.8.10
+
+ - `palette` widget:
+   - prevent ldpp from re-constructing due to multiple adjacent click events
+   - toggle specific tab explicitly to prevent from unexpected tab toggling
+
+
 ## v4.8.9
 
  - `font` widget: check default object againt empty to prevent serialization issue
