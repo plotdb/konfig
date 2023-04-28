@@ -1,9 +1,7 @@
 module.exports =
   pkg:
     extend: name: '@plotdb/konfig', version: 'main', path: 'base'
-    dependencies: [
-      {name: \ldfile}
-    ]
+    dependencies: [ {name: \ldfile} ]
   init: ({root, context, data, pubsub}) ->
     {ldview, ldfile} = context
     @_meta = data

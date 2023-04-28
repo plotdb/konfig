@@ -169,7 +169,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           if val[id] != nval[id] and !(o.append and !(nval[id]?)) =>
             val[id] = nval[id]
             ctrl[id].itf.set val[id]
-            ((id)~>@_objwait(ctrl[id].itf.object val[id] .then -> obj[id] = it))(id)
+            ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
         else traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
     traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
 
@@ -235,10 +235,10 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           .then -> return ctrl[id].itf = it
       .then (item) ~>
         val[id] = v = item.get!
-        @_objwait(item.object(v).then -> obj[id] = it)
+        @_objwait(Promise.resolve(item.object v).then -> obj[id] = it)
         item.on \change, ~>
           val[id] = it
-          @_objwait(item.object(it).then -> obj[id] = it)
+          @_objwait(Promise.resolve(item.object it).then -> obj[id] = it)
           @update id, it
       .then -> ctrl[id]
 

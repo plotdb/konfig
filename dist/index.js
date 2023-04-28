@@ -343,7 +343,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
       return results$;
       function fn$(id){
-        return this$._objwait(ctrl[id].itf.object(val[id]).then(function(it){
+        return this$._objwait(Promise.resolve(ctrl[id].itf.object(val[id])).then(function(it){
           return obj[id] = it;
         }));
       }
@@ -490,12 +490,12 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     }).then(function(item){
       var v;
       val[id] = v = item.get();
-      this$._objwait(item.object(v).then(function(it){
+      this$._objwait(Promise.resolve(item.object(v)).then(function(it){
         return obj[id] = it;
       }));
       return item.on('change', function(it){
         val[id] = it;
-        this$._objwait(item.object(it).then(function(it){
+        this$._objwait(Promise.resolve(item.object(it)).then(function(it){
           return obj[id] = it;
         }));
         return this$.update(id, it);
