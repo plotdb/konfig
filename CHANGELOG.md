@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.8.12
+
+ - `upload` widget:
+   - support data source for saving / loading files.
+
+
 ## v4.8.11
 
  - wrap widget.object in Promise to prevent failure if non-Promise data is returned.
