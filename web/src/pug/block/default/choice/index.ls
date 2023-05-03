@@ -3,13 +3,15 @@ module.exports =
     extend: name: '@plotdb/konfig', version: 'main', path: 'base'
     dependencies: []
   init: ({root, context, data, pubsub}) ->
-    @_meta = data
+    @_meta = {}
+    set-meta = (m) ~> @_meta = JSON.parse(JSON.stringify(m))
+    set-meta data
     {ldview} = context
     pubsub.fire \init, do
       get: -> view.get('select').value
       set: -> view.get('select').value = it
       default: ~> @_meta.default
-      meta: ~> @_meta = it
+      meta: ~> set-meta it
     view = new ldview do
       root: root
       action: change: select: ({node}) -> pubsub.fire \event, \change, node.value

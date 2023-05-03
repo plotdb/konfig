@@ -22,7 +22,7 @@ module.exports =
         get: opt.get or ->
         set: opt.set or ->
         meta: opt.meta or ~> @_meta = it
-        default: opt.default or ~> @_meta.default
+        default: opt.default or ~> (@_meta or {}).default
         object: opt.object or (->Promise.resolve(it))
         render: ->
           view.render!

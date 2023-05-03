@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.8.13
+
+ - in widgets `boolean`, `choice`, `palette`, `text`:
+   - update `meta` related update code and prepare `_meta` for base widget.
+ - `base` widget: check `_meta` for existence befor using
+
+
 ## v4.8.12
 
  - `upload` widget:

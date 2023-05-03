@@ -5,8 +5,9 @@ module.exports =
   init: ({root, context, data, pubsub}) ->
     {ldview} = context
     meta = (d) ~>
-      @_meta = d
+      @_meta = JSON.parse(JSON.stringify(d))
       @_values = @_meta.values or []
+    meta data
     pubsub.fire \init, do
       get: -> view.get('input').value or ''
       set: -> view.get('input').value = it or ''
