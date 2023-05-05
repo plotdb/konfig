@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.16
+
+ - remove unnecessary log
+
+
 ## v4.8.15
 
  - `font` widget: should return `null` if get object fails.
