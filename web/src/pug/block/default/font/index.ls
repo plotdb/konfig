@@ -26,7 +26,7 @@ module.exports =
         view.render \font-name
       default: -> get-default!
       meta: (m) -> obj._meta = m
-      object: (f) ~> chooser.load f .catch -> return get-default!
+      object: (f) ~> chooser.load f .catch -> return null
     obj._m = data or {}
     obj.font = get-default!
     chooser = new xfc do

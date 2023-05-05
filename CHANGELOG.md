@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.15
+
+ - `font` widget: should return `null` if get object fails.
+
+
 ## v4.8.14
 
  - `font` widget: properly handle exception from font loading failure
