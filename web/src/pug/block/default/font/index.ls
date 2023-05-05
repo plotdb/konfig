@@ -26,7 +26,7 @@ module.exports =
         view.render \font-name
       default: -> get-default!
       meta: (m) -> obj._meta = m
-      object: (f) ~> chooser.load f
+      object: (f) ~> chooser.load f .catch -> return get-default!
     obj._m = data or {}
     obj.font = get-default!
     chooser = new xfc do
@@ -58,5 +58,7 @@ module.exports =
           ret = if !obj.font => t("default") else obj.font.name or t("default")
           if ret.length > 10 => ret = ret.substring(0, 10) + '...'
           node.innerText = ret
+          console.log 123
           Promise.resolve(if obj.font => chooser.load obj.font else obj.font)
             .then (f) -> node.setAttribute \class, (if f and f.className => that else '')
+            .catch -> # something wrong in chooser.load. skip.

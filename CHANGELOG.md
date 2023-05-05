@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.14
+
+ - `font` widget: properly handle exception from font loading failure
+
+
 ## v4.8.13
 
  - in widgets `boolean`, `choice`, `palette`, `text`:
