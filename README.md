@@ -100,7 +100,7 @@ with this DOM:
 ### Events
 
  - `change`: fired when value is changed. Params:
-   - `value`: value object return by `get`.
+   - `value`: (serialized) value object return by `get`.
 
 ### Sample Usage
 
