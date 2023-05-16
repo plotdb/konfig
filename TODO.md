@@ -1,3 +1,4 @@
+ - we may want to prevent race condition in multiple `build` calls.
  - font image sprite url issue
  - now update before initialized, which seems awkward. 
    - since we have passed value after init, perhaps the init update is totally unnecessary?
