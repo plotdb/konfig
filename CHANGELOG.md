@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.19
+
+ - `color` widget: correctly initialize palette and color index.
+
+
 ## v4.8.18
 
  - `color` widget: add add/remove color button in picker

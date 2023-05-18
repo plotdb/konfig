@@ -29,16 +29,18 @@ module.exports =
       default: ~> @default
       meta: ~>
         @_meta = it
-        @ldcp.set-palette it.palette
+        @ldcp.set-palette(it.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
         if it.idx? => @ldcp.set-idx it.idx
         @prepare-default {overwrite: true, data: it}
+
+    palette = data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>
+    defc = ldcolor.web(data.default)
+    if !(defc in (palette ++ <[transparent currentColor]>)) => palette = [defc] ++ palette
     @ldcp = new ldcolorpicker(
       root.querySelector('[ld~=input]'),
       className: "round shadow-sm round flat compact-palette no-empty-color vertical"
-      palette: (
-        (if data.default => [data.default] else []).filter(->!(it in <[transparent currentColor]>)) ++
-        (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
-      )
+      palette: palette
+      idx: if ~(idx = palette.indexOf(defc)) => idx else 0
       context: data.context or 'random'
       exclusive: if data.exclusive? => data.exclusive else true
     )
