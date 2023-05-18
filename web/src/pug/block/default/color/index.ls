@@ -34,7 +34,7 @@ module.exports =
         @prepare-default {overwrite: true, data: it}
     @ldcp = new ldcolorpicker(
       root.querySelector('[ld~=input]'),
-      className: "round shadow-sm round flat compact-palette no-button no-empty-color vertical"
+      className: "round shadow-sm round flat compact-palette no-empty-color vertical"
       palette: (
         (if data.default => [data.default] else []).filter(->!(it in <[transparent currentColor]>)) ++
         (data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
