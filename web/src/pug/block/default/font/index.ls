@@ -50,6 +50,7 @@ module.exports =
         button: ({node}) ->
           obj.ldcv.get!
             .then (f) ->
+              if !f => return
               obj.font = if f => f{name, style, weight} else null
               view.render \font-name
               pubsub.fire \event, \change, obj.font

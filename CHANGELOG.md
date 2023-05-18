@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.17
+
+ - `font` widget: fix bug: font object should not be updated if user cancel from choosing font.
+
+
 ## v4.8.16
 
  - remove unnecessary log
