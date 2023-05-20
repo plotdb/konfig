@@ -20,7 +20,9 @@ module.exports =
           list: ~> @_meta.values
           key: -> it
           init: ({node, data}) ~>
-            if @_meta.default == data => node.setAttribute \selected, \selected
+            val = if typeof(data) == \object => data.value else data
+            if @_meta.default == val => node.setAttribute \selected, \selected
           handler: ({node,data}) ->
-            node.setAttribute \value, data
-            node.textContent = data
+            {value,name} = if typeof(data) == \object => data else {value: data,name: data}
+            node.setAttribute \value, value
+            node.textContent = name

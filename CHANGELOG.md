@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.20
+
+ - `choice` widget: support object as values
+
+
 ## v4.8.19
 
  - `color` widget: correctly initialize palette and color index.
