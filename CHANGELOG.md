@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.22
+
+ - fix bug: `ensureBuilt()` behaves like `!ensuretBuilt()`
+
+
 ## v4.8.21
 
  - add `ensureBuilt()` api and update document

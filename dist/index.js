@@ -22,7 +22,7 @@ konfig = function(opt){
   this._obj = {};
   this._objps = [];
   this.ensureBuilt = proxise(function(){
-    return this$.ensureBuilt.running === false
+    return this$.ensureBuilt.running === true
       ? null
       : Promise.resolve();
   });

@@ -17,7 +17,7 @@ konfig = (opt={}) ->
   @_objps = []
   # meta can be updated anytime. we should always check if
   # building is in progress for some critical action such as `obj()`.
-  @ensure-built = proxise ~> return if @ensure-built.running == false => null else Promise.resolve!
+  @ensure-built = proxise ~> return if @ensure-built.running == true => null else Promise.resolve!
   @typemap = opt.typemap or null
   @mgr = @mgr-chain = new block.manager registry: ({name, version, path}) ->
     throw new Error("@plotdb/konfig: #name@#version/#path is not supported")
