@@ -87,6 +87,7 @@ with this DOM:
  - `interface(meta)`: return a Promise resolved with an interface for the widget defined by `meta`.
  - `on(event, cb(args...))`
  - `fire(event, args...)`
+ - `ensureBuilt()`: in case that konfig is building interface and not yet ready, use `ensureBuilt` which return a Promise that resolves when konfig is ready.
 
 
 ## Class API

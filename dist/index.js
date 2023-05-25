@@ -21,6 +21,11 @@ konfig = function(opt){
   this._val = {};
   this._obj = {};
   this._objps = [];
+  this.ensureBuilt = proxise(function(){
+    return this$.ensureBuilt.running === false
+      ? null
+      : Promise.resolve();
+  });
   this.typemap = opt.typemap || null;
   this.mgr = this.mgrChain = new block.manager({
     registry: function(arg$){
@@ -311,7 +316,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
   },
   obj: function(){
     var this$ = this;
-    return Promise.all(this._objps)['finally'](function(){
+    return this.ensureBuilt().then(function(){
+      return Promise.all(this$._objps);
+    })['finally'](function(){
       return this$._objps.splice(0);
     }).then(function(){
       return this$._obj;
@@ -507,6 +514,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
   build: function(clear, cfg){
     var this$ = this;
     clear == null && (clear = false);
+    this.ensureBuilt.running = true;
     this._buildTab(clear);
     return this._buildCtrl(clear).then(function(){
       return this$._ctrllist.map(function(c){
@@ -520,6 +528,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
     }).then(function(){
       return this$.update();
+    }).then(function(){
+      this$.ensureBuilt.running = false;
+      this$.ensureBuilt.resolve();
     });
   },
   _buildCtrl: function(clear){

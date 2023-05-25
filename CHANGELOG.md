@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.8.21
+
+ - add `ensureBuilt()` api and update document
+ - fix bug: update meta multiple times may lead to unexpected result when calling `obj()` between konfig rebuilding.
+
+
 ## v4.8.20
 
  - `choice` widget: support object as values
