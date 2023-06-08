@@ -76,6 +76,13 @@ konfig.views = {
             var node, data;
             node = arg$.node, data = arg$.data;
             return node.appendChild(data.root);
+          },
+          handler: function(arg$){
+            var node, data;
+            node = arg$.node, data = arg$.data;
+            if (!data.root.parentNode) {
+              return node.appendChild(data.root);
+            }
           }
         }
       }
@@ -125,6 +132,9 @@ konfig.views = {
                 handler: function(arg$){
                   var node, data;
                   node = arg$.node, data = arg$.data;
+                  if (!data.root.parentNode) {
+                    node.appendChild(data.root);
+                  }
                   return data.itf.render();
                 }
               }
@@ -203,6 +213,9 @@ konfig.views = {
           handler: function(arg$){
             var node, data;
             node = arg$.node, data = arg$.data;
+            if (!data.root.parentNode) {
+              node.appendChild(data.root);
+            }
             node.style.flex = "1 1 " + 16 * (data.meta.weight || 1) + "%";
             return data.itf.render();
           }

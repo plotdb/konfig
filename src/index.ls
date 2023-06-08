@@ -42,6 +42,7 @@ konfig.views =
           list: ~> @_ctrllist.filter -> !it.meta.hidden
           key: -> it.key
           init: ({node, data}) ~> node.appendChild data.root
+          handler: ({node, data}) ~> if !data.root.parentNode => node.appendChild data.root
   default: ->
     new ldview do
       root: @root
@@ -61,6 +62,7 @@ konfig.views =
                 key: -> it.key
                 init: ({node, data}) ~> node.appendChild data.root
                 handler: ({node, data}) ~>
+                  if !data.root.parentNode => node.appendChild data.root
                   data.itf.render!
   recurse: ->
     if @_template => template = @_template
@@ -94,6 +96,7 @@ konfig.views =
           key: -> it.key
           init: ({node, data}) ~> node.appendChild data.root
           handler: ({node, data}) ~>
+            if !data.root.parentNode => node.appendChild data.root
             node.style.flex = "1 1 #{16 * (data.meta.weight or 1)}%"
             data.itf.render!
     )

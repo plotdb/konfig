@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.23
+
+ - fix bug: widgets disappear randomly after meta is updated multiple times with default views.
+
+
 ## v4.8.22
 
  - fix bug: `ensureBuilt()` behaves like `!ensuretBuilt()`
