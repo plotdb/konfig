@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.8.24 (upcoming)
+## v4.8.24
 
  - color widget: normalize default palette, color and picker index in both meta update and initialization steps.
 
