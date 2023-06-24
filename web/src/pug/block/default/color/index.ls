@@ -19,9 +19,20 @@ module.exports =
       @render!
 
     @prepare-default = (o={}) ->
-      @default = if o.data.default in <[currentColor transparent]> => o.data.default
-      else ldcolor.web(o.data.default or @ldcp.get-color!)
+      @default = if o.default in <[currentColor transparent]> => o.default
+      else ldcolor.web(o.default or @ldcp.get-color!)
       if o.overwrite => @set @default
+
+    prepare = (o = {}) ->
+      p = o.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>
+      if Array.isArray(p) => p = colors: p
+      p.colors = p.colors.map -> ldcolor.web(it)
+      if o.default =>
+        c = ldcolor.web(o.default)
+        if !(c in (p.colors ++ <[transparent currentColor]>)) => p.colors = [c] ++ p.colors
+      else c = p.colors[o.idx or 0] or o.colors.0
+      if !~(idx = p.colors.indexOf c) => idx = 0
+      return {palette: p, default: c, idx: idx}
 
     pubsub.fire \init, do
       get: ~> @c
@@ -29,22 +40,24 @@ module.exports =
       default: ~> @default
       meta: ~>
         @_meta = it
-        @ldcp.set-palette(it.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>)
-        if it.idx? => @ldcp.set-idx it.idx
-        @prepare-default {overwrite: true, data: it}
+        # palette is expected to be an object with `name` and `colors` fields.
+        # for simplicity we detect array and transform it for user.
+        ret = prepare it
+        @ldcp.set-palette ret.palette
+        if ret.idx? => @ldcp.set-idx ret.idx
+        @prepare-default {overwrite: true, default: ret.default}
 
-    palette = data.palette or <[#cc0505 #f5b70f #9bcc31 #089ccc]>
-    defc = ldcolor.web(data.default)
-    if !(defc in (palette ++ <[transparent currentColor]>)) => palette = [defc] ++ palette
+    ret = prepare data
+
     @ldcp = new ldcolorpicker(
       root.querySelector('[ld~=input]'),
       className: "round shadow-sm round flat compact-palette no-empty-color vertical"
-      palette: palette
-      idx: if ~(idx = palette.indexOf(defc)) => idx else 0
+      palette: ret.palette
+      idx: ret.idx
       context: data.context or 'random'
       exclusive: if data.exclusive? => data.exclusive else true
     )
-    @prepare-default {overwrite: true, data}
+    @prepare-default {overwrite: true, default: ret.default}
 
     view = new ldview do
       root: root

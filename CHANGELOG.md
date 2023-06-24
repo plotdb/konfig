@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.24 (upcoming)
+
+ - color widget: normalize default palette, color and picker index in both meta update and initialization steps.
+
+
 ## v4.8.23
 
  - fix bug: widgets disappear randomly after meta is updated multiple times with default views.
