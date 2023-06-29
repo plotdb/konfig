@@ -12,9 +12,16 @@ module.exports =
       set: -> view.get('select').value = it
       default: ~> @_meta.default
       meta: ~> set-meta it
+      limited: ~>
+        if !@_meta.limit? => return false
+        !(view.get('select').value in @_meta.limit)
     view = new ldview do
       root: root
-      action: change: select: ({node}) -> pubsub.fire \event, \change, node.value
+      action: change: select: ({node}) ~>
+        if @_meta.limit? =>
+          limited = !(node.value in @_meta.limit)
+          root.classList.toggle \limited, limited
+        pubsub.fire \event, \change, node.value
       handler:
         option:
           list: ~> @_meta.values

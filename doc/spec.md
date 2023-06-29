@@ -57,6 +57,7 @@ This block should provide an interface with following methods:
  - `get()`: get current value
  - `set(value)`: set value of this control
  - `meta(meta)`: update meta of this control
+ - `limited()`: return true if current value is limited (such as, should not be used to generate result)
  - `default()`: return default value from this control
  - `on(event, cb(args...))`: register event handler for events fired by this control
  - `fire(event, args...)`: fire an event to this control

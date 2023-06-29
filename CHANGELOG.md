@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.8.25
+
+ - add `limited` api and support `limited` feature in `number` and `choice` fields.
+
+
 ## v4.8.24
 
  - color widget: normalize default palette, color and picker index in both meta update and initialization steps.

@@ -151,6 +151,19 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     @set nv
     @_update!
 
+  limited: (opt = {}) ->
+    lc = any: false
+    ret = {}
+    traverse = (meta, val = {}, ctrl = {}) ~>
+      ctrls = if meta.child => meta.child else meta
+      for id,v of ctrls =>
+        if v.type =>
+          val[id] = ctrl[id].itf.limited? and ctrl[id].itf.limited!
+          lc.any = lc.any or val[id]
+        else traverse(v, val{}[id], ctrl{}[id])
+    traverse @_meta, ret, @_ctrlobj
+    return if opt.detail => ret else lc.any
+
   get: -> JSON.parse JSON.stringify @_val
   _objwait: (p) ->
     @_objps.push p

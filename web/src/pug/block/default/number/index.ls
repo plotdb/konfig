@@ -28,6 +28,13 @@ module.exports =
         obj.ldrs.set-config Object.fromEntries(
           <[min max step from to exp limitMax range label]>.map(~> [it, @_meta[it]]).filter(->it.1?)
         )
+      limited: ~>
+        if !(@_meta.limit-max? or @_meta.limit-min?) => return false
+        v = obj.ldrs.get!
+        return (
+          (@_meta.limit-max? and v > @_meta.limit-max) or
+          (@_meta.limit-min? and v <= @_meta.limit-min)
+        )
       render: -> obj.ldrs.update!
     set-meta data
 
@@ -42,4 +49,12 @@ module.exports =
             <[min max step from to exp limitMax range label]>.map(~> [it, @_meta[it]]).filter(->it.1?)
           )
         )
-        obj.ldrs.on \change, -> pubsub.fire \event, \change, it
+        obj.ldrs.on \change, (v) ~>
+          root.classList.toggle \limited, false
+          if @_meta.limit-max? or @_meta.limit-min? =>
+            limited = (
+              (@_meta.limit-max? and v > @_meta.limit-max) or
+              (@_meta.limit-min? and v <= @_meta.limit-min)
+            )
+            root.classList.toggle \limited, limited
+          pubsub.fire \event, \change, v

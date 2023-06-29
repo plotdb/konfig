@@ -72,6 +72,10 @@ with this DOM:
  - `init()`: initialization.
     - return Promise, resolved initial config on initialized.
  - `render()`: re-render controls
+ - `limited(opt)`: return if current config uses some limited values.
+   - return value is based on `opt`, an object with a fields `detail`. when `detail` is:
+     - omitted or `false`: return true or false, indicating if any value is limited.
+     - `true`: return an object with `true` in corresponding field if that field uses a limited value.
  - `get()`: get value object.
  - `set(v, opt)`: set value object to `v`.
    - options: an option object with possibly following field:
