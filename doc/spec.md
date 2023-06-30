@@ -64,6 +64,10 @@ This block should provide an interface with following methods:
  - `render()`: update ui of this control
  - `object(v)`: convert a serializable `v` into corresponding object
    - return a Promise resolved with the corresponding object
+ - `action`: this should be an object with fields of custom action to trigger by its host. for example:
+
+    action: {open: function(name) { ... }}
+
 
 To implement a block, check `@plotdb/konfig.widget.default`'s base block for example. ( available in `web/src/pug/block/default/base` )
 

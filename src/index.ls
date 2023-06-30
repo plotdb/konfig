@@ -256,6 +256,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then (item) ~>
         val[id] = v = item.get!
         @_objwait(Promise.resolve(item.object v).then -> obj[id] = it)
+        item.on \action, (d) ~> @fire \action, {src: item, data: d}
         item.on \change, ~>
           val[id] = it
           @_objwait(Promise.resolve(item.object it).then -> obj[id] = it)

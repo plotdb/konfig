@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.0
+
+ - support top-down `action` (simply by document it) for host to control widgets by exposed APIs.
+ - support bottom-up `action` event for host to accept action requests from widgets.
+
+
 ## v4.8.25
 
  - add `limited` api and support `limited` feature in `number` and `choice` fields.

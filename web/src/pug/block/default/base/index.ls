@@ -30,6 +30,7 @@ module.exports =
           if opt.render => opt.render!
         on: (n, cb) -> (if Array.isArray(n) => n else [n]).map (n) ~> @evt-handler.[][n].push cb
         fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
+        action: opt.action or {}
       if view => view.render \hint
     pubsub.on \event, (n, ...v) ~> @itf.fire.apply @itf, [n] ++ v
     if !root => return

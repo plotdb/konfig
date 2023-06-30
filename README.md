@@ -106,6 +106,12 @@ with this DOM:
 
  - `change`: fired when value is changed. Params:
    - `value`: (serialized) value object return by `get`.
+ - `action`: fired when widget fires this event.
+   - this is for customized widgets to send user-defined events. `data` below is defined by user.
+   - Params:
+     - `src`: source widget that fires this event
+     -`data`: data sent along with the original event by source widget.
+
 
 ### Sample Usage
 
