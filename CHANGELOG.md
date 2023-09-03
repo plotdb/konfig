@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.1
+
+ - upgrade @xlfont/choose for url hinting feature
+ - respect url hint when constructing xfc chooser in font widget.
+
+
 ## v4.9.0
 
  - support top-down `action` (simply by document it) for host to control widgets by exposed APIs.

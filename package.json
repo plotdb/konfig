@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "browser": "dist/index.min.js",
   "main": "dist/index.min.js",
   "files": [
@@ -27,7 +27,7 @@
     "@loadingio/ldquery": "^3.0.4",
     "@loadingio/vscroll": "^0.0.8",
     "@plotdb/chart": "^2.1.17",
-    "@xlfont/choose": "^0.0.15",
+    "@xlfont/choose": "^0.0.17",
     "@xlfont/load": "^2.1.2",
     "@zbryikt/template": "^2.3.45",
     "bootstrap": "^4.5.2",

@@ -29,10 +29,12 @@ module.exports =
       object: (f) ~> chooser.load f .catch -> return null
     obj._m = data or {}
     obj.font = get-default!
+    urls = if xfc.url => xfc.url! else {}
+    # TODO we may want to cache this chooser for other font widgets to speed up.
     chooser = new xfc do
       root: (if !root => null else root.querySelector('.ldcv')), init-render: true
-      meta: 'https://xlfont.maketext.io/meta'
-      links: 'https://xlfont.maketext.io/links'
+      meta: urls.meta or 'https://xlfont.maketext.io/meta'
+      links: urls.links or 'https://xlfont.maketext.io/links'
     chooser.init!
     if !root => return
     chooser.on \choose, (f) ~> obj.ldcv.set f
