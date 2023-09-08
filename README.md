@@ -102,7 +102,7 @@ with this DOM:
    - this is for merging config objects.
 
 
-### Events
+## Events
 
  - `change`: fired when value is changed. Params:
    - `value`: (serialized) value object return by `get`.
@@ -113,7 +113,7 @@ with this DOM:
      -`data`: data sent along with the original event by source widget.
 
 
-### Sample Usage
+## Sample Usage
 
     kfg = new konfig({
       root: document.body,
@@ -209,6 +209,16 @@ Additionally, it should return an object with at least following method:
 
 This function is called everytime a konfig rebuild is necessary ( e.g., when `meta` is updated ). You should implement singleton by yourself if needed.
 
+
+## Action Loop
+
+Widgets may need to communicate with its controller, but there is no direct access or interface of konfig to widgets. Two way communication is possible with action:
+
+    rpc = proxise -> itf.fire \action, {name: \rpc, data: {...}}; return null
+    new itf action: rpc: -> rpc.resolve it
+    ...
+    rpc!then -> ...
+    
 
 ## License
 
