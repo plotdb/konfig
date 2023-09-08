@@ -183,14 +183,15 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     nv = JSON.parse JSON.stringify nv
     @render!
     traverse = (meta, val = {}, obj = {}, nval = {}, ctrl = {}, pid) ~>
-      ctrls = if meta.child => meta.child else meta
+      if typeof(ctrls = if meta.child => meta.child else meta) != \object => return
       for id,v of ctrls =>
         if v.type =>
           if val[id] != nval[id] and !(o.append and !(nval[id]?)) =>
             val[id] = nval[id]
             ctrl[id].itf.set val[id]
             ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
-        else traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
+        else if typeof(v) == \object => traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
+        else console.warn "@plotdb/konfig: set malformat config under #id", ctrls
     traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
 
   _update: (n, v) -> @fire \change, JSON.parse(JSON.stringify(@_val)), n, v
@@ -336,7 +337,7 @@ konfig.merge = (des = {}, ...objs) ->
       if v.type or (dc[k] and dc[k].type) =>
         if !dc[k] => dc[k] = src[k]
         else if dc[k] => dc[k] <<< src[k]
-      else
+      else if typeof(sc[k]) == \object
         dc[k] = _(dc[k], sc[k])
     return des
   for i from 0 til objs.length => des = _ des, JSON.parse(JSON.stringify(objs[i]))

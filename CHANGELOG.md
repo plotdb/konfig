@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.2
+
+ - check if value is an object before traverse into it in set / merge
+ - provide warning when an attempt to traverse a non-object value is made due to config issue
+
+
 ## v4.9.1
 
  - upgrade @xlfont/choose for url hinting feature

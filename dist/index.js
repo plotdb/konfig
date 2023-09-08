@@ -376,7 +376,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       obj == null && (obj = {});
       nval == null && (nval = {});
       ctrl == null && (ctrl = {});
-      ctrls = meta.child ? meta.child : meta;
+      if (typeof (ctrls = meta.child ? meta.child : meta) !== 'object') {
+        return;
+      }
       for (id in ctrls) {
         v = ctrls[id];
         if (v.type) {
@@ -385,8 +387,10 @@ konfig.prototype = import$(Object.create(Object.prototype), {
             ctrl[id].itf.set(val[id]);
             results$.push(fn$(id));
           }
-        } else {
+        } else if (typeof v === 'object') {
           results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), nval[id] || (nval[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
+        } else {
+          results$.push(console.warn("@plotdb/konfig: set malformat config under " + id, ctrls));
         }
       }
       return results$;
@@ -745,7 +749,7 @@ konfig.merge = function(des){
         } else if (dc[k]) {
           import$(dc[k], src[k]);
         }
-      } else {
+      } else if (typeof sc[k] === 'object') {
         dc[k] = _(dc[k], sc[k]);
       }
     }
