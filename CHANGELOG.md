@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.9.3 (upcoming)
+## v4.9.3
 
  - call `ensure-built` when `set` is called to ensure widgets are ready to be used.
  - ensure `build` return a Promise so `meta` resolves after built.
