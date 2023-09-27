@@ -400,7 +400,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         }));
       }
     };
-    return traverse(this._meta, this._val, this._obj, nv, this._ctrlobj, null);
+    return this.ensureBuilt().then(function(){
+      return traverse(this$._meta, this$._val, this$._obj, nv, this$._ctrlobj, null);
+    });
   },
   _update: function(n, v){
     return this.fire('change', JSON.parse(JSON.stringify(this._val)), n, v);
@@ -566,22 +568,24 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     var this$ = this;
     clear == null && (clear = false);
     this.ensureBuilt.running = true;
-    this._buildTab(clear);
-    return this._buildCtrl(clear).then(function(){
-      return this$._ctrllist.map(function(c){
-        return c.block.attach();
+    return Promise.resolve().then(function(){
+      this$._buildTab(clear);
+      return this$._buildCtrl(clear).then(function(){
+        return this$._ctrllist.map(function(c){
+          return c.block.attach();
+        });
+      }).then(function(){
+        return this$.render(clear);
+      }).then(function(){
+        if (cfg != null) {
+          return this$.set(cfg);
+        }
+      }).then(function(){
+        return this$.update();
+      }).then(function(){
+        this$.ensureBuilt.running = false;
+        this$.ensureBuilt.resolve();
       });
-    }).then(function(){
-      return this$.render(clear);
-    }).then(function(){
-      if (cfg != null) {
-        return this$.set(cfg);
-      }
-    }).then(function(){
-      return this$.update();
-    }).then(function(){
-      this$.ensureBuilt.running = false;
-      this$.ensureBuilt.resolve();
     });
   },
   _buildCtrl: function(clear){

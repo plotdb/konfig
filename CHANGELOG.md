@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.3 (upcoming)
+
+ - call `ensure-built` when `set` is called to ensure widgets are ready to be used.
+ - ensure `build` return a Promise so `meta` resolves after built.
+
+
 ## v4.9.2
 
  - check if value is an object before traverse into it in set / merge

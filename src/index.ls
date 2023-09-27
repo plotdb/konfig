@@ -192,6 +192,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
             ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
         else if typeof(v) == \object => traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
         else console.warn "@plotdb/konfig: set malformat config under #id", ctrls
+    # ensure widgets are ready so we can call their `set` in `ctrl[id].itf.set` above.
+    <~ @ensure-built!then _
     traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
 
   _update: (n, v) -> @fire \change, JSON.parse(JSON.stringify(@_val)), n, v
@@ -266,6 +268,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   build: (clear = false, cfg) ->
     @ensure-built.running = true
+    <~ Promise.resolve!then _
     @_build-tab clear
     @_build-ctrl clear
       .then ~> @_ctrllist.map (c) -> c.block.attach!
