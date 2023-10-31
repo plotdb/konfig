@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.4
+
+ - set config along with build / meta should be done after built to prevent a deadlock.
+
+
 ## v4.9.3
 
  - call `ensure-built` when `set` is called to ensure widgets are ready to be used.

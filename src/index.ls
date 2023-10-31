@@ -273,12 +273,12 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     @_build-ctrl clear
       .then ~> @_ctrllist.map (c) -> c.block.attach!
       .then ~> @render clear
-      .then ~> if cfg? => @set cfg
-      .then ~> @update!
       .then ~>
         @ensure-built.running = false
         @ensure-built.resolve!
         return
+      .then ~> if cfg? => @set cfg
+      .then ~> @update!
 
   _build-ctrl: (clear = false) ->
     promises = []

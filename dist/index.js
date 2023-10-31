@@ -577,14 +577,14 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }).then(function(){
         return this$.render(clear);
       }).then(function(){
+        this$.ensureBuilt.running = false;
+        this$.ensureBuilt.resolve();
+      }).then(function(){
         if (cfg != null) {
           return this$.set(cfg);
         }
       }).then(function(){
         return this$.update();
-      }).then(function(){
-        this$.ensureBuilt.running = false;
-        this$.ensureBuilt.resolve();
       });
     });
   },
