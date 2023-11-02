@@ -17,7 +17,8 @@ module.exports =
     pubsub.fire \init, do
       get: -> serialize obj.files
       set: (files) ->
-        obj.files = if Array.isArray(files) => files else [files]
+        obj.files = (if Array.isArray(files) => files else [files])
+          .map (f) -> ({} <<< f) # import into new obj to prevent pollution
         view.get(\input).value = ''
       default: -> []
       meta: ~> @_meta = it

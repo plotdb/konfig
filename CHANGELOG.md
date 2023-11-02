@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.5
+
+ - upload widget: clone input object to prevent pollution
+
+
 ## v4.9.4
 
  - set config along with build / meta should be done after built to prevent a deadlock.
