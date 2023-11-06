@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.6
+
+ - upgrade `@xlfont/choose` and rebuild for font widget
+
+
 ## v4.9.5
 
  - upload widget: clone input object to prevent pollution

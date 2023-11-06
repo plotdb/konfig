@@ -35,6 +35,7 @@ module.exports =
       root: (if !root => null else root.querySelector('.ldcv')), init-render: true
       meta: urls.meta or 'https://xlfont.maketext.io/meta'
       links: urls.links or 'https://xlfont.maketext.io/links'
+    pubsub.on \config, (o = {}) -> chooser.config o
     chooser.init!
     if !root => return
     chooser.on \choose, (f) ~> obj.ldcv.set f
