@@ -11,8 +11,19 @@ module.exports =
       "zh-TW": "system default": "預設字型"
   init: ({root, context, data, pubsub, t}) ->
     {ldview,ldcover,xfc} = context
-    obj = {font: null}
+    obj = {font: null, fobj: null}
     get-default = -> if typeof(obj._m.default) == \string => {name: obj._m.default} else obj._m.default
+    fobj = ->
+      Promise.resolve!
+        .then ->
+          return if obj.fobj => that
+          else if obj.font => chooser.load obj.font else {}
+        .then ->
+          obj.fobj = it
+          check-limited!
+          return it
+    check-limited = ~> root.classList.toggle \limited, is-limited!
+    is-limited = ~> return !!(obj.fobj and obj.fobj.limited)
     # TODO data for get/set should be serializable and backward compatible.
     pubsub.fire \init, do
       get: ->
@@ -23,10 +34,12 @@ module.exports =
         obj.font = if !f => f
         else if typeof(f) == \string => {name: f}
         else f{name, style, weight}
+        obj.fobj = null
         view.render \font-name
       default: -> get-default!
       meta: (m) -> obj._meta = m
       object: (f) ~> chooser.load f .catch -> return null
+      limited: -> is-limited!
     obj._m = data or {}
     obj.font = get-default!
     urls = if xfc.url => xfc.url! else {}
@@ -35,7 +48,10 @@ module.exports =
       root: (if !root => null else root.querySelector('.ldcv')), init-render: true
       meta: urls.meta or 'https://xlfont.maketext.io/meta'
       links: urls.links or 'https://xlfont.maketext.io/links'
-    pubsub.on \config, (o = {}) -> chooser.config o
+    pubsub.on \config, (o = {}) ->
+      chooser.config o
+      obj.fobj = null
+      fobj!
     chooser.init!
     if !root => return
     chooser.on \choose, (f) ~> obj.ldcv.set f
@@ -48,6 +64,7 @@ module.exports =
       action: click:
         system: ({node}) ->
           obj.font = f = null
+          obj.fobj = null
           view.render \font-name
           pubsub.fire \event, \change, f
         button: ({node}) ->
@@ -55,6 +72,7 @@ module.exports =
             .then (f) ->
               if !f => return
               obj.font = if f => f{name, style, weight} else null
+              obj.fobj = null
               view.render \font-name
               pubsub.fire \event, \change, obj.font
       handler:
@@ -62,6 +80,6 @@ module.exports =
           ret = if !obj.font => t("default") else obj.font.name or t("default")
           if ret.length > 10 => ret = ret.substring(0, 10) + '...'
           node.innerText = ret
-          Promise.resolve(if obj.font => chooser.load obj.font else obj.font)
-            .then (f) -> node.setAttribute \class, (if f and f.className => that else '')
+          fobj!
+            .then (f) ~> node.setAttribute \class, (if f and f.className => that else '')
             .catch -> # something wrong in chooser.load. skip.

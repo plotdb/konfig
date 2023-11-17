@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.9
+
+ - font widget: correctly support `limit` with cached font loading
+
+
 ## v4.9.8
 
  - update limited function of `number` and `choice` for initializing rendering
