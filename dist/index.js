@@ -567,24 +567,28 @@ konfig.prototype = import$(Object.create(Object.prototype), {
   build: function(clear, cfg){
     var this$ = this;
     clear == null && (clear = false);
-    this.ensureBuilt.running = true;
-    return Promise.resolve().then(function(){
-      this$._buildTab(clear);
-      return this$._buildCtrl(clear).then(function(){
-        return this$._ctrllist.map(function(c){
-          return c.block.attach();
+    return (this.ensureBuilt.running
+      ? this.ensureBuilt()
+      : Promise.resolve()).then(function(){
+      this$.ensureBuilt.running = true;
+      return Promise.resolve().then(function(){
+        this$._buildTab(clear);
+        return this$._buildCtrl(clear).then(function(){
+          return this$._ctrllist.map(function(c){
+            return c.block.attach();
+          });
+        }).then(function(){
+          return this$.render(clear);
+        }).then(function(){
+          this$.ensureBuilt.running = false;
+          this$.ensureBuilt.resolve();
+        }).then(function(){
+          if (cfg != null) {
+            return this$.set(cfg);
+          }
+        }).then(function(){
+          return this$.update();
         });
-      }).then(function(){
-        return this$.render(clear);
-      }).then(function(){
-        this$.ensureBuilt.running = false;
-        this$.ensureBuilt.resolve();
-      }).then(function(){
-        if (cfg != null) {
-          return this$.set(cfg);
-        }
-      }).then(function(){
-        return this$.update();
       });
     });
   },

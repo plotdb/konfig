@@ -267,6 +267,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       .then -> ctrl[id]
 
   build: (clear = false, cfg) ->
+    <~ (if @ensure-built.running => @ensure-built! else Promise.resolve!).then _
     @ensure-built.running = true
     <~ Promise.resolve!then _
     @_build-tab clear

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.7
+
+ - prevent re-entry of `build` when build is already running
+
+
 ## v4.9.6
 
  - upgrade `@xlfont/choose` and rebuild for font widget
