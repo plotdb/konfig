@@ -18,6 +18,14 @@ module.exports =
         if typeof(m.default) == \object => m <<< m.default
         else if typeof(m.default) == \number => m.from = m.default
       @_meta = JSON.parse(JSON.stringify(m))
+    check-limited = ~> root.classList.toggle \limited, is-limited!
+    is-limited = ~>
+      if !(@_meta.limit-max? or @_meta.limit-min?) => return false
+      v = obj.ldrs.get!
+      return (
+        (@_meta.limit-max? and v > @_meta.limit-max) or
+        (@_meta.limit-min? and v <= @_meta.limit-min)
+      )
     pubsub.fire \init, do
       get: -> obj.ldrs.get!
       set: -> obj.ldrs.set it
@@ -28,20 +36,13 @@ module.exports =
         obj.ldrs.set-config Object.fromEntries(
           <[min max step from to exp limitMax range label]>.map(~> [it, @_meta[it]]).filter(->it.1?)
         )
-      limited: ~>
-        if !(@_meta.limit-max? or @_meta.limit-min?) => return false
-        v = obj.ldrs.get!
-        return (
-          (@_meta.limit-max? and v > @_meta.limit-max) or
-          (@_meta.limit-min? and v <= @_meta.limit-min)
-        )
+      limited: -> is-limited!
       render: -> obj.ldrs.update!
     set-meta data
 
     view = new ldview do
       root: root
-      action: click:
-        switch: -> obj.ldrs.edit!
+      action: click: switch: -> obj.ldrs.edit!
       init: ldrs: ({node}) ~>
         obj.root = node
         obj.ldrs = new ldslider(
@@ -50,11 +51,6 @@ module.exports =
           )
         )
         obj.ldrs.on \change, (v) ~>
-          root.classList.toggle \limited, false
-          if @_meta.limit-max? or @_meta.limit-min? =>
-            limited = (
-              (@_meta.limit-max? and v > @_meta.limit-max) or
-              (@_meta.limit-min? and v <= @_meta.limit-min)
-            )
-            root.classList.toggle \limited, limited
+          check-limited!
           pubsub.fire \event, \change, v
+        check-limited!

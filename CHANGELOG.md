@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.8
+
+ - update limited function of `number` and `choice` for initializing rendering
+
+
 ## v4.9.7
 
  - prevent re-entry of `build` when build is already running
