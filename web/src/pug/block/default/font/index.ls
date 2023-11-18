@@ -1,5 +1,6 @@
 module.exports =
   pkg:
+    sync-init: true
     extend: name: '@plotdb/konfig', version: 'main', path: 'base'
     dependencies: [
       {name: "@xlfont/load", version: "main", path: "index.min.js"}
@@ -52,13 +53,13 @@ module.exports =
       chooser.config o
       obj.fobj = null
       fobj!
-    chooser.init!
+    <~ chooser.init!then _
     if !root => return
     chooser.on \choose, (f) ~> obj.ldcv.set f
     view = new ldview do
       root: root
       init:
-        ldcv: ({node}) ->
+        ldcv: ({node}) ~>
           obj.ldcv = new ldcover root: node, in-place: false
           obj.ldcv.on \toggle.on, -> debounce 50 .then -> chooser.render!
       action: click:
@@ -83,3 +84,7 @@ module.exports =
           fobj!
             .then (f) ~> node.setAttribute \class, (if f and f.className => that else '')
             .catch -> # something wrong in chooser.load. skip.
+    <~ view.init!then _
+    @ <<<
+      chooser: -> chooser
+      cover: -> obj.ldcv

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.10
+
+ - font widget: use `syncInit` to pass widget interface to child.
+
+
 ## v4.9.9
 
  - font widget: correctly support `limit` with cached font loading
