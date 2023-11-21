@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.11 (upcoming)
+
+ - fix bug: font widget: access a variable that is not in scope
+
+
 ## v4.9.10
 
  - font widget: use `syncInit` to pass widget interface to child.
