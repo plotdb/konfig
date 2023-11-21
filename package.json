@@ -27,7 +27,7 @@
     "@loadingio/ldquery": "^3.0.4",
     "@loadingio/vscroll": "^0.0.8",
     "@plotdb/chart": "^2.1.17",
-    "@xlfont/choose": "^0.0.22",
+    "@xlfont/choose": "^0.0.26",
     "@xlfont/load": "^2.1.2",
     "@zbryikt/template": "^2.3.45",
     "bootstrap": "^4.5.2",
@@ -78,7 +78,7 @@
   "dependencies": {
     "@loadingio/ldcolorpicker": "^3.0.4",
     "@loadingio/vscroll": "^0.0.8",
-    "@plotdb/block": "^5.2.2",
+    "@plotdb/block": "^5.2.5",
     "@plotdb/csscope": "^5.0.3",
     "@plotdb/datadom": "^0.2.0",
     "@plotdb/rescope": "^5.0.9",
