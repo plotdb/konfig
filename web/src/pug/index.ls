@@ -77,16 +77,15 @@ if true =>
   .then ~>
     cfg = new konfig kfg-cfg
     cfg.on \change, ~> @update it
-    cfg.init!then ->
+    p1 = cfg.init!then ->
       console.log '@plotdb/konfig cfg inited with init config:', it
       c = cfg._ctrllist
         .filter -> it.meta.type == \color
         .0
       c.itf.meta c.meta <<< {palette: {colors: <[#f00 #0f0 #00f]>}}
-
     cfg-alt = new konfig kfg-alt-cfg
     cfg-alt.on \change, -> ld$.find('[ld=kfg]',0).style.fontSize = "#{it.size2}"
-    cfg-alt.init!then -> console.log "@plotdb/konfig cfg-alt inited."
+    p2 = cfg-alt.init!then -> console.log "@plotdb/konfig cfg-alt inited."
 
     sample = ld$.find('#sample',0)
 
@@ -108,16 +107,16 @@ if true =>
           .then (o = {}) ~> o.object @val.font
           .then (f) -> f.sync sample.innerText
 
-
-    # test updating konfig programmatically
-    setTimeout (->
-      val = cfg.get!
-      console.log val
-      val.choice = \right
-      cfg.set val
-      cfg.render!
-    ), 1000
-
     ld$.find('.btn[ld=get-default]', 0).addEventListener \click, ->
       console.log "cfg default: ", cfg.default!
       console.log "cfg-alt default: ", cfg-alt.default!
+
+    Promise.all [p1, p2]
+      .then -> debounce 1000
+      .then ->
+        # test updating konfig programmatically
+        val = cfg.get!
+        console.log val
+        val.choice = \right
+        cfg.set val
+        cfg.render!
