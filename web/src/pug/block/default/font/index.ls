@@ -36,7 +36,7 @@ module.exports =
         else if typeof(f) == \string => {name: f}
         else f{name, style, weight}
         obj.fobj = null
-        view.render \font-name
+        obj.view.render \font-name
       default: -> get-default!
       meta: (m) -> obj._meta = m
       object: (f) ~> chooser.load f .catch -> return null
@@ -56,7 +56,7 @@ module.exports =
     <~ chooser.init!then _
     if !root => return
     chooser.on \choose, (f) ~> obj.ldcv.set f
-    view = new ldview do
+    obj.view = view = new ldview do
       root: root
       init:
         ldcv: ({node}) ~>
