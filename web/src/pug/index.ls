@@ -1,5 +1,17 @@
 <- (->it.apply {}) _
 
+ts =
+  _: []
+  log: -> @_.push [Date.now!, it or '']
+  stat: ->
+    for i from 1 til @_.length =>
+      console.log(
+        "#i".padStart(3,' ') + " / " + "#{(@_[i].0 - @_[i - 1].0)}".padStart(5, ' ') + "ms" +
+        if @_[i].1 or @_[i - 1].1 => " / #{@_[i - 1].1 or '-'} to #{@_[i].1 or '-'}" else ''
+      )
+
+ts.log!
+
 popup = do
   ldcv: new ldcover root: ld$.find('.ldcv', 0)
   data: 'yes'
@@ -37,6 +49,7 @@ popup = do
   registry: ({name,version,path,type}) ->
     if type == \block => "/block/#name/#version/#{path or 'index.html'}"
     else "/assets/lib/#name/#version/#{path or ''}"
+
 kfg-cfg =
   root: ld$.find('[ld=kfg]', 0)
   debounce: false
@@ -73,8 +86,10 @@ if true =>
   kfg-cfg <<< { use-bundle: false, manager: @manager }
   kfg-alt-cfg <<< { use-bundle: false, manager: @manager }
 
+ts.log 'before debundling'
 @manager.debundle url: "/assets/bundle/index.html"
   .then ~>
+    ts.log 'after debundling'
     cfg = new konfig kfg-cfg
     cfg.on \change, ~> @update it
     p1 = cfg.init!then ->
@@ -112,11 +127,17 @@ if true =>
       console.log "cfg-alt default: ", cfg-alt.default!
 
     Promise.all [p1, p2]
+      .then -> ts.log 'wait for initialization'
       .then -> debounce 1000
       .then ->
+        ts.log 'after debounce'
         # test updating konfig programmatically
         val = cfg.get!
         console.log val
         val.choice = \right
         cfg.set val
         cfg.render!
+      .then ->
+        ts.log 'update config'
+        console.log "performance profile"
+        ts.stat!
