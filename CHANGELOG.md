@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.12
+
+ - call `set` during `building`, but add `build` option to determine that it's inside `build` so don't wait for `ensure-built`.
+
+
 ## v4.9.11
 
  - fix bug: font widget: access a variable that is not in scope

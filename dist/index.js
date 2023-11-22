@@ -400,7 +400,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         }));
       }
     };
-    return this.ensureBuilt().then(function(){
+    return (o.build
+      ? Promise.resolve()
+      : this.ensureBuilt()).then(function(){
       return traverse(this$._meta, this$._val, this$._obj, nv, this$._ctrlobj, null);
     });
   },
@@ -580,12 +582,14 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         }).then(function(){
           return this$.render(clear);
         }).then(function(){
+          if (cfg != null) {
+            return this$.set(cfg, {
+              build: true
+            });
+          }
+        }).then(function(){
           this$.ensureBuilt.running = false;
           this$.ensureBuilt.resolve();
-        }).then(function(){
-          if (cfg != null) {
-            return this$.set(cfg);
-          }
         }).then(function(){
           return this$.update();
         });
