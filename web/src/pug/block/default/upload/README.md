@@ -2,6 +2,9 @@
 
 Value of this widget is an array of files where each file is an object with following fields:
 
+ - `key`: a unique key for identifying this file object in file storage.
+ - `idx`: a zero-based reference number indicating order/index of this file object in multiple upload field.
+ - `digest`: a digest(e.g., MD5) of the file content to identify if its content is changed.
  - `name`: name field from JS File object.
  - `size`: size field from JS File object.
  - `type`: type field from JS File object.
@@ -14,13 +17,20 @@ Additional fields are also available via `object()` api:
 
 For example, following is a sample value returned from `widget.get()`:
 
-    [{name: 'sample.html', size: 0, type: 'text/html', lastModified: 1682755735156}]
+    [{
+        name: 'sample.html', size: 1023, type: 'text/html',
+        lastModified: 1682755735156,
+        digest: '...', key: 'icon-uhowfk-0', idx: 0
+    }]
 
-and following is a sample value returne frmo `widget.object()`:
+
+and following is a sample value returne from `widget.object()`:
 
     [{
-      name: 'sample.html', size: 0, type: 'text/html', lastModified: 1682755735156,
-      blob: [...blob object ...], dataurl: "data:text/html;base64,...."
+        name: 'sample.html', size: 1023, type: 'text/html',
+        lastModified: 1682755735156,
+        digest: '...', key: 'icon-uhowfk-0', idx: 0
+        blob: [...blob object ...], dataurl: "data:text/html;base64,...."
     }]
 
 Host application can pass additional data to this widget through `data` parameter as an object with following fields:
