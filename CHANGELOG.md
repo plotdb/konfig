@@ -3,6 +3,12 @@
 ## v4.9.11 (upcoming)
 
  - fix bug: font widget: access a variable that is not in scope
+ - upload widget:
+   - rename `hkey` to `digest`
+   - add `digest` dataSource api requiremnet for retrieving blob digest
+   - add additional field `idx` in file object as a reference of the original order
+   - digest file object
+   - check `digest` change to fire `change` event if necessary when updating `digest` field
 
 
 ## v4.9.10
