@@ -403,7 +403,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     return (o.build
       ? Promise.resolve()
       : this.ensureBuilt()).then(function(){
-      return traverse(this$._meta, this$._val, this$._obj, nv, this$._ctrlobj, null);
+      if (!this$.ensureBuilt.running) {
+        return traverse(this$._meta, this$._val, this$._obj, nv, this$._ctrlobj, null);
+      }
     });
   },
   _update: function(n, v){

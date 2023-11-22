@@ -195,7 +195,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     # ensure widgets are ready so we can call their `set` in `ctrl[id].itf.set` above.
     # however, skip if `o.build` is true, because this means `set` is called during building
     <~ (if o.build => Promise.resolve! else @ensure-built!)then _
-    traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
+    # we may want to prevent set from running if `build` is running again here.
+    if !@ensure-built.running => traverse @_meta, @_val, @_obj, nv, @_ctrlobj, null
 
   _update: (n, v) -> @fire \change, JSON.parse(JSON.stringify(@_val)), n, v
   _init: ->
