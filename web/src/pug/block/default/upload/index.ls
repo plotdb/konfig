@@ -1,4 +1,4 @@
-singleton = {hash: {}}
+singleton = {digest: {}}
 module.exports =
   pkg:
     extend: name: '@plotdb/konfig', version: 'main', path: 'base'
@@ -11,47 +11,54 @@ module.exports =
     #  - name, size, type, lastModified: from File Object
     #  - blob, dataurl: manually created by this widget
     #  - key: key to find this file from data source.
-    #  - hkey: temporal key if data source of this file is in user's browser.
-    obj = {files: [], hash: singleton.hash}
-    serialize = (files) -> files.map -> it{name, size, type, lastModified, key, hkey}
+    #  - digest: file digest(hash) for identifying file change.
+    obj = {files: [], digest: singleton.digest}
+    serialize = (files) -> files.map (f) -> f{name, size, type, lastModified, key, idx, digest}
     pubsub.fire \init, do
       get: -> serialize obj.files
       set: (files) ->
+        # import into new obj to prevent pollution
+        # always rewrite idx - we actually need index directly
+        # from their real order so idx is only for reference.
         obj.files = (if Array.isArray(files) => files else [files])
-          .map (f) -> ({} <<< f) # import into new obj to prevent pollution
+          .map (f, i) -> ({} <<< f <<< {idx: i})
         view.get(\input).value = ''
       default: -> []
       meta: ~> @_meta = it
       object: ->
-        ps = obj.files.map (f) ->
+        lc = changed: false
+        ps = obj.files.map (f, i) ->
           # in following cases, we don't have to fetch the file:
           #  - blob exists
-          #  - blob can be found based on given hash key
-          #  - no data source key (thus file won't be found in data source)
+          #  - blob can be found based on given digest (not yet saved, but set again with the same digest)
+          #  - no data source key / no get-blob (thus file won't be able to be found)
           if f.blob => return Promise.resolve f
-          if obj.hash[f.hkey] => return Promise.resolve(f <<< that)
+          if obj.digest[f.digest] => return Promise.resolve obj.digest[f.digest]
           if !f.key? or !ds.get-blob? => return Promise.resolve f
-          ds.get-blob f .then (blob) ->
-            ldfile.fromFile blob, \dataurl
-              .then -> f <<< {dataurl: it.result, blob: blob}
-        Promise.all ps .then -> obj.files
+          ds.get-blob f, i
+            .then (blob) ->
+              f.blob = blob
+              (ret) <- ldfile.fromFile blob, \dataurl .then _
+              f.dataurl = ret.result
+              if !ds.digest? => return
+              (digest) <- ds.digest(f, i).then _
+              if f.digest != digest => lc.changed = true
+              f.digest = digest
+        <- Promise.all ps .then _
+        if lc.changed => debounce 0 .then -> pubsub.fire \event, \change, serialize(obj.files)
+        return obj.files
     view = new ldview do
       root: root
       init: input: ({node}) ~> if @_meta.multiple => node.setAttribute \multiple, true
       action: change:
         input: ({node}) ->
-          ps = [node.files[v] for v from 0 til node.files.length]
-            .map (v) ->
-              ldfile.fromFile v, \dataurl
-                .then -> v{name, size, type, lastModified} <<< {dataurl: it.result, blob: v}
-                .then (file) ->
-                  if !ds.get-key? => return Promise.resolve file
-                  ds.get-key file .then (key) -> file <<< {key}
-                .then (file) ->
-                  if file.key => return file
-                  file.hkey = [k for k of obj.hash].length
-                  obj.hash[file.hkey] = file{blob, dataurl}
-                  file
+          ps = [node.files[v] for v from 0 til node.files.length].map (v,i) ->
+            ldfile.fromFile v, \dataurl
+              .then -> v{name, size, type, lastModified} <<< {dataurl: it.result, blob: v, idx: i}
+              .then (f) ->
+                if !ds.digest? => f else ds.digest(f, i).then (digest) -> f <<< {digest}
+              .then (f) -> if !ds.get-key? => f else ds.get-key(f, i).then (key) -> f <<< {key}
+              .then (f) -> if !f.digest => f else obj.digest[f.digest] = f
           Promise.all ps
             .then (files) ->
               obj.files = files

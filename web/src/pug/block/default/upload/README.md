@@ -28,3 +28,4 @@ Host application can pass additional data to this widget through `data` paramete
  - `dataSource`: interface for accessing file stored remotely. It's an object with following fields:
    - `getKey(f)`: return a Promise resolving with the key corresponding to given file object `f`.
    - `getBlob(f)`: return a Promise resolving with the blob corresponding to given file object `f`.
+   - `digest(f)`: return a Promise resolving with the digest (e.g., MD5) of the given file object `f`.
