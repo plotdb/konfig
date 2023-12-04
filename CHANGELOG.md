@@ -3,6 +3,8 @@
 ## v4.9.13 (upcoming)
 
  - prevent set from running if build is running again.
+ - fix bug: `config` field doesn't work when calling `meta`
+ - support `disableLimit` option in `number` and `choice` widget
 
 
 ## v4.9.12

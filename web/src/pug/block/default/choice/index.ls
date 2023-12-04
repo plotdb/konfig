@@ -11,6 +11,7 @@ module.exports =
       limited = is-limited!
       root.classList.toggle \limited, limited
     is-limited = ~>
+      if @_meta.disable-limit => return false
       if !@_meta.limit? => return false
       !(view.get('select').value in @_meta.limit)
     pubsub.fire \init, do
