@@ -29,7 +29,7 @@ module.exports =
       @_meta = JSON.parse(JSON.stringify(m))
       ldrs-cfg!
     check-limited = ~> root.classList.toggle \limited, is-limited!
-    has-limit = ~> return !!(@_meta.disable-limit or !(@_meta.limit-max? or @_meta.limit-min?))
+    has-limit = ~> return !@_meta.disable-limit and !!(@_meta.limit-max? or @_meta.limit-min?)
     is-limited = ~>
       if !has-limit! => return false
       v = obj.ldrs.get!

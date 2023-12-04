@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.14
+
+ - fix bug: number widget: `disableLimit` option doesn't work as expected
+
+
 ## v4.9.13
 
  - prevent set from running if build is running again.
