@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.9.13 (upcoming)
+## v4.9.13
 
  - prevent set from running if build is running again.
  - fix bug: `config` field doesn't work when calling `meta`
