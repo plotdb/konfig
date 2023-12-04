@@ -42,6 +42,9 @@ This is an object with following fields:
    - should be a serializable value such as plain object, string, number, etc.
    - this ensures a default object reconstruction via object tree traverse, even without using `@plotdb/konfig`.
    - it's still possible to have computed value from ctrls. users should be always aware of this.
+ - `disableLimit`: for widgets that support the concept of `limit`, this field can suppress limit option.
+   - useful to unlock certain limitation for users with different plans.
+
 
 It's for and by the view provided by user (or from default views) how `name`, `desc` and `hint` are used and rendered.
 
