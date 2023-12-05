@@ -10,7 +10,7 @@ konfig = (opt={}) ->
   @_tabobj = {}
   @_tablist = []
   @_template = null # for recursive view, or views with template
-  @_meta = opt.meta or {}
+  @_meta = @_clone(opt.meta or {})
   @_tab = opt.tab or {}
   @_val = {}
   @_obj = {}
@@ -122,18 +122,28 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         @_view.ctx {root: @root, ctrls: @_ctrllist, tabs: @_tablist}
     @_view.render!
 
+  _clone: (n, r = {}) ->
+    # we don't clone data inside Array, but only Array itself.
+    # this simply because in our use case, ctrls are stored as hash instead of array.
+    # so if `n` is an array, it will be okay to shallow copy.
+    if Array.isArray(n) => return n.slice 0 # use slice to copy
+    if typeof(n) != \object => return n
+    for k,v of n => r[k] = @_clone(v)
+    return r
+
   meta: (o = {}) ->
-    # we pollute meta (e.g., with auto generated id) so we have to clone input in order to
-    #  - prevent affect caller
-    #  - prevent id overwritten if caller use the same obj for different subtree.
-    o = JSON.parse JSON.stringify o
+    # we pollute meta (e.g., with auto gened id) so we have to clone input in order to
+    #   - prevent affect caller
+    #   - prevent id overwritten if caller use the same obj for different subtree.
+    # see `@_clone` below.
     {meta, tab, config} = o
+
     @ <<< {_meta: {}, _tab: {}}
     if !(meta?) or (typeof(meta.type) == \string) =>
-      @_meta = o
+      @_meta = @_clone(o)
       @build true
     else
-      if meta? => @_meta = meta
+      if meta? => @_meta = @_clone(meta)
       if tab? => @_tab = tab
       @build true, config
 

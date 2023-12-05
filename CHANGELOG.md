@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.9.15
+
+ - keep additional members in meta by a customized deep clone function.
+ - copy meta in constructor
+ - upload widget: in `set` / `object`, update file object with `blob` and `dataurl` if available
+
+
 ## v4.9.14
 
  - fix bug: number widget: `disableLimit` option doesn't work as expected

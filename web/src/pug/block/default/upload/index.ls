@@ -21,7 +21,7 @@ module.exports =
         # always rewrite idx - we actually need index directly
         # from their real order so idx is only for reference.
         obj.files = (if Array.isArray(files) => files else [files])
-          .map (f, i) -> ({} <<< f <<< {idx: i})
+          .map (f, i) -> ({} <<< f <<< {idx: i} <<< (obj.digest[f.digest] or {}){blob, dataurl})
         view.get(\input).value = ''
       default: -> []
       meta: ~> @_meta = it
@@ -33,7 +33,7 @@ module.exports =
           #  - blob can be found based on given digest (not yet saved, but set again with the same digest)
           #  - no data source key / no get-blob (thus file won't be able to be found)
           if f.blob => return Promise.resolve f
-          if obj.digest[f.digest] => return Promise.resolve obj.digest[f.digest]
+          if obj.digest[f.digest] => return Promise.resolve(f <<< obj.digest[f.digest]{blob, dataurl})
           if !f.key? or !ds.get-blob? => return Promise.resolve f
           ds.get-blob f, i
             .then (blob) ->
