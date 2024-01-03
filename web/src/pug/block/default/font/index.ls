@@ -27,10 +27,13 @@ module.exports =
           return if (file.blob instanceof Blob) => file.blob
           else if obj.digest[file.digest] => obj.digest[file.digest].blob
           else null
-        .then (blob) -> if blob or !file.digest => blob else ds.get-blob(file)
         .then (blob) ->
-          if !blob => return
+          if blob or !file.digest => blob
+          else if ds.get-blob => ds.get-blob(file)
+          else blob
+        .then (blob) ->
           file.blob = blob
+          if !(blob and ds.digest) => return
           (digest) <- ds.digest(file).then _
           if file.digest != digest => obj.changed = true
           file.digest = digest
