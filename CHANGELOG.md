@@ -1,5 +1,17 @@
 # Change Logs
 
+## v4.9.16
+
+ - font widget:
+   - adapt data source
+   - support font object from saved asset file
+   - use `serialize` in `get` and `set` api
+   - use `fobj` for `object` api
+   - prevent race condition when updating `font-name`
+   - get `digest` and `key` for uploaded fonts after chooser dialog is resolved
+   - add `title` for tooltip in font button
+
+
 ## v4.9.15
 
  - keep additional members in meta by a customized deep clone function.
