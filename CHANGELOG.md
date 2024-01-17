@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.18
+
+ - font widget: use fallback font object when font can't be found.
+
+
 ## v4.9.17
 
  - font widget: fix bug: in `fobj`, ensure a dummy font object to prevent accessing null object
