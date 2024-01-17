@@ -20,7 +20,7 @@ module.exports =
     fobj = (opt = {}) ->
       font = opt.font
       cancelable = opt.cancelable
-      if !font => font = obj.font
+      if !font => font = obj.{}font
       file = font.{}mod.file or {}
       Promise.resolve!
         .then ->

@@ -120,7 +120,7 @@ ts.log 'before debundling'
         cfg.obj!then -> console.log ">",it
         cfg.interface kfg-cfg.meta.font
           .then (o = {}) ~> o.object @val.font
-          .then (f) -> f.sync sample.innerText
+          .then (f) -> if f => f.sync sample.innerText
 
     ld$.find('.btn[ld=get-default]', 0).addEventListener \click, ->
       console.log "cfg default: ", cfg.default!

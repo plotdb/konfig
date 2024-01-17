@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.17 (upcoming)
+
+ - font widget: fix bug: in `fobj`, ensure a dummy font object to prevent accessing null object
+
+
 ## v4.9.16
 
  - font widget:
