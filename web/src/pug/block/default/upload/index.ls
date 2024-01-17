@@ -34,6 +34,18 @@ module.exports =
           #  - no data source key / no get-blob (thus file won't be able to be found)
           if f.blob => return Promise.resolve f
           if obj.digest[f.digest] => return Promise.resolve(f <<< obj.digest[f.digest]{blob, dataurl})
+          # legacy - dataurl in f.result. remove it and convert it into blob
+          if f.result =>
+            f.dataurl = f.result
+            fetch f.result .then -> it.blob!
+              .then (blob) ->
+                f.name = f.name or 'unnamed'
+                f <<< {blob} <<< size: blob.size, type: blob.type, lastModified: Date.now!
+                delete f.result
+                if !ds.digest? => f else ds.digest(f, i).then (digest) -> f <<< {digest}
+              .then (f) -> if !ds.get-key? => f else ds.get-key(f, i).then (key) -> f <<< {key}
+              .then (f) -> if !f.digest => f else obj.digest[f.digest] = f
+              .then -> lc.changed = true
           if !f.key? or !ds.get-blob? => return Promise.resolve f
           ds.get-blob f, i
             .then (blob) ->

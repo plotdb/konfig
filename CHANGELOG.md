@@ -1,8 +1,9 @@
 # Change Logs
 
-## v4.9.17 (upcoming)
+## v4.9.17
 
  - font widget: fix bug: in `fobj`, ensure a dummy font object to prevent accessing null object
+ - upload widget: support legacy file object with only `result` (dataurl) stored.
 
 
 ## v4.9.16
