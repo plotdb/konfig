@@ -398,8 +398,12 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         if (v.type) {
           if (val[id] !== nval[id] && !(o.append && !(nval[id] != null))) {
             val[id] = nval[id];
-            ctrl[id].itf.set(val[id]);
-            results$.push(fn$(id));
+            if (!(ctrl[id] && ctrl[id].itf)) {
+              results$.push(console.warn("@plotdb/konfig: set config `" + id + "` without corresponding ctrl defined in meta."));
+            } else {
+              ctrl[id].itf.set(val[id]);
+              results$.push(fn$(id));
+            }
           }
         } else if (typeof v === 'object') {
           results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), nval[id] || (nval[id] = {}), ctrl[id] || (ctrl[id] = {}), id));

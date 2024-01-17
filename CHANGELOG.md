@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.19
+
+ - fix bug: check config corresponding ctrl for existency before using it to prevent from exception.
+ - warn when setting config without corresponding meta / ctrl.
+
+
 ## v4.9.18
 
  - font widget: use fallback font object when font can't be found.

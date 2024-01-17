@@ -198,8 +198,11 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         if v.type =>
           if val[id] != nval[id] and !(o.append and !(nval[id]?)) =>
             val[id] = nval[id]
-            ctrl[id].itf.set val[id]
-            ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
+            if !(ctrl[id] and ctrl[id].itf) =>
+              console.warn "@plotdb/konfig: set config `#id` without corresponding ctrl defined in meta."
+            else
+              ctrl[id].itf.set val[id]
+              ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
         else if typeof(v) == \object => traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
         else console.warn "@plotdb/konfig: set malformat config under #id", ctrls
     # ensure widgets are ready so we can call their `set` in `ctrl[id].itf.set` above.
