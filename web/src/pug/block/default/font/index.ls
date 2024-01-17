@@ -20,7 +20,7 @@ module.exports =
     fobj = (opt = {}) ->
       font = opt.font
       cancelable = opt.cancelable
-      if !font => font = obj.{}font
+      if !font => font = obj.font or (obj.font = get-default!)
       file = font.{}mod.file or {}
       Promise.resolve!
         .then ->
@@ -38,13 +38,16 @@ module.exports =
           if file.digest != digest => obj.changed = true
           file.digest = digest
           font.{}mod.{}file <<< file
-        .then -> chooser.load font .catch -> return null
+        .then ->
+          chooser.load font
+            .catch -> chooser.load get-default!
+            .catch -> return null
         .then ->
           if obj.font != font and cancelable => return lderror.reject 999
           if obj.font == font =>
             obj.fobj = it
             check-limited!
-          return it
+          return it or {name: 'inherit'}
 
     check-limited = ~> root.classList.toggle \limited, is-limited!
     is-limited = ~> return !!(obj.fobj and obj.fobj.{}mod.limited)
