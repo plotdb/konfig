@@ -58,7 +58,8 @@ A `@plotdb/block` object can be found for each ctrl definition object from its `
 This block should provide an interface with following methods:
 
  - `get()`: get current value
- - `set(value)`: set value of this control
+ - `set(value, opt)`: set value of this control. `opt` is an object with following options:
+   - `passive`: default false. when false, this block should fire a change event if the given value is different from current value.  
  - `meta(meta)`: update meta of this control
  - `limited()`: return true if current value is limited (such as, should not be used to generate result)
  - `default()`: return default value from this control
@@ -101,7 +102,10 @@ Here is a sample implementation of a block for simple data reflection which exte
           opt.pubsub.fire(
             "init", {
               get: function() { return local.data; },
-              set: function(data) { local.data = data; },
+              set: function(data, opt) {
+                local.data = data;
+                if(!(opt || {}).passive) { opt.pubsub.fire("event", "change", data); }
+              },
             }
           );
         }
