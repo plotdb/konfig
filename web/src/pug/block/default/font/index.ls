@@ -15,7 +15,9 @@ module.exports =
     {ldview,ldcover,xfc} = context
     ds = data.data-source or {}
     obj = {font: null, fobj: null, digest: singleton.digest}
-    get-default = -> if typeof(obj._m.default) == \string => {name: obj._m.default} else obj._m.default
+    get-default = ->
+      return if typeof(obj._m.default) == \string => {name: obj._m.default}
+      else obj._m.default or {}
 
     fobj = (opt = {}) ->
       font = opt.font
@@ -47,7 +49,7 @@ module.exports =
           if obj.font == font =>
             obj.fobj = it
             check-limited!
-          return it or {name: 'inherit'}
+          return it or {} # default font object
 
     check-limited = ~> root.classList.toggle \limited, is-limited!
     is-limited = ~> return !!(obj.fobj and obj.fobj.{}mod.limited)
