@@ -13,6 +13,7 @@ module.exports =
     @render = ->
       pubsub.fire \render
       if view? => view.render!
+    notify = ~> pubsub.fire \event, \change, @c
     @set = (c) ->
       @c = c
       if !(c in <[currentColor transparent]> or isNaN(ldcolor.hsl(c).h)) => @ldcp.set-color(c)
@@ -36,7 +37,10 @@ module.exports =
 
     pubsub.fire \init, do
       get: ~> @c
-      set: ~> @set it
+      set: (v,o={}) ~>
+        fire = !ldcolor.same(v,@c) and !o.passive
+        @set(v)
+        if fire => notify!
       default: ~> @default
       meta: ~>
         @_meta = it
@@ -88,5 +92,5 @@ module.exports =
           else node.style.backgroundColor = c
     @ldcp.on \change, ~>
       @c = ldcolor.web it
-      pubsub.fire \event, \change, @c
+      notify!
       @render!

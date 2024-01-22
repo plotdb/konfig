@@ -14,8 +14,9 @@ module.exports =
     {ldview,ldcolor} = context
     pubsub.fire \init, do
       get: ~> data.popup.data!
-      set: ~>
-        data.popup.data it
+      set: (v,o={}) ~>
+        data.popup.data v
+        if !o.passive => pubsub.fire \event, \change, v
         set-text data.popup.data!
     view = new ldview do
       root: root

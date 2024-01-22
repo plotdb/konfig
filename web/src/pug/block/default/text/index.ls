@@ -10,7 +10,10 @@ module.exports =
     meta data
     pubsub.fire \init, do
       get: -> view.get('input').value or ''
-      set: -> view.get('input').value = it or ''
+      set: (v,o={}) ->
+        notify = view.get(\input).value != (v or '') and !o.passive
+        v = view.get(\input).value = v or ''
+        if notify => pubsub.fire \event, \change, v
       default: ~> @_meta.default or ''
       meta: ~> meta it
     view = new ldview do

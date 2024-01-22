@@ -12,8 +12,9 @@ module.exports =
     {ldview,ldslider} = context
     obj = {}
     @_meta = {}
+    get-value = -> "#{obj.ldrs.get!}#{obj.unit}"
     update-value = (o={}) ->
-      v = "#{obj.ldrs.get!}#{obj.unit}"
+      v = get-value!
       if !o.init and v != obj.v => pubsub.fire \event, \change, v
       obj.v = v
     set-unit = (o = {}) ~>
@@ -37,13 +38,16 @@ module.exports =
       #  - user can use the result string directly without concat value and unit
       #  - simpler against null value
       #  - user have to parse string if they need value, which will need api from this widget.
-      get: -> "#{obj.ldrs.get!}#{obj.unit}" #{value: obj.ldrs.get!, unit: obj.unit}
-      set: (v) ->
+      get: -> get-value! #{value: obj.ldrs.get!, unit: obj.unit}
+      set: (v,o={}) ->
         ret = /^(\d+(?:\.(?:\d+))?)(\D*)/.exec("#v")
         if !ret => ret = /^(\d+(?:\.(?:\d+))?)(\D*)/.exec("#{@default!}")
         if !ret => ret = [0,0,@_meta.units.0]
+        unit = ret.2 or obj.unit or @_meta.units.0
+        notify = (+ret.1 != obj.ldrs.get!) and (unit != obj.unit) and !o.passive
         obj.ldrs.set +ret.1
-        obj.unit = ret.2 or obj.unit or @_meta.units.0
+        obj.unit = unit
+        if notify => pubsub.fire \event, \change, get-value!
         view.render!
 
       /*

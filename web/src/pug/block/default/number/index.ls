@@ -39,7 +39,10 @@ module.exports =
       )
     pubsub.fire \init, do
       get: -> obj.ldrs.get!
-      set: -> obj.ldrs.set it
+      set: (v, o={}) ->
+        fire = obj.ldrs.get! != v and !o.passive
+        obj.ldrs.set(v)
+        if fire => pubsub.fire \event, \change, v
       # TODO this should be normalized by ldslider, but this means ldslider has to provide a normalize api
       default: ~> @_meta.default
       meta: ~> set-meta(it)

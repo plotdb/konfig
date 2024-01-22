@@ -11,8 +11,10 @@ module.exports =
     set-meta data
     pubsub.fire \init, do
       get: -> obj.state
-      set: ->
-        obj.state = !!it
+      set: (v,o={}) ->
+        notify = obj.state != v and !o.passive
+        obj.state = !!v
+        if notify => pubsub.fire \event, \change, obj.state
         view.render \switch
       default: -> obj.default
       meta: (m) -> set-meta m

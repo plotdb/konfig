@@ -9,8 +9,10 @@ module.exports =
     {ldview, ldcover} = context
     pubsub.fire \init, do
       get: -> obj.data or ''
-      set: ->
-        obj.data = (it or '')
+      set: (v,o={}) ->
+        fire = obj.data != (v or '') and !o.passive
+        obj.data = (v or '')
+        if fire => pubsub.fire \event, \change, obj.data
         view.render!
       default: -> obj.default
       meta: -> obj.default = it.default

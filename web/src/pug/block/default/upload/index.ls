@@ -16,13 +16,14 @@ module.exports =
     serialize = (files) -> files.map (f) -> f{name, size, type, lastModified, key, idx, digest}
     pubsub.fire \init, do
       get: -> serialize obj.files
-      set: (files) ->
+      set: (files,o={}) ->
         # import into new obj to prevent pollution
         # always rewrite idx - we actually need index directly
         # from their real order so idx is only for reference.
         obj.files = (if Array.isArray(files) => files else [files])
           .map (f, i) -> ({} <<< f <<< {idx: i} <<< (obj.digest[f.digest] or {}){blob, dataurl})
         view.get(\input).value = ''
+        if !o.passive => pubsub.fire \event, \change, serialize(obj.files)
       default: -> []
       meta: ~> @_meta = it
       object: ->

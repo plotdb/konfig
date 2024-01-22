@@ -24,8 +24,10 @@ module.exports =
 
     pubsub.fire \init, do
       get: -> obj.pal
-      set: ->
-        obj.pal = it
+      set: (v,o={}) ->
+        notify = JSON.stringify(obj.pal or {}) != JSON.stringify(v or {}) and !o.passive
+        obj.pal = v
+        if notify => pubsub.fire \event, \change, obj.pal
         view.render!
       default: -> obj.default
       meta: (m) -> set-meta m

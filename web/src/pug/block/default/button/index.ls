@@ -7,18 +7,23 @@ module.exports =
         "config": "設定"
   init: ({root, context, data, pubsub, t}) ->
     {ldview,ldcolor} = context
-    local = {data: data.default, default: data.default}
+    lc = {data: data.default, default: data.default}
+    notify = -> pubsub.fire \event, \change, lc.data
     pubsub.fire \init, {
-      get: (-> local.data )
-      set: (-> local.data = it)
-      default: -> local.default
-      meta: -> local.data = local.default = it.default
+      get: (-> lc.data )
+      set: (v, o = {}) ->
+        fire = lc.data != v and !o.passive
+        lc.data = v
+        if fire => notify!
+      default: -> lc.default
+      meta: -> lc.data = lc.default = it.default
     }
     view = new ldview do
       root: root
       action: click: button: ->
-        Promise.resolve(data.cb local.data)
+        Promise.resolve(data.cb lc.data)
           .then ->
-            if local.data == it => return
-            pubsub.fire \event, \change, ( local.data = it )
+            if lc.data == it => return
+            lc.data = it
+            notify!
       text: button: -> data.text or '...'

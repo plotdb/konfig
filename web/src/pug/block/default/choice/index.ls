@@ -16,7 +16,10 @@ module.exports =
       !(view.get('select').value in @_meta.limit)
     pubsub.fire \init, do
       get: -> view.get('select').value
-      set: -> view.get('select').value = it
+      set: (v,o={}) ->
+        notify = view.get('select').value != v and !o.passive
+        view.get('select').value = v
+        if notify => pubsub.fire \event, \change, v
       default: ~> @_meta.default
       meta: ~> set-meta it
       limited: ~> is-limited!

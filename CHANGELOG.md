@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.20
+
+ - fix bug: `widget.set` doesn't update values in konfig object.
+ - upgrade devdependencies
+
+
 ## v4.9.19
 
  - fix bug: check config corresponding ctrl for existency before using it to prevent from exception.

@@ -65,11 +65,14 @@ module.exports =
       get: ->
         # dont return a direct null/undefined to prevent json0 serialization issue.
         return if !obj.font => (@default! or '') else serialize obj.font
-      set: (f) ->
-        obj.font = if !f => f
+      set: (f,o={}) ->
+        font = if !f => f
         else if typeof(f) == \string => {name: f}
         else serialize(f)
+        notify = JSON.stringify(obj.font or {}) != JSON.stringify(font or {}) and !o.passive
+        obj.font = font
         obj.fobj = null
+        if notify => pubsub.fire \event, \change, obj.font
         obj.view.render \font-name
       default: -> get-default!
       meta: (m) -> obj._meta = m
