@@ -29,6 +29,7 @@ module.exports =
         check-limited!
         pubsub.fire \event, \change, node.value
       handler:
+        select: ({node}) ~> node.setAttribute \aria-label, (@_meta.name or 'generic')
         option:
           list: ~> @_meta.values
           key: -> it

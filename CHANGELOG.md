@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.21 (upcoming)
+
+ - add aria-label in select element in choice widget
+
+
 ## v4.9.20
 
  - fix bug: `widget.set` doesn't update values in konfig object.
