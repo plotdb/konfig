@@ -3,7 +3,9 @@
 ## v4.9.21 (upcoming)
 
  - add aria-label in select element in choice widget
- - font widget: don't wait for view.init to speed up
+ - font widget:
+   - don't wait for view.init to speed up initialization
+   - set `init-render` of chooser constructor param to false to speed up initialization
 
 
 ## v4.9.20

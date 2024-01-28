@@ -83,7 +83,9 @@ module.exports =
     urls = if xfc.url => xfc.url! else {}
     # TODO we may want to cache this chooser for other font widgets to speed up.
     chooser = new xfc do
-      root: (if !root => null else root.querySelector('.ldcv')), init-render: true
+      root: (if !root => null else root.querySelector('.ldcv'))
+      # don't init render to speed up initialization
+      init-render: false
       meta: urls.meta or 'https://xlfont.maketext.io/meta'
       links: urls.links or 'https://xlfont.maketext.io/links'
     pubsub.on \config, (o = {}) ->
