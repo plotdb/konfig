@@ -92,9 +92,12 @@ module.exports =
       chooser.config o
       obj.fobj = null
       fobj!
-    <~ chooser.init!then _
+    # core chooser APIs always init if needed first so we can lazy init chooser here.
+    # to explicitly init, use `<~ chooser.init!then _` here.
     if !root => return
     chooser.on \choose, (f) ~> obj.ldcv.set f
+    # get ldcv root first before it been removed by ldcover constructor.
+    ldcv-root = root.querySelector("[ld=ldcv]")
     obj.view = view = new ldview do
       root: root
       init:
@@ -139,10 +142,14 @@ module.exports =
             .catch (e) ->
               if lderror.id(e) == 999 => # cancel
               # something wrong in chooser.load. skip.
-    # Before `view.init!` finishes, `obj.ldcv` won't be available.
-    # Yet it only triggers when user toggle it on and we expect user not faster than this.
-    # So we don't bother to pend on it.
-    view.init!
+    # to ensure obj.ldcv available, use `<~ view.init!then _` here.
+    # however, we don't expect `@cover()` to be called soon in child blocks,
+    # thus we don't bother to wait it here.
     @ <<<
       chooser: -> chooser
+      # in case child block need to manipulate cover objec manually
       cover: -> obj.ldcv
+      # in case child block need to decorate cover dom manually
+      dom: cover: ldcv-root
+      # in case child block bundle metadata directly.
+      metadata: (m) -> chooser.metadata m

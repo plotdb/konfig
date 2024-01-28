@@ -6,6 +6,8 @@
  - font widget:
    - don't wait for view.init to speed up initialization
    - set `init-render` of chooser constructor param to false to speed up initialization
+   - skip `chooser.init` so metadata can be provided later in child block.
+   - provide cover dom directly so child block doesn't have to wait until parent view inited.
 
 
 ## v4.9.20
