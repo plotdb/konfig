@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.22
+
+ - choice widget: check limitation only if `limit` is defined and is not false.
+
+
 ## v4.9.21
 
  - add aria-label in select element in choice widget
