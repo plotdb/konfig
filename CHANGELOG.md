@@ -3,6 +3,7 @@
 ## v4.9.21 (upcoming)
 
  - add aria-label in select element in choice widget
+ - font widget: don't wait for view.init to speed up
 
 
 ## v4.9.20

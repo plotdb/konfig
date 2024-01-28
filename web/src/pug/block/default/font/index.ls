@@ -137,7 +137,10 @@ module.exports =
             .catch (e) ->
               if lderror.id(e) == 999 => # cancel
               # something wrong in chooser.load. skip.
-    <~ view.init!then _
+    # Before `view.init!` finishes, `obj.ldcv` won't be available.
+    # Yet it only triggers when user toggle it on and we expect user not faster than this.
+    # So we don't bother to pend on it.
+    view.init!
     @ <<<
       chooser: -> chooser
       cover: -> obj.ldcv
