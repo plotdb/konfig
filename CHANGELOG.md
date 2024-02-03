@@ -1,5 +1,12 @@
 # Change Logs
 
+## v4.9.23
+
+ - detacth controls when clear rebuilding all controls
+ - font widfget: destroy ldcover when widget is destroyed
+ - upgrade dependencies
+
+
 ## v4.9.22
 
  - choice widget: check limitation only if `limit` is defined and is not false.

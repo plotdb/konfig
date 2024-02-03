@@ -11,10 +11,11 @@ module.exports =
     i18n:
       en: "default": "Default"
       "zh-TW": "system default": "預設字型"
+  destroy: -> @_obj.ldcv.destroy removeNode: true
   init: ({root, context, data, pubsub, t}) ->
     {ldview,ldcover,xfc} = context
     ds = data.data-source or {}
-    obj = {font: null, fobj: null, digest: singleton.digest}
+    @_obj = obj = {font: null, fobj: null, digest: singleton.digest}
     get-default = ->
       return if typeof(obj._m.default) == \string => {name: obj._m.default}
       else obj._m.default or {}

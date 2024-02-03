@@ -324,6 +324,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       @_ctrllist.map ({block, root}) ->
         if block.destroy => block.destroy!
         if root.parentNode => root.parentNode.removeChild root
+    <~ Promise.all (@_ctrllist or []).map(-> it.block.detach!) .then _
     if clear or !@_val => @ <<< {_val: {}, _obj: {}}
     if clear or !@_ctrlobj => @_ctrlobj = {}
     if clear or !@_ctrllist => @_ctrllist = []
