@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.24
+
+ - fix bug: `check-limited` doesn't work for initial value in `number` and `choice` widgets
+
+
 ## v4.9.23
 
  - detacth controls when clear rebuilding all controls

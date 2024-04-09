@@ -4,8 +4,6 @@ module.exports =
     dependencies: []
   init: ({root, context, data, pubsub}) ->
     @_meta = {}
-    set-meta = (m) ~> @_meta = JSON.parse(JSON.stringify(m))
-    set-meta data
     {ldview} = context
     check-limited = ~>
       limited = is-limited!
@@ -13,13 +11,18 @@ module.exports =
     is-limited = ~>
       if @_meta.disable-limit => return false
       if !@_meta.limit? or @_meta.limit == false => return false
-      !(view.get('select').value in @_meta.limit)
+      return if view? => !(view.get('select').value in @_meta.limit) else false
+    set-meta = (m) ~>
+      @_meta = JSON.parse(JSON.stringify(m))
+      check-limited!
+    set-meta data
     pubsub.fire \init, do
       get: -> view.get('select').value
       set: (v,o={}) ->
         notify = view.get('select').value != v and !o.passive
         view.get('select').value = v
         if notify => pubsub.fire \event, \change, v
+        check-limited!
       default: ~> @_meta.default
       meta: ~> set-meta it
       limited: ~> is-limited!
