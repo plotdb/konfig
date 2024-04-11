@@ -1,5 +1,14 @@
 # Change Logs
 
+## v4.9.25
+
+ - paragraph widget:
+   - enlarge paragraph widget dialog
+   - auto focus paragraph widget dialog
+   - use mini style ldcover
+   - use non-in-place, non-resident dialog to prevent being scoped in parent container
+
+
 ## v4.9.24
 
  - fix bug: `check-limited` doesn't work for initial value in `number` and `choice` widgets

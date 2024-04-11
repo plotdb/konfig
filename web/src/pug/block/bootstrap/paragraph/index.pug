@@ -1,13 +1,14 @@
 div
   div(plug="config")
     textarea.form-control(rows="1",ld="input",aria-label="paragraph")
-    .ldcv(ld="ldcv"): .base(ld="panel"): .inner
+    .ldcv.mini(ld="ldcv",style="position:absolute"): .base(ld="panel"): .inner
       .p-2: textarea.form-control(ld="textarea",rows="3",aria-label="paragraph")
       .px-2.pb-2.text-right
         .btn.btn-sm.btn-outline-secondary(data-ldcv-set="") Cancel
         .btn.btn-sm.btn-primary.ml-2(data-ldcv-set="ok") OK
 
-  style(type="text/css"): :stylus
+  //- since we now use non-in-place cover, style won't be applied correctly.
+  //-style(type="text/css"): :stylus
     textarea[ld=input] { resize: none }
     .ldcv
       position: absolute
