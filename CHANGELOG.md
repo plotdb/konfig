@@ -1,5 +1,14 @@
 # Change Logs
 
+## v4.9.26
+
+ - tweak base header vertical alignment
+ - rewrite `paragraph` widget as a plain textarea.
+ - port original paragraph to `multiline` widget.
+ - add `multiline` in demo page.
+ - tweak layout in demo page.
+
+
 ## v4.9.25
 
  - paragraph widget:

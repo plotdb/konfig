@@ -4,9 +4,9 @@ block head
   style(type="text/css"): :stylus
     html, body { width: 100%; height: 100%; padding: 0;margin: 0}
     .config
-      margin: 0 0 1em
+      margin: 0 0 .5em
       flex: 1 1 200px
-      height: 3em
+      height: fit-content
     div[ld=kfg-alt] div[block]
       .ldrs .hint { padding: 4px 4px 3px }
       .ldrs .hint { top: 1.785em }
@@ -22,7 +22,7 @@ block body
       .d-flex.flex-wrap.h-100(ld="kfg",style="gap:1em")
         .tab.p-2.border.rounded.shadow-sm.h-100(ld-each="tab",style="min-width:15em;overflow-y:scroll")
           .text-center.font-weight-bold.p-1.mb-4.bg-secondary.text-light.rounded(ld="name")
-          .config.mb-4(ld-each="ctrl")
+          .config.mb-2(ld-each="ctrl")
       .flex-grow-1
         #sample.rounded.shadow-sm.border.p-4.w-100.h-100
   .ldcv.default-size: .base: .inner

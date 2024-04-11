@@ -38,6 +38,7 @@ popup = do
   format:
     name: \format, type: \format, default: 'default format'
   paragraph: name: \paragraph, type: \paragraph, default: 'some points\n1. multiple lines. \n2. fit into ui.'
+  multiline: name: \multiline, type: \multiline, default: 'some points\n1. multiple lines. \n2. fit into ui.'
   upload: name: \upload, type: \upload, multiple: true
   font: name: \font, type: \font
   popup: name: \popup, type: \popup, popup:

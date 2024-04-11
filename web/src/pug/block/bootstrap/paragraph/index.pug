@@ -1,21 +1,5 @@
 div
   div(plug="config")
     textarea.form-control(rows="1",ld="input",aria-label="paragraph")
-    .ldcv.mini(ld="ldcv",style="position:absolute"): .base(ld="panel"): .inner
-      .p-2: textarea.form-control(ld="textarea",rows="3",aria-label="paragraph")
-      .px-2.pb-2.text-right
-        .btn.btn-sm.btn-outline-secondary(data-ldcv-set="") Cancel
-        .btn.btn-sm.btn-primary.ml-2(data-ldcv-set="ok") OK
-
-  //- since we now use non-in-place cover, style won't be applied correctly.
-  //-style(type="text/css"): :stylus
-    textarea[ld=input] { resize: none }
-    .ldcv
-      position: absolute
-      &:before { background: rgba(0,0,0,.1) }
-      &:after { display: none }
-      .base { position: absolute }
-    .form-control { font-size: 1em }
-
   script(type="@plotdb/block"): include:lsc index.ls
 
