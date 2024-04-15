@@ -16,6 +16,12 @@ module.exports =
         view.render!
       default: -> obj.default
       meta: -> obj.default = it.default
+    input-handler = ({node}) ->
+      value = node.value
+      if obj.data != value => pubsub.fire \event, \change, value
+      obj.data = value
+      view.render!
+
     view = new ldview do
       root: root
       init: ldcv: ({node}) ->
@@ -31,6 +37,8 @@ module.exports =
         textarea: ({node}) -> node.value = obj.data or ''
         multiline: ({node}) -> node.classList.toggle \active, !!obj.multiline
       action:
+        input: input: input-handler
+        change: input: input-handler
         click:
           multiline: ({node}) ->
             obj.multiline = !obj.multiline

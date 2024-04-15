@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.27
+
+ - fix bug: input box in multiline widget doesn't work
+
+
 ## v4.9.26
 
  - tweak base header vertical alignment
