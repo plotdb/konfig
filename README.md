@@ -56,7 +56,6 @@ A common sample usage:
       useBundle: true /* bundle from konfig.widget.bootstrap.min.js */
       view: 'simple'
       meta: { sample: { type: 'number' } }
-      view: 'simple'
     });
     kfg.on("change", function() { ... });
     kfg.init().then(function() {
