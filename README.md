@@ -193,6 +193,8 @@ When `view` option is an object, it can be anything with following methods:
    - `ctrls`: ctrl list
    - `tabs`: tab list
 
+which can be implemented using ldView.
+
 
 ### view as function
 
