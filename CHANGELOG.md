@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.28
+
+ - fix bug: provided tab should be kept without be pruned.
+ - fix bug: incorrect variable used when build-tab
+
+
 ## v4.9.27
 
  - fix bug: input box in multiline widget doesn't work

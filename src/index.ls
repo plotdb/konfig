@@ -336,7 +336,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     if @render-mode == \ctrl => return
     if clear and @_tablist => @_tablist.map ({root}) -> if root.parentNode => root.parentNode.removeChild root
     if clear or !@_tablist => @_tablist = []
-    if clear or !@_tab => @_tab = {}
+    # _tab is from user input. we should not force clear it here, so only init it if epmty.
+    if !@_tab => @_tab = {}
     if clear => @_tabobj = {}
     traverse = (tab, depth = 0, parent = {tab: {}}) ~>
       if !(tab and (Array.isArray(tab) or typeof(tab) == \object)) => return
@@ -344,11 +345,12 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       else [{id,v} for id,v of tab].map ({id,v},i) -> v <<< {id}
       for order from 0 til list.length =>
         item = list[order]
-        item <<< {depth, parent} <<< (if !(v.name) => {name: item.id} else {})
-        item <<< if !(v.order?) => {order} else {}
+        item <<< {depth, parent} <<< (if !(item.name) => {name: item.id} else {})
+        item <<< if !(item.order?) => {order} else {}
         tabo = @_prepare-tab item
         traverse item.child, ((item.depth or 0) + 1), tabo
-    traverse @_tab
+    # _tab is from user input. we should not pollute it, so we clone it.
+    traverse JSON.parse(JSON.stringify(@_tab))
 
 konfig.merge = (des = {}, ...objs) ->
   _ = (des = {}, src = {}) ->

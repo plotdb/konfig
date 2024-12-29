@@ -713,7 +713,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     if (clear || !this._tablist) {
       this._tablist = [];
     }
-    if (clear || !this._tab) {
+    if (!this._tab) {
       this._tab = {};
     }
     if (clear) {
@@ -748,12 +748,12 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       for (i$ = 0, to$ = list.length; i$ < to$; ++i$) {
         order = i$;
         item = list[order];
-        import$((item.depth = depth, item.parent = parent, item), !v.name
+        import$((item.depth = depth, item.parent = parent, item), !item.name
           ? {
             name: item.id
           }
           : {});
-        import$(item, !(v.order != null)
+        import$(item, !(item.order != null)
           ? {
             order: order
           }
@@ -763,7 +763,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
       return results$;
     };
-    return traverse(this._tab);
+    return traverse(JSON.parse(JSON.stringify(this._tab)));
   }
 });
 konfig.merge = function(des){

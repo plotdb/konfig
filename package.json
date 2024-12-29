@@ -3,7 +3,7 @@
   "name": "@plotdb/konfig",
   "license": "MIT",
   "description": "config tool",
-  "version": "4.9.27",
+  "version": "4.9.28",
   "browser": "dist/index.min.js",
   "main": "dist/index.min.js",
   "files": [
