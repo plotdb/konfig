@@ -1,0 +1,20 @@
+//- module
++scope("config").w-100.flex-grow-1.d-flex.flex-column(style="height:100%",ld="config")
+  .border-bottom.z-fixed.d-flex.g-2.bg-light.sticky.p-3.shadow-sm.font-weight-bold(style="top:0;left:0;width:100%")
+    +scope().dropdown(ld-each="lv")
+      .dropdown-toggle.d-inline-block.clickable(ld="dropdown",data-toggle="dropdown"): span(ld="name")
+      i.i-dart-right.ml-2(ld="icon")
+      .dropdown-menu.shadow-sm
+        .dropdown-item(ld-each="picker")
+    div(ld-each="lv")
+  .p-4(ld="konfig",style="overflow-y:scroll")
+    +scope()(ld="template")
+      .mb-2.pb-2.font-weight-bold(ld="name",style="font-size:1.25em")
+        span(ld-each="bread")
+          span.text-underline(ld="text")
+          i.i-dart-right.mx-2.text-sm(ld="icon")
+      div(style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5em")
+        .mb-4(ld-each="ctrl")
+      .pb-2
+      div(ld-each="tab",style="scroll-margin-top:2em")
+      .pb-5

@@ -1,0 +1,17 @@
+extends /base.pug
+block head
+block body
+  .w-1024.rwd.mx-auto.my-4
+    .rounded-sm.shadow-sm.border(style="width:360px;height:600px")
+      .h-100(style="overflow:hidden"): include konfig.pug
+block script
+  +script([
+    {name: "@plotdb/httputil"},
+    {name: "i18next", version: "main", path: "dist/umd/i18next.min.js"},
+    {name: "i18next-browser-languagedetector", path: "/dist/umd/i18nextBrowserLanguageDetector.min.js"}
+  ])
+  script(type="module")
+    include sample-meta.js
+    include i18n.js
+    include:lsc konfig.ls
+    include:lsc index.ls
