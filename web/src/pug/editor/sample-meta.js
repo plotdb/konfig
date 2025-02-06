@@ -1,6 +1,13 @@
 var sampleMeta = {
     "meta": {
+        "0note": {
+            "order": 1.0,
+            "name": " ",
+            "type": "note",
+            "desc": "這個樣式簡潔明瞭，適合用於正式場合。字體清晰易讀，版面乾淨整潔，傳達專業穩重的形象。"
+        },
         "margin": {
+            "order": 2.0,
             "type": "number"
         },
         "font": {
@@ -27,13 +34,16 @@ var sampleMeta = {
             }
         },
         "color": {
+            "order": 3,
             "type": "color",
             "default": "currentColor"
         },
         "palette": {
+            "order": 4,
             "type": "palette"
         },
         "background": {
+            "order": 5,
             "type": "color",
             "default": "transparent"
         },

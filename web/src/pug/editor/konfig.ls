@@ -2,7 +2,6 @@
 (host)<-(->it) _
 
 t = host.t
-console.log t
 
 reset: -> @_kfg.reset!
 meta: (m) -> @_kfg.meta m
@@ -112,11 +111,19 @@ init: ->
             key: -> it.key
             view: opt
           ctrl:
-            list: ({ctx}) -> ctx.ctrls
+            list: ({ctx}) ->
+              ctx.ctrls.sort (a,b) ->
+                return if !(a.meta.order? or b.meta.order?) => 0
+                else if !a.meta.order? => 1
+                else if !b.meta.order? => -1
+                else a.meta.order - b.meta.order
+              ctx.ctrls
             key: -> it.key
             view:
               init: "@": ({node, ctx}) -> node.appendChild ctx.root
-              handler: "@": ({node, ctx}) -> ctx.itf.render!
+              handler: "@": ({node, ctx}) ->
+                if ctx.meta.type == \note => node.style = "grid-column: span 2"
+                ctx.itf.render!
       })
     )
     return render: -> obj.view.render!
@@ -124,7 +131,7 @@ init: ->
   @_kfg = new konfig do
     root: baseview.get('konfig')
     manager: host.manager
-    use-bundle: true
+    use-bundle: false
     autotab: true
     view: myview
     typemap: (name) -> {name: "@plotdb/konfig", version: "main", path: "bootstrap/#name"}

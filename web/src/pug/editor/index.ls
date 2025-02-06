@@ -4,9 +4,9 @@
 @update = ->
 @manager = new block.manager registry: ({name, version, path, type}) ->
   if type == \block =>
-    ret = /^@plotdb\/konfig.widget.(.+)$/.exec(name)
-    return if !ret => "/block/#name/#version/index.html"
-    else "/block/#{ret.1}/#path/index.html"
+    return if name != \@plotdb/konfig => "/block/#name/#version/index.html"
+    else if /bootstrap/.exec(path) => "/block/#path/index.html"
+    else "/block/default/#path/index.html"
   else return "/assets/lib/#name/#version/#{path or 'index.min.js'}"
 
 i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \en, fallbackNS: '', defaultNS: ''
@@ -27,5 +27,4 @@ i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \en, fallbackNS: '', defau
   .then ~> @mod.konfig = konfig @
   .then ~> @mod.konfig.init!
   .then ~> @mod.konfig.meta sample-meta
-  .then -> console.log i18next.t(\generic)
 
