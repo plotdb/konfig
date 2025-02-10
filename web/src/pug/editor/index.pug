@@ -1,7 +1,12 @@
 extends /base.pug
 block head
 block body
-  .w-1024.rwd.mx-auto.my-4: .d-flex.flex-wrap.g-2
+  .w-1024.rwd.mx-auto.my-4
+    .d-flex.flex-wrap.g-2.justify-content-center.mb-4
+      .btn-group
+        .btn.btn-outline-secondary(ld="set-meta",data-name="meta1") Meta 1
+        .btn.btn-outline-secondary(ld="set-meta",data-name="meta2") Meta 2
+    .d-flex.flex-wrap.g-2.justify-content-center
       .rounded-sm.shadow-sm.border(style="width:360px;height:600px")
         .h-100(style="overflow:hidden"): include konfig.pug
       .rounded-sm.shadow-sm.border(style="width:360px;height:600px")
@@ -15,7 +20,8 @@ block script
     {name: "i18next-browser-languagedetector", path: "/dist/umd/i18nextBrowserLanguageDetector.min.js"}
   ])
   script(type="module")
-    include sample-meta.js
+    include sample-meta1.js
+    include:lsc sample-meta2.ls
     include i18n.js
     include:lsc konfig.ls
     include:lsc index.ls

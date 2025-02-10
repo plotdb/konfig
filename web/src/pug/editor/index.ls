@@ -1,6 +1,13 @@
 ({konfig}) <- ldc.register <[konfig]>, _
 
-view = new ldview root: document.body
+view = new ldview do
+  root: document.body
+  action: click:
+    "set-meta": ({node}) ~>
+      name = node.dataset.name
+      @mod.konfig1.meta sample[name]
+      @mod.konfig2.meta sample[name]
+
 @mod = {}
 @update = ->
 @manager = new block.manager registry: ({name, version, path, type}) ->
@@ -25,9 +32,9 @@ i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \en, fallbackNS: '', defau
     )
     console.log "[i18n] use language: ", lng
     i18next.changeLanguage lng
-  .then ~> @mod.konfig = konfig @
-  .then ~> @mod.konfig.init!
-  .then ~> @mod.konfig.meta sample-meta
+  .then ~> @mod.konfig1 = konfig @
+  .then ~> @mod.konfig1.init!
+  .then ~> @mod.konfig1.meta sample.meta1
   .then ~>
     tpl = view.get \block-template .content.childNodes.0.cloneNode(true)
     cls = new block.class(root: tpl, manager: @manager)
@@ -35,5 +42,5 @@ i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \en, fallbackNS: '', defau
       .then (bi) -> bi.attach {root: view.get(\block-root)} .then -> bi.interface!
       .then ~> @mod.konfig2 = it @
       .then ~> @mod.konfig2.init!
-      .then ~> @mod.konfig2.meta sample-meta
+      .then ~> @mod.konfig2.meta sample.meta1
       .then -> console.log \done.

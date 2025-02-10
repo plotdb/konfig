@@ -1,4 +1,5 @@
-var sampleMeta = {
+var sample = {};
+sample.meta1 = {
     "meta": {
         "0note": {
             "order": 1.0,
