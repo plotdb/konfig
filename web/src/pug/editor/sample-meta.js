@@ -4,7 +4,7 @@ var sampleMeta = {
             "order": 1.0,
             "name": " ",
             "type": "note",
-            "desc": "這個樣式簡潔明瞭，適合用於正式場合。字體清晰易讀，版面乾淨整潔，傳達專業穩重的形象。"
+            "desc": "這個樣式簡潔明瞭，適合用於正式場合。支援 **Markdown** ，可以使用[連結](https://github.com/plotdb/konfig)，字體清晰易讀，版面乾淨整潔，傳達專業穩重的形象。\n\n需要了解更多的話，請[點擊此連結](https://github.com/plotdb/konfig)前往 @plotdb/konfig 專案庫以獲取更多資訊"
         },
         "margin": {
             "order": 2.0,
