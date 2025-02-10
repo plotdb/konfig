@@ -1,9 +1,13 @@
 extends /base.pug
 block head
 block body
-  .w-1024.rwd.mx-auto.my-4
-    .rounded-sm.shadow-sm.border(style="width:360px;height:600px")
-      .h-100(style="overflow:hidden"): include konfig.pug
+  .w-1024.rwd.mx-auto.my-4: .d-flex.flex-wrap.g-2
+      .rounded-sm.shadow-sm.border(style="width:360px;height:600px")
+        .h-100(style="overflow:hidden"): include konfig.pug
+      .rounded-sm.shadow-sm.border(style="width:360px;height:600px")
+        .h-100(style="overflow:hidden", ld="block-root")
+  template(ld="block-template")
+    include block/index.pug
 block script
   +script([
     {name: "@plotdb/httputil"},

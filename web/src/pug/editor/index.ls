@@ -1,5 +1,6 @@
 ({konfig}) <- ldc.register <[konfig]>, _
 
+view = new ldview root: document.body
 @mod = {}
 @update = ->
 @manager = new block.manager registry: ({name, version, path, type}) ->
@@ -27,4 +28,12 @@ i18next.init supportedLng: <[en zh-TW]>, fallbackLng: \en, fallbackNS: '', defau
   .then ~> @mod.konfig = konfig @
   .then ~> @mod.konfig.init!
   .then ~> @mod.konfig.meta sample-meta
-
+  .then ~>
+    tpl = view.get \block-template .content.childNodes.0.cloneNode(true)
+    cls = new block.class(root: tpl, manager: @manager)
+    cls.create!
+      .then (bi) -> bi.attach {root: view.get(\block-root)} .then -> bi.interface!
+      .then ~> @mod.konfig2 = it @
+      .then ~> @mod.konfig2.init!
+      .then ~> @mod.konfig2.meta sample-meta
+      .then -> console.log \done.
