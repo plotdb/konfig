@@ -4,12 +4,18 @@ root=web/src/pug/block
 subsets="default bootstrap"
 
 echo "prepare..."
-rm -rf dist
-mkdir -p dist
+if [[ "$1" == "simple" ]]; then
+  echo "[simple] skipping removing dist folder"
+else
+  echo "removing dist folder..."
+  rm -rf dist
+  mkdir -p dist
+fi
 
 echo "building index.ls -> index.js ..."
 ./node_modules/.bin/lsc -cpb --no-header src/index.ls > dist/index.js
 echo "(function(){" > dist/index.js
+
 ./node_modules/.bin/lsc -cpb --no-header src/index.ls >> dist/index.js
 ./node_modules/.bin/lsc tools/pack.ls >> dist/index.js
 echo "})();" >> dist/index.js
@@ -19,14 +25,18 @@ echo "minify index.js -> index.min.js ..."
 echo "minify konfig.widget.bootstrap.js -> konfig.widget.bootstrap.min.js ..."
 ./node_modules/.bin/uglifyjs dist/konfig.widget.bootstrap.js -m -c > dist/konfig.widget.bootstrap.min.js
 
-for subset in $subsets; do
-  for dir in $(ls $root/$subset); do
-    echo "transpile widget $subset/$dir -> dist/widgets/$subset/$dir/$subset/index.html ..."
-    mkdir -p dist/widgets/$subset/$dir
-    ./node_modules/.bin/srcbuild-pug $root/$subset/$dir/index.pug > dist/widgets/$subset/$dir/index.html
+if [[ "$1" == "simple" ]]; then
+  echo "[simple] skipping widget transpilation."
+else
+  for subset in $subsets; do
+    for dir in $(ls $root/$subset); do
+      echo "transpile widget $subset/$dir -> dist/widgets/$subset/$dir/$subset/index.html ..."
+      mkdir -p dist/widgets/$subset/$dir
+      ./node_modules/.bin/srcbuild-pug $root/$subset/$dir/index.pug > dist/widgets/$subset/$dir/index.html
+    done
   done
-done
-cp -R dist/widgets/default/* dist
+  cp -R dist/widgets/default/* dist
+fi
 
 echo "bundling blocks -> index.html ..."
 ./node_modules/.bin/lsc tools/bundle.ls > web/static/assets/bundle/index.html
