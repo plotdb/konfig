@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.9.29 (upcoming)
+
+ - add `note` widget for informative purpose
+ - construct tab in `_build-ctrl` if tab provided and if necessary recursively
+
+
 ## v4.9.28
 
  - fix bug: provided tab should be kept without be pruned.
