@@ -303,14 +303,21 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       ctrls = if meta.child => meta.child else meta
       tab = if meta.child => meta.tab else null
 
-      if !tab and @autotab and pid =>
-        tab = "tabid-#{@_tablist.length}-#{Math.random!toString(36).substring(2)}"
-        tabo = @_prepare-tab {
+      if ((!tab and @autotab) or tab) and pid =>
+        # only if we want to support object value in tab
+        #if tab and typeof(tab) == \object => [_tab, tab] = [tab, tab.id]
+        if !tab => tab = "tabid-#{@_tablist.length}-#{Math.random!toString(36).substring(2)}"
+        tabo = if @_tabobj[tab] => that else @_prepare-tab({
           id: tab, name: pid
           depth: if ptabo => ptabo.tab.depth + 1 else 0
+          order: meta.order if meta.child and meta.order?
           parent: if ptabo => ptabo else {tab: {}}
-        }
-        if ptabo => ptabo.tabs.push tabo
+        } <<< (if _tab? and _tab => _tab else {}))
+        # when user provides tab (via meta.tab), it may from different subtree
+        # which may lead conflict of parent.
+        # here we decide the parent by the very first one we set without overwriting it again.
+        if !tabo.tab.parent => tabo.tab.parent = if ptabo => ptabo else {tab: {}}
+        if tabo.tab.parent == ptabo and !(tabo in ptabo.tabs) => ptabo.tabs.push tabo
 
       if !ctrls => return
       for id,v of ctrls =>
