@@ -286,7 +286,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
   },
   meta: function(o){
     var meta, tab, config;
-    o == null && (o = {});
+    if (o == null) {
+      return this._clone(this._meta);
+    }
     meta = o.meta, tab = o.tab, config = o.config;
     this._meta = {};
     this._tab = {};

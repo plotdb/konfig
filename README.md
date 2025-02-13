@@ -82,7 +82,7 @@ with this DOM:
  - `obj()`: instead of a plain, serializable JSON, `obj()` return a Promise resolved with objects corresponding to operatable objects provided by widgets.
  - `default()`: get a config object with all values from default value.
  - `reset()`: reset config object to default value.
- - `meta(opt)`: update `meta` object. return Promise
+ - `meta(opt)`: return `meta` object if `opt` is omitted. otherwise update `meta` object, return Promise.
    - parameters: either
      - the meta object
      - `{meta, tab}` object.

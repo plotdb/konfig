@@ -126,12 +126,15 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     # we don't clone data inside Array, but only Array itself.
     # this simply because in our use case, ctrls are stored as hash instead of array.
     # so if `n` is an array, it will be okay to shallow copy.
+    # TODO this may limit how ctrls are defined so we will have to be careful about this,
+    # or consider rewrite _clone to also clone data inside Array.
     if Array.isArray(n) => return n.slice 0 # use slice to copy
     if typeof(n) != \object => return n
     for k,v of n => r[k] = @_clone(v)
     return r
 
-  meta: (o = {}) ->
+  meta: (o) ->
+    if !o? => return @_clone(@_meta)
     # we pollute meta (e.g., with auto gened id) so we have to clone input in order to
     #   - prevent affect caller
     #   - prevent id overwritten if caller use the same obj for different subtree.

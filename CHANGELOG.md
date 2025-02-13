@@ -4,6 +4,7 @@
 
  - add `note` widget for informative purpose
  - construct tab in `_build-ctrl` if tab provided and if necessary recursively
+ - make `meta()` return (clone of) `meta` when no parameter is provided
 
 
 ## v4.9.28
