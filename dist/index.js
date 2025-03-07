@@ -316,7 +316,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         v = ctrls[id];
         if (v.type) {
           results$.push(val[id] = ctrl[id].itf['default']());
-        } else {
+        } else if (v !== ctrls) {
           results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
         }
       }
@@ -348,7 +348,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
         if (v.type) {
           val[id] = ctrl[id].itf.limited != null && ctrl[id].itf.limited();
           results$.push(lc.any = lc.any || val[id]);
-        } else {
+        } else if (v !== ctrls) {
           results$.push(traverse(v, val[id] || (val[id] = {}), ctrl[id] || (ctrl[id] = {})));
         }
       }
@@ -409,7 +409,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
               results$.push(fn$(id));
             }
           }
-        } else if (typeof v === 'object') {
+        } else if (typeof v === 'object' && v !== ctrls) {
           results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), nval[id] || (nval[id] = {}), ctrl[id] || (ctrl[id] = {}), id));
         } else {
           results$.push(console.warn("@plotdb/konfig: set malformat config under " + id, ctrls));

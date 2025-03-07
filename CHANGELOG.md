@@ -5,6 +5,7 @@
  - add `note` widget for informative purpose
  - construct tab in `_build-ctrl` if tab provided and if necessary recursively
  - make `meta()` return (clone of) `meta` when no parameter is provided
+ - prevent infinite recursion by checking equality between object and value in iteration
 
 
 ## v4.9.28

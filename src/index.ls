@@ -155,7 +155,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       ctrls = if meta.child => meta.child else meta
       for id,v of ctrls =>
         if v.type => val[id] = ctrl[id].itf.default!
-        else traverse(v, val{}[id], ctrl{}[id], id)
+        # iterate string will get string. compare v against ctrls to prevent infinite recursion.
+        else if (v != ctrls) => traverse(v, val{}[id], ctrl{}[id], id)
     traverse @_meta, ret = {}, @_ctrlobj, null
     ret
 
@@ -173,7 +174,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         if v.type =>
           val[id] = ctrl[id].itf.limited? and ctrl[id].itf.limited!
           lc.any = lc.any or val[id]
-        else traverse(v, val{}[id], ctrl{}[id])
+        # iterate string will get string. compare v against ctrls to prevent infinite recursion.
+        else if (v != ctrls) => traverse(v, val{}[id], ctrl{}[id])
     traverse @_meta, ret, @_ctrlobj
     return if opt.detail => ret else lc.any
 
@@ -206,7 +208,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
             else
               ctrl[id].itf.set val[id], passive: true
               ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
-        else if typeof(v) == \object => traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
+        # iterate string will get string. compare v against ctrls to prevent infinite recursion.
+        else if typeof(v) == \object and v != ctrls => traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)
         else console.warn "@plotdb/konfig: set malformat config under #id", ctrls
     # ensure widgets are ready so we can call their `set` in `ctrl[id].itf.set` above.
     # however, skip if `o.build` is true, because this means `set` is called during building
