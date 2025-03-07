@@ -1,6 +1,6 @@
 # Change Logs
 
-## v4.9.29 (upcoming)
+## v4.9.29
 
  - add `note` widget for informative purpose
  - construct tab in `_build-ctrl` if tab provided and if necessary recursively
