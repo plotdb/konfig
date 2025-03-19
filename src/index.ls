@@ -207,6 +207,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
               console.warn "@plotdb/konfig: set config `#id` without corresponding ctrl defined in meta."
             else
               ctrl[id].itf.set val[id], passive: true
+              # reflect widget limitation back to store value.
+              val[id] = ctrl[id].itf.get!
               ((id)~>@_objwait(Promise.resolve(ctrl[id].itf.object val[id]).then -> obj[id] = it))(id)
         # iterate string will get string. compare v against ctrls to prevent infinite recursion.
         else if typeof(v) == \object and v != ctrls => traverse(v, val{}[id], obj{}[id], nval{}[id], ctrl{}[id], id)

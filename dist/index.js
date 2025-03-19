@@ -406,6 +406,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
               ctrl[id].itf.set(val[id], {
                 passive: true
               });
+              val[id] = ctrl[id].itf.get();
               results$.push(fn$(id));
             }
           }

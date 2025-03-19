@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.30
+
+ - fix bug: set may lead to inconsistency between widget internal value and konfig value due to widget limitation.
+
+
 ## v4.9.29
 
  - add `note` widget for informative purpose
