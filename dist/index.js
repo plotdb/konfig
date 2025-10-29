@@ -845,6 +845,11 @@ konfig.append = function(){
   }
   return c1;
 };
+konfig.prototype.utils = {
+  merge: konfig.merge,
+  append: konfig.append,
+  views: konfig.views
+};
 konfig.version = 'main';
 if (typeof module != 'undefined' && module !== null) {
   module.exports = konfig;

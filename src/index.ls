@@ -393,6 +393,7 @@ konfig.append = (...cs) ->
     _ c1, c2
   return c1
 
+konfig.prototype <<< utils: konfig{merge, append, views}
 konfig.version = 'main'
 if module? => module.exports = konfig
 else if window? => window.konfig = konfig

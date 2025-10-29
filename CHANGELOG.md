@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.31
+
+ - expose class static methods in API to make it easier to access
+
+
 ## v4.9.30
 
  - fix bug: set may lead to inconsistency between widget internal value and konfig value due to widget limitation.
