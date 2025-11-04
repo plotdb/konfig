@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.10.0
+
+ - enable the support of object tab value
+
+
 ## v4.9.32
 
  - add `meta:building`, `meta:built` events

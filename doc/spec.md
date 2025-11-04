@@ -51,7 +51,7 @@ It's for and by the view provided by user (or from default views) how `name`, `d
 Controls can extend this interface but to prevent future conflict, it should *avoid using* words with `_` prefix.
 
 
-## Ctrl type block 
+## Ctrl type block
 
 A `@plotdb/block` object can be found for each ctrl definition object from its `block` or `type` value.
 
@@ -59,7 +59,7 @@ This block should provide an interface with following methods:
 
  - `get()`: get current value
  - `set(value, opt)`: set value of this control. `opt` is an object with following options:
-   - `passive`: default false. when false, this block should fire a change event if the given value is different from current value.  
+   - `passive`: default false. when false, this block should fire a change event if the given value is different from current value.
  - `meta(meta)`: update meta of this control
  - `limited()`: return true if current value is limited (such as, should not be used to generate result)
  - `default()`: return default value from this control
@@ -204,22 +204,22 @@ However in this example it's hard to distinguish a control defintion from a conf
 Generally speaking, intermediate node without `child` is just a shorthand. Always put controls in `child` if you want to prevent ambiguity.
 
 
-## Tab: Group of Ctrls 
+## Tab: Group of Ctrls
 
 While meta are constructed based on the hierarchy of the expected result object, we may want controls to be shown in different order or groups. This is done by setting `tab` and `order` members in ctrl definition object.
 
 Tabs can also be nested, and defined similarly in a separated object:
 
     [
-      {id: "some-tab", name: "Some Tab", order: ...}, 
+      {id: "some-tab", name: "Some Tab", order: ...},
       {id: "another-tab", child: [ ... ]}
     ]
 
 or, in an object:
 
     {
-      "some-tab": { ... }, 
-      "another-tab": { ..., child: { ... } }, 
+      "some-tab": { ... },
+      "another-tab": { ..., child: { ... } },
     }
 
 where a tab object contains following members:
@@ -235,3 +235,16 @@ where a tab object contains following members:
 
 Providing a `tabs` object and a `meta` object, one can manually construct an edit panel, or use `@plotdb/konfig` to construct one.
 
+
+## Inline Tabs
+
+Instead of providing ctrls and tabs in two parameters, you can also inline tabs in `tab` field in nested cases:
+
+    {
+      "general": {
+        "tab": { "name": "General Settings", ... }
+        "child": { ... }
+      }
+    }
+
+the tab object is defined as in the section `Tab: Group of Ctrls` except for the `child` field.

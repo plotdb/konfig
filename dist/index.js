@@ -632,7 +632,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     clear == null && (clear = false);
     promises = [];
     traverse = function(meta, val, obj, ctrl, pid, ptabo){
-      var ctrls, tab, tabo, that, id, v, results$ = [];
+      var ctrls, tab, ref$, _tab, tabo, that, id, v, results$ = [];
       val == null && (val = {});
       obj == null && (obj = {});
       ctrl == null && (ctrl = {});
@@ -642,6 +642,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       ctrls = meta.child ? meta.child : meta;
       tab = meta.child ? meta.tab : null;
       if (((!tab && this$.autotab) || tab) && pid) {
+        if (tab && typeof tab === 'object') {
+          ref$ = [tab, tab.id], _tab = ref$[0], tab = ref$[1];
+        }
         if (!tab) {
           tab = "tabid-" + this$._tablist.length + "-" + Math.random().toString(36).substring(2);
         }
@@ -657,7 +660,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
               : {
                 tab: {}
               }
-          }, (typeof _tab != 'undefined' && _tab !== null) && _tab
+          }, _tab != null && _tab
             ? _tab
             : {}));
         if (!tabo.tab.parent) {
