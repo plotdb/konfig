@@ -142,13 +142,17 @@ konfig.prototype = Object.create(Object.prototype) <<< do
     {meta, tab, config} = o
 
     @ <<< {_meta: {}, _tab: {}}
-    if !(meta?) or (typeof(meta.type) == \string) =>
-      @_meta = @_clone(o)
-      @build true
-    else
-      if meta? => @_meta = @_clone(meta)
-      if tab? => @_tab = tab
-      @build true, config
+    Promise.resolve!
+      .then ~> @fire \meta:building
+      .then ~>
+        if !(meta?) or (typeof(meta.type) == \string) =>
+          @_meta = @_clone(o)
+          @build true
+        else
+          if meta? => @_meta = @_clone(meta)
+          if tab? => @_tab = tab
+          @build true, config
+      .then ~> @fire \meta:built
 
   default: ->
     traverse = (meta, val = {}, ctrl = {}, pid) ~>

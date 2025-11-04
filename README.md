@@ -103,6 +103,8 @@ with this DOM:
 
 ## Events
 
+ - `meta:building`: fired when meta is going to change.
+ - `meta:built`: fired when meta is changed and built.
  - `change`: fired when value is changed. Params:
    - `value`: (serialized) value object return by `get`.
  - `action`: fired when widget fires this event.

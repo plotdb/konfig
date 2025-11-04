@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.9.32
+
+ - add `meta:building`, `meta:built` events
+
+
 ## v4.9.31
 
  - expose class static methods in API to make it easier to access

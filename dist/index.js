@@ -285,25 +285,31 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     return r;
   },
   meta: function(o){
-    var meta, tab, config;
+    var meta, tab, config, this$ = this;
     if (o == null) {
       return this._clone(this._meta);
     }
     meta = o.meta, tab = o.tab, config = o.config;
     this._meta = {};
     this._tab = {};
-    if (!(meta != null) || typeof meta.type === 'string') {
-      this._meta = this._clone(o);
-      return this.build(true);
-    } else {
-      if (meta != null) {
-        this._meta = this._clone(meta);
+    return Promise.resolve().then(function(){
+      return this$.fire('meta:building');
+    }).then(function(){
+      if (!(meta != null) || typeof meta.type === 'string') {
+        this$._meta = this$._clone(o);
+        return this$.build(true);
+      } else {
+        if (meta != null) {
+          this$._meta = this$._clone(meta);
+        }
+        if (tab != null) {
+          this$._tab = tab;
+        }
+        return this$.build(true, config);
       }
-      if (tab != null) {
-        this._tab = tab;
-      }
-      return this.build(true, config);
-    }
+    }).then(function(){
+      return this$.fire('meta:built');
+    });
   },
   'default': function(){
     var traverse, ret;
