@@ -40,7 +40,7 @@ module.exports =
             val = if typeof(data) == \object => data.value else data
             if @_meta.default == val => node.setAttribute \selected, \selected
           handler: ({node,data}) ->
-            {value,name} = if typeof(data) == \object => data else {value: data,name: data}
+            {value,name} = if typeof(data) == \object => data else {value: data, name: data}
             node.setAttribute \value, value
             node.textContent = name
     view.init!then -> check-limited!
