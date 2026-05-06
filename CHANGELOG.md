@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.11.1
+
+ - fix bug: remove unnecessary log
+ - choice: support option label i18n  
+
+
 ## v4.11.0
 
  - support `base` plug in base widget for overwriting root DOM
