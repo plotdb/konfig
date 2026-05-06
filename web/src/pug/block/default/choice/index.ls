@@ -2,7 +2,7 @@ module.exports =
   pkg:
     extend: name: '@plotdb/konfig', version: 'main', path: 'base'
     dependencies: []
-  init: ({root, context, data, pubsub}) ->
+  init: ({root, context, data, pubsub, t}) ->
     @_meta = {}
     {ldview} = context
     check-limited = ~>
@@ -35,12 +35,12 @@ module.exports =
         select: ({node}) ~> node.setAttribute \aria-label, (@_meta.name or 'generic')
         option:
           list: ~> @_meta.values
-          key: -> it
+          key: -> it.value or it
           init: ({node, data}) ~>
             val = if typeof(data) == \object => data.value else data
             if @_meta.default == val => node.setAttribute \selected, \selected
           handler: ({node,data}) ->
             {value,name} = if typeof(data) == \object => data else {value: data, name: data}
             node.setAttribute \value, value
-            node.textContent = name
+            node.textContent = t(name)
     view.init!then -> check-limited!
