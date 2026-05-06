@@ -37,15 +37,29 @@ Constructor options:
  - `root`: root node or CSS selector for root node.
    - root node is used to place root tab for this config.
  - `useBundle`: true if use bundle blocks, if availale. default true.
+   - when true, this will create block classes from class object stored in `konfig.bundle`.
+     include `@plotdb/konfig:konfig.widget.bootstrap.min.js` will fill this field automatically with builtin widgets;
+   - (TBD) this is more like an option for debugging:
+     - It's only needed when we have to prepare `konfig.bundle` but want to kepp them out of block manager.
+     - Consider removing this in the future.
  - `debounce`: true to debounce updating. default true.
  - `autotab`: true to use meta object field key as tab name by default. default false
  - `meta`: meta object. see spec for more information.
  - `tab`: tab object. see spec for more information.
  - `manager`: block manager for retrieving blocks
    - use default manager if omitted, which always throw an Error except for blocks available in bundle.
- - `typemap(name)`: converter from widget name to `@plotdb/block` definition. For widget customization.
+ - `typemap(name)`: converter from widget name to `@plotdb/block` definition.
    - `name`: a widget name, such as `number`, `color`, etc.
    - return value: should be an object for block definition such as `{name: 'number', version: '0.0.1'}`
+   - note:
+     - we usually use simple names in konfig meta, so `typemap` is necessary for converting names to bid.
+     - here is an example using typemap along with builtin widget bundle:
+
+           typemap: function(name) {
+             return {name: "@plotdb/konfig", version: "main", path: "bootstrap/" + name};
+           }
+
+       check `web/src/pug/blockdefault` and `web/src/pug/block/bootstrap` to see supported widgets in the bundle.
  - `view`: view for rendering. optional, default null. For more information, see `Views` section below.
 
 
@@ -53,8 +67,11 @@ A common sample usage:
 
     kfg = new konfig({
       root: document.querySelector('.kfg'),
-      useBundle: true /* bundle from konfig.widget.bootstrap.min.js */
-      view: 'simple'
+      /* define how blocks are found baed on name */
+      typemap: function(name) {
+          return {name: "@plotdb/konfig", version: "main", path: "bootstrap/" + name};
+      },
+      view: 'simple',
       meta: { sample: { type: 'number' } }
     });
     kfg.on("change", function() { ... });

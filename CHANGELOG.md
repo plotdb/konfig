@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.11.0
+
+ - support `base` plug in base widget for overwriting root DOM
+
+
 ## v4.10.0
 
  - enable the support of object tab value
