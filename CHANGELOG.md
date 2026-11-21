@@ -1,5 +1,11 @@
 # Change Logs
 
+## v4.12.1
+
+ - fix bug: builtin views sort tabs in reversed order. now lower order first, as documented.
+   - tabs without order are placed after those with order, in creation order.
+
+
 ## v4.12.0
 
  - support `autotab: 'path'` option for using meta key path ( e.g., `xaxis/tick` ) as auto tab id

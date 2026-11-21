@@ -32,6 +32,11 @@ konfig = (opt={}) ->
     else @_update n, v
   @
 
+# lower order first. tabs without order are placed after those with order, in creation order.
+konfig._tab-order = (a, b) ->
+  [ao, bo] = [a.tab.order, b.tab.order]
+  if ao? and bo? => ao - bo else if ao? => -1 else if bo? => 1 else 0
+
 konfig.views =
   simple: ->
     new ldview do
@@ -50,7 +55,7 @@ konfig.views =
       handler:
         tab:
           list: ~>
-            @_tablist.sort (a,b) -> b.tab.order - a.tab.order
+            @_tablist.sort konfig._tab-order
             @_tablist
           key: -> it.key
           view:
@@ -83,7 +88,7 @@ konfig.views =
             tabs = @_tablist.filter ->
               !(it.tab.parent.tab.id or ctx.tab.id) or
               (it.tab.parent and ctx.tab and it.tab.parent.tab.id == ctx.tab.id)
-            tabs.sort (a,b) -> b.tab.order - a.tab.order
+            tabs.sort konfig._tab-order
             tabs
           key: -> it.key
           view: opt
