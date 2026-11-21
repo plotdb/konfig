@@ -56,6 +56,19 @@ konfig = function(opt){
   };
   return this;
 };
+konfig._tabOrder = function(a, b){
+  var ref$, ao, bo;
+  ref$ = [a.tab.order, b.tab.order], ao = ref$[0], bo = ref$[1];
+  if (ao != null && bo != null) {
+    return ao - bo;
+  } else if (ao != null) {
+    return -1;
+  } else if (bo != null) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
 konfig.views = {
   simple: function(){
     var this$ = this;
@@ -96,9 +109,7 @@ konfig.views = {
       handler: {
         tab: {
           list: function(){
-            this$._tablist.sort(function(a, b){
-              return b.tab.order - a.tab.order;
-            });
+            this$._tablist.sort(konfig._tabOrder);
             return this$._tablist;
           },
           key: function(it){
@@ -180,9 +191,7 @@ konfig.views = {
             tabs = this$._tablist.filter(function(it){
               return !(it.tab.parent.tab.id || ctx.tab.id) || (it.tab.parent && ctx.tab && it.tab.parent.tab.id === ctx.tab.id);
             });
-            tabs.sort(function(a, b){
-              return b.tab.order - a.tab.order;
-            });
+            tabs.sort(konfig._tabOrder);
             return tabs;
           },
           key: function(it){
