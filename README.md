@@ -44,6 +44,11 @@ Constructor options:
      - Consider removing this in the future.
  - `debounce`: true to debounce updating. default true.
  - `autotab`: true to use meta object field key as tab name by default. default false
+   - set to `path` to use path of meta object field keys ( joined with `/`, e.g., `xaxis/tick` ) as tab id.
+     - with predictable tab ids, `name`, `desc`, `hint` and `order` of auto tabs can be provided via `tab` option.
+     - parent and depth of such tabs always follow meta hierarchy, even if they are nested differently in `tab` option.
+     - see `Tabs for Auto Tabs` in `doc/spec.md` for more information.
+     - when `true`, tab ids of auto tabs are randomly generated.
  - `meta`: meta object. see spec for more information.
  - `tab`: tab object. see spec for more information.
  - `manager`: block manager for retrieving blocks
@@ -116,6 +121,10 @@ with this DOM:
    - this is for merging meta objects.
  - `append(o1, o2, o3, ...)`: recursively append config object backward to o1. return merged object.
    - this is for merging config objects.
+ - `tab`: helpers for `tab` option keyed by path ( see `autotab: 'path'` in `doc/spec.md` ).
+   - `tab.paths(meta)`: list tab ids of all sections ( non-ctrl nodes ) in meta: path joined with `/`, or the id of an inline tab.
+   - `tab.check(meta, tab)`: return keys in `tab` that match no section in meta.
+   - `tab.mount(prefix, tab)`: return a copy of `tab` with keys prefixed by `prefix`. key `''` maps to `prefix` itself.
 
 
 ## Events

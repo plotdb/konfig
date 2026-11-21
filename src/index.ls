@@ -238,8 +238,8 @@ konfig.prototype = Object.create(Object.prototype) <<< do
       # in this case, a tab is created first with depth 0, and later from autotab.
       # the tab with nonzero depth is from autotab and should overwrite the depth 0 one,
       # since the depth 0 one carries less information (only the tab id)
-      if ctab.depth < tab.depth => ctab <<< {tab}
-      return ctab
+      if ctab.depth < tab.depth => ctab <<< tab
+      return @_tabobj[tab.id]
     root = document.createElement('div')
     @_tablist.push d = {
       root, tab
@@ -310,15 +310,20 @@ konfig.prototype = Object.create(Object.prototype) <<< do
 
   _build-ctrl: (clear = false) ->
     promises = []
-    traverse = (meta, val = {}, obj = {},  ctrl = {}, pid, ptabo) ~>
+    traverse = (meta, val = {}, obj = {},  ctrl = {}, pid, ptabo, ppath) ~>
       if !(meta and typeof(meta) == \object) => return
       ctrls = if meta.child => meta.child else meta
       tab = if meta.child => meta.tab else null
+      # path of this node in meta, joined with `/`. used as tab id when `autotab` is `path`.
+      path = if !pid => null else if ppath => "#ppath/#pid" else pid
 
       if ((!tab and @autotab) or tab) and pid =>
         # this provides support of object value in tab
         if tab and typeof(tab) == \object => [_tab, tab] = [tab, tab.id]
-        if !tab => tab = "tabid-#{@_tablist.length}-#{Math.random!toString(36).substring(2)}"
+        if !tab =>
+          autoid = true
+          tab = if @autotab == \path => path
+          else "tabid-#{@_tablist.length}-#{Math.random!toString(36).substring(2)}"
 
         tabo = if @_tabobj[tab] => that else @_prepare-tab({
           id: tab, name: pid
@@ -330,6 +335,16 @@ konfig.prototype = Object.create(Object.prototype) <<< do
         # which may lead conflict of parent.
         # here we decide the parent by the very first one we set without overwriting it again.
         if !tabo.tab.parent => tabo.tab.parent = if ptabo => ptabo else {tab: {}}
+        # path id is unique to its position in meta, so its parent and depth always follow meta,
+        # even if this tab is created earlier ( e.g., from `tab` option ) with different hierarchy.
+        if autoid and @autotab == \path =>
+          otabo = tabo.tab.parent
+          isroot = !(otabo and otabo.tab and otabo.tab.id)
+          if (ptabo and otabo != ptabo) or (!ptabo and !isroot) =>
+            if otabo and otabo.tabs and ~(idx = otabo.tabs.indexOf tabo) => otabo.tabs.splice idx, 1
+            tabo.tab <<< {parent: (ptabo or {tab: {}}), depth: (if ptabo => ptabo.tab.depth + 1 else 0)}
+          # name defaults to tab id ( full path ) if created from `tab` option. use meta key instead.
+          if tabo.tab.name == tab and tab != pid => tabo.tab.name = pid
         if tabo.tab.parent == ptabo and !(tabo in ptabo.tabs) => ptabo.tabs.push tabo
 
       if !ctrls => return
@@ -338,7 +353,7 @@ konfig.prototype = Object.create(Object.prototype) <<< do
           v <<< {id} <<< (if tab and !v.tab => {tab} else {})
           promises.push @_prepare-ctrl(v, val, obj, ctrl)
           continue
-        traverse(v, val{}[id], obj{}[id], ctrl{}[id], id, tabo)
+        traverse(v, val{}[id], obj{}[id], ctrl{}[id], id, tabo, path)
 
     if clear and @_ctrllist =>
       @_ctrllist.map ({block, root}) ->
@@ -398,7 +413,37 @@ konfig.append = (...cs) ->
     _ c1, c2
   return c1
 
-konfig.prototype <<< utils: konfig{merge, append, views}
+# helpers for `tab` option keyed by path ( see `autotab: 'path'` ).
+# meta is walked the same way as `_build-ctrl`: `child` is expanded, nodes with `type` are ctrls.
+konfig.tab =
+  # list tab id of every section ( non-ctrl node ) in meta, which is its path joined with `/`,
+  # or the explicit id of an inline tab ( `{tab: 'id', child}` or `{tab: {id}, child}` ).
+  paths: (meta = {}) ->
+    ret = []
+    _ = (meta, ppath) ->
+      for id, v of (meta.child or meta) =>
+        if !(v and typeof(v) == \object) or v.type => continue
+        path = if ppath => "#ppath/#id" else id
+        tab = if v.child => v.tab else null
+        tab = if tab and typeof(tab) == \object => tab.id else tab
+        ret.push(tab or path)
+        _ v, path
+    if meta and typeof(meta) == \object => _ meta, null
+    ret
+  # return keys in `tab` that don't match any section in meta.
+  check: (meta = {}, tab = {}) ->
+    paths = konfig.tab.paths meta
+    [k for k of tab when !(k in paths)]
+  # prefix keys of `tab` with `prefix` and return a new object. key '' maps to `prefix` itself.
+  # e.g., mount('xaxis', {'': a, tick: b}) -> {xaxis: a, 'xaxis/tick': b}
+  mount: (prefix, tab = {}) ->
+    ret = {}
+    for k, v of tab =>
+      key = if !prefix => k else if k => "#prefix/#k" else prefix
+      ret[key] = JSON.parse JSON.stringify v
+    ret
+
+konfig.prototype <<< utils: konfig{merge, append, views, tab}
 konfig.version = 'main'
 if module? => module.exports = konfig
 else if window? => window.konfig = konfig

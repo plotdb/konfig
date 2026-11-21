@@ -463,9 +463,9 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     if (this._tabobj[tab.id]) {
       ctab = this._tabobj[tab.id].tab;
       if (ctab.depth < tab.depth) {
-        ctab.tab = tab;
+        import$(ctab, tab);
       }
-      return ctab;
+      return this._tabobj[tab.id];
     }
     root = document.createElement('div');
     this._tablist.push(d = {
@@ -631,8 +631,8 @@ konfig.prototype = import$(Object.create(Object.prototype), {
     var promises, traverse, this$ = this;
     clear == null && (clear = false);
     promises = [];
-    traverse = function(meta, val, obj, ctrl, pid, ptabo){
-      var ctrls, tab, ref$, _tab, tabo, that, id, v, results$ = [];
+    traverse = function(meta, val, obj, ctrl, pid, ptabo, ppath){
+      var ctrls, tab, path, ref$, _tab, autoid, tabo, that, otabo, isroot, idx, id, v, results$ = [];
       val == null && (val = {});
       obj == null && (obj = {});
       ctrl == null && (ctrl = {});
@@ -641,12 +641,18 @@ konfig.prototype = import$(Object.create(Object.prototype), {
       }
       ctrls = meta.child ? meta.child : meta;
       tab = meta.child ? meta.tab : null;
+      path = !pid
+        ? null
+        : ppath ? ppath + "/" + pid : pid;
       if (((!tab && this$.autotab) || tab) && pid) {
         if (tab && typeof tab === 'object') {
           ref$ = [tab, tab.id], _tab = ref$[0], tab = ref$[1];
         }
         if (!tab) {
-          tab = "tabid-" + this$._tablist.length + "-" + Math.random().toString(36).substring(2);
+          autoid = true;
+          tab = this$.autotab === 'path'
+            ? path
+            : "tabid-" + this$._tablist.length + "-" + Math.random().toString(36).substring(2);
         }
         tabo = (that = this$._tabobj[tab])
           ? that
@@ -670,6 +676,23 @@ konfig.prototype = import$(Object.create(Object.prototype), {
               tab: {}
             };
         }
+        if (autoid && this$.autotab === 'path') {
+          otabo = tabo.tab.parent;
+          isroot = !(otabo && otabo.tab && otabo.tab.id);
+          if ((ptabo && otabo !== ptabo) || (!ptabo && !isroot)) {
+            if (otabo && otabo.tabs && ~(idx = otabo.tabs.indexOf(tabo))) {
+              otabo.tabs.splice(idx, 1);
+            }
+            ref$ = tabo.tab;
+            ref$.parent = ptabo || {
+              tab: {}
+            };
+            ref$.depth = ptabo ? ptabo.tab.depth + 1 : 0;
+          }
+          if (tabo.tab.name === tab && tab !== pid) {
+            tabo.tab.name = pid;
+          }
+        }
         if (tabo.tab.parent === ptabo && !in$(tabo, ptabo.tabs)) {
           ptabo.tabs.push(tabo);
         }
@@ -688,7 +711,7 @@ konfig.prototype = import$(Object.create(Object.prototype), {
           promises.push(this$._prepareCtrl(v, val, obj, ctrl));
           continue;
         }
-        results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), ctrl[id] || (ctrl[id] = {}), id, tabo));
+        results$.push(traverse(v, val[id] || (val[id] = {}), obj[id] || (obj[id] = {}), ctrl[id] || (ctrl[id] = {}), id, tabo, path));
       }
       return results$;
     };
@@ -854,10 +877,62 @@ konfig.append = function(){
   }
   return c1;
 };
+konfig.tab = {
+  paths: function(meta){
+    var ret, _;
+    meta == null && (meta = {});
+    ret = [];
+    _ = function(meta, ppath){
+      var id, ref$, v, path, tab, results$ = [];
+      for (id in ref$ = meta.child || meta) {
+        v = ref$[id];
+        if (!(v && typeof v === 'object') || v.type) {
+          continue;
+        }
+        path = ppath ? ppath + "/" + id : id;
+        tab = v.child ? v.tab : null;
+        tab = tab && typeof tab === 'object' ? tab.id : tab;
+        ret.push(tab || path);
+        results$.push(_(v, path));
+      }
+      return results$;
+    };
+    if (meta && typeof meta === 'object') {
+      _(meta, null);
+    }
+    return ret;
+  },
+  check: function(meta, tab){
+    var paths, k, results$ = [];
+    meta == null && (meta = {});
+    tab == null && (tab = {});
+    paths = konfig.tab.paths(meta);
+    for (k in tab) {
+      if (!in$(k, paths)) {
+        results$.push(k);
+      }
+    }
+    return results$;
+  },
+  mount: function(prefix, tab){
+    var ret, k, v, key;
+    tab == null && (tab = {});
+    ret = {};
+    for (k in tab) {
+      v = tab[k];
+      key = !prefix
+        ? k
+        : k ? prefix + "/" + k : prefix;
+      ret[key] = JSON.parse(JSON.stringify(v));
+    }
+    return ret;
+  }
+};
 konfig.prototype.utils = {
   merge: konfig.merge,
   append: konfig.append,
-  views: konfig.views
+  views: konfig.views,
+  tab: konfig.tab
 };
 konfig.version = 'main';
 if (typeof module != 'undefined' && module !== null) {

@@ -236,6 +236,34 @@ where a tab object contains following members:
 Providing a `tabs` object and a `meta` object, one can manually construct an edit panel, or use `@plotdb/konfig` to construct one.
 
 
+## Tabs for Auto Tabs
+
+With `autotab: 'path'`, auto tabs are identified by the path of their keys in meta joined with `/`, so they can be described in `tab` option without changing meta:
+
+    new konfig({
+      autotab: 'path',
+      meta: { xaxis: { tick: { count: {type: 'number'} }, show: {type: 'boolean'} } },
+      tab: {
+        "xaxis": { name: "X Axis", desc: "settings for x axis" },
+        "xaxis/tick": { name: "Tick", desc: {en: "...", "zh-TW": "..."} }
+      }
+    });
+
+ - parent and depth of these tabs always follow meta hierarchy, even if they are nested differently in `tab` option.
+ - if `name` is omitted, the meta key ( e.g., `tick` ) is used.
+ - tabs in `tab` option without any corresponding nodes in meta or ctrls are still kept; views may want to hide tabs without ctrls and subtabs.
+ - inline tabs ( see below ) with explicit `id` keep their id; those without `id` use path as id.
+
+Helpers for such `tab` objects, walking meta the same way as konfig does ( `child` is expanded; nodes with `type` are ctrls ):
+
+ - `konfig.tab.paths(meta)`: tab ids of all sections, e.g., `['xaxis', 'xaxis/tick']` for the meta above.
+ - `konfig.tab.check(meta, tab)`: keys in `tab` without a matching section, e.g., for catching typos or renamed sections in tests.
+ - `konfig.tab.mount(prefix, tab)`: prefix keys of a shared `tab` object, so it can be reused under different keys:
+
+    konfig.tab.mount('xaxis', {'': {desc: 'axis'}, tick: {desc: 'ticks'}})
+    // -> {"xaxis": {desc: 'axis'}, "xaxis/tick": {desc: 'ticks'}}
+
+
 ## Inline Tabs
 
 Instead of providing ctrls and tabs in two parameters, you can also inline tabs in `tab` field in nested cases:
