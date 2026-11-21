@@ -1,5 +1,14 @@
 # Change Logs
 
+## v4.12.0
+
+ - support `autotab: 'path'` option for using meta key path ( e.g., `xaxis/tick` ) as auto tab id
+   - auto tabs with path id follow meta hierarchy for parent and depth, even if created earlier from `tab` option.
+ - add `konfig.tab` helpers ( `paths`, `check`, `mount` ) for `tab` option keyed by path
+ - fix bug: tab collision in `_prepare-tab` should merge tab fields instead of setting a `tab` field
+ - fix bug: `_prepare-tab` should always return tab entry object, instead of tab object when collision
+
+
 ## v4.11.1
 
  - fix bug: remove unnecessary log
