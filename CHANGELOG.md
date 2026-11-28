@@ -1,5 +1,10 @@
 # Change Logs
 
+## v4.12.2
+
+ - move `i18next` and `i18next-browser-languagedetector` to `devDependencies`: only the demo site ( `web/` ) uses them, `dist/` doesn't.
+ - upgrade `@loadingio/vscroll` to `^0.0.14` ( its build tools moved to `devDependencies` ), and remove its duplicated `devDependencies` entry.
+
 ## v4.12.1
 
  - fix bug: builtin views sort tabs in reversed order. now lower order first, as documented.
